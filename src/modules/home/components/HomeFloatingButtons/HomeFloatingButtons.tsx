@@ -1,30 +1,36 @@
-import "./HomeFloatingButtons.css";
 import { Link } from "react-router-dom";
-import { ShoppingBag, MessageCircle } from "lucide-react";
+import {
+  MessageCircle,
+  ShoppingBag,
+} from "lucide-react";
 
-export default function FloatingButtons() {
+import { BRAND_CONFIG } from "@/tenant/config/brand";
+
+export default function HomeFloatingButtons() {
+  const whatsappUrl =
+    `https://wa.me/${BRAND_CONFIG.contact.whatsapp}?text=${encodeURIComponent(
+      "Hola, quiero consultar por los autos coleccionables disponibles.",
+    )}`;
+
   return (
-    <div className="fixed bottom-5 right-5 flex flex-col gap-3 z-50">
+    <div className="fixed bottom-5 right-5 z-50 flex flex-col items-end gap-3">
       <Link
         to="/catalogo"
-        className="flex items-center gap-2 px-4 py-3 rounded-full bg-primary text-white font-bold shadow-lg"
+        className="flex items-center gap-2 rounded-full border border-white/10 bg-slate-900 px-5 py-3 text-xs font-black text-white shadow-2xl transition hover:bg-slate-800"
       >
-        <ShoppingBag size={18} />
+        <ShoppingBag size={17} />
         Catálogo
       </Link>
 
       <a
-        href="https://wa.me/51936188636"
+        href={whatsappUrl}
         target="_blank"
-        className="flex items-center gap-2 px-4 py-3 rounded-full bg-green-500 text-white font-bold shadow-lg"
+        rel="noopener noreferrer"
+        className="flex items-center gap-2 rounded-full bg-emerald-500 px-5 py-3 text-xs font-black text-white shadow-2xl transition hover:bg-emerald-400"
       >
-        <MessageCircle size={18} />
+        <MessageCircle size={17} />
         WhatsApp
       </a>
     </div>
   );
 }
-
-
-
-

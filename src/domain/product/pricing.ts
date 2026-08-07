@@ -35,7 +35,7 @@ export function getOriginalProductPrice(product: Product): number {
  * Precio efectivo utilizado en carrito, detalle y pedidos.
  *
  * La cantidad pertenece al CartItem, pero no participa
- * en el cálculo unitario del modelo B2C de Gleemour.
+ * en el cálculo unitario del modelo B2C de coleccionables.
  */
 export function getEffectivePrice(product: Product): number {
   return getProductPrice(product);

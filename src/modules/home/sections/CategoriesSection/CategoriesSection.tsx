@@ -1,109 +1,74 @@
 import "./CategoriesSection.css";
+
 import { Link } from "react-router-dom";
-import { ArrowRight, Building2, Flower2, Music, Sparkles } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 
-import { HomeSectionHeader } from "../../components/HomeSectionHeader";
-
-const categories = [
-  {
-    name: "Naturales",
-    tag: "Flores frescas",
-    slug: "naturales",
-    description:
-      "Arreglos vivos, delicados y llenos de emoción para sorprender en el momento perfecto.",
-    feature: "Más pedido",
-    icon: Flower2,
-    tone: "primary",
-    gridClass: "lg:col-span-2",
-    isLarge: true,
-  },
-  {
-    name: "Artificiales",
-    tag: "Belleza duradera",
-    slug: "artificiales",
-    description:
-      "Detalles que permanecen en el tiempo y convierten un recuerdo en algo visible.",
-    feature: "Duradero",
-    icon: Sparkles,
-    tone: "secondary",
-    gridClass: "lg:col-span-1",
-    isLarge: false,
-  },
-  {
-    name: "Corporativos",
-    tag: "Para empresas",
-    slug: "corporativos",
-    description:
-      "Detalles elegantes para clientes, equipos, eventos y fechas especiales.",
-    feature: "Empresas",
-    icon: Building2,
-    tone: "lavender",
-    gridClass: "lg:col-span-1",
-    isLarge: false,
-  },
-];
+import { getCategoryUrl } from "@/app/routes/routes";
+import { CATEGORIES } from "@/tenant/config/catalog";
 
 export default function CategoriesSection() {
   return (
-    <section id="catalogo" className="home-section categories-section">
-      <HomeSectionHeader
-        icon={Music}
-        kicker="Categorías Gleemour"
-        title="Elige cómo quieres hacer sentir"
-        description="Naturales, artificiales o corporativos: encuentra el detalle ideal para cada intención."
-        align="center"
-      />
+    <section
+      id="categorias"
+      className="home-collectibles-categories"
+    >
+      <div className="mx-auto max-w-7xl px-5 py-20 md:px-8 md:py-28">
+        <div className="max-w-3xl">
+          <span className="text-[11px] font-black uppercase tracking-[0.24em] text-sky-400">
+            Explora
+          </span>
 
-      <div className="categories-divider" />
+          <h2 className="mt-4 text-3xl font-black tracking-[-0.04em] text-white md:text-5xl">
+            Encuentra el auto que estás buscando.
+          </h2>
 
-      <div className="categories-premium-grid">
-        {categories.map((cat, index) => {
-          const Icon = cat.icon;
+          <p className="mt-5 max-w-2xl text-sm leading-7 text-slate-400 md:text-base">
+            Navega por nuestras categorías y descubre nuevas piezas para tu colección.
+          </p>
+        </div>
 
-          return (
-            <Link
-              key={cat.slug}
-              to={`/catalogo/categoria.html?cat=${cat.slug}`}
-              className={`categories-premium-card ${cat.gridClass} tone-${cat.tone}`}
-              style={{ animationDelay: `${index * 120}ms` }}
-            >
-              <span className="categories-feature-badge">{cat.feature}</span>
+        <div className="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+          {CATEGORIES.map((category) => {
+            const href =
+              category.id === "todas"
+                ? "/catalogo"
+                : getCategoryUrl(category.id);
 
-              <div
-                className={`categories-premium-content ${
-                  cat.isLarge ? "is-large" : ""
-                }`}
+            return (
+              <Link
+                key={category.id}
+                to={href}
+                className="home-collectibles-category-card group"
               >
-                <div className="categories-icon-box">
-                  <Icon size={cat.isLarge ? 42 : 36} strokeWidth={1.6} />
+                <div className="flex items-start justify-between">
+                  <span className="text-3xl">
+                    {category.icon}
+                  </span>
+
+                  <ArrowRight
+                    size={18}
+                    className="text-slate-600 transition group-hover:translate-x-1 group-hover:text-sky-400"
+                  />
                 </div>
 
-                <div className="categories-copy">
-                  <span className="categories-tag">{cat.tag}</span>
+                <div className="mt-10">
+                  <span className="text-[10px] font-black uppercase tracking-[0.2em] text-slate-500">
+                    {category.id}
+                  </span>
 
-                  <h3>{cat.name}</h3>
+                  <h3 className="mt-2 text-xl font-black text-white">
+                    {category.name}
+                  </h3>
 
-                  <p>{cat.description}</p>
-
-                  <div className="categories-card-cta">
-                    <span>Ver detalles</span>
-                    <span className="categories-line" />
-                    <ArrowRight size={18} />
-                  </div>
+                  <p className="mt-3 text-sm leading-6 text-slate-400">
+                    {category.description}
+                  </p>
                 </div>
-              </div>
-
-              <div className="categories-glow" />
-            </Link>
-          );
-        })}
+              </Link>
+            );
+          })}
+        </div>
       </div>
     </section>
   );
 }
-
-
-
-
-
-

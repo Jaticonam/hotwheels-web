@@ -1,114 +1,91 @@
-import { useState } from "react";
 import { Link } from "react-router-dom";
-import { ChevronDown, ShoppingBag } from "lucide-react";
+import {
+  Menu,
+  Search,
+  ShoppingBag,
+} from "lucide-react";
 
 type HomeNavProps = {
   cartCount?: number;
   onCartClick?: () => void;
 };
 
-const catalogItems = [
-  {
-    label: "🌹 Naturales",
-    href: "/catalogo/categoria.html?cat=naturales",
-  },
-  {
-    label: "🌸 Artificiales",
-    href: "/catalogo/categoria.html?cat=artificiales",
-  },
-  {
-    label: "🏢 Corporativos",
-    href: "/catalogo/categoria.html?cat=corporativos",
-  },
-];
-
-export default function HomeNav({ cartCount = 0, onCartClick }: HomeNavProps) {
-  const [open, setOpen] = useState(false);
-
+export default function HomeNav({
+  cartCount = 0,
+  onCartClick,
+}: HomeNavProps) {
   return (
-    <nav className="sticky top-0 z-50 w-full border-b border-[var(--w-border)] bg-[var(--w-bg)]/90 backdrop-blur-xl">
-      <div className="home-container">
-        <div className="flex h-20 items-center justify-between gap-4">
-          {/* Logo */}
+    <nav className="sticky top-0 z-50 border-b border-white/10 bg-slate-950/90 backdrop-blur-xl">
+      <div className="mx-auto flex h-20 max-w-7xl items-center justify-between gap-4 px-5 md:px-8">
+        <Link
+          to="/"
+          className="flex flex-col leading-none"
+        >
+          <span className="text-lg font-black uppercase tracking-[0.18em] text-white md:text-xl">
+            Coleccionables
+          </span>
+
+          <span className="mt-1 text-[9px] font-black uppercase tracking-[0.34em] text-sky-400">
+            Escala 1:64
+          </span>
+        </Link>
+
+        <div className="hidden items-center gap-8 text-sm font-bold text-slate-300 md:flex">
           <Link
-            to="/"
-            className="group flex items-center transition-all duration-300 hover:scale-[1.03]"
+            to="/catalogo"
+            className="transition hover:text-white"
           >
-            <div className="relative">
-              <img
-                src="https://gleemour.com/logo_color.png"
-                alt="Logo Gleemour"
-                className="h-11 object-contain transition-all duration-300 group-hover:scale-110 sm:h-14"
-              />
-              <span className="absolute inset-0 rounded-full bg-[var(--w-primary)]/20 opacity-0 blur-lg transition-all duration-300 group-hover:opacity-100" />
-            </div>
+            Catálogo
           </Link>
 
-          {/* Links */}
-          <div className="flex items-center gap-2 sm:gap-4">
-            {/* Catálogo */}
-            <div
-              className="relative"
-              onMouseEnter={() => setOpen(true)}
-              onMouseLeave={() => setOpen(false)}
-            >
-              <button
-                type="button"
-                onClick={() => setOpen((prev) => !prev)}
-                className="inline-flex items-center gap-1.5 rounded-full px-4 py-2.5 text-sm font-bold text-[var(--w-text)] transition hover:bg-white hover:text-[var(--w-primary-dark)]"
-              >
-                Catálogo
-                <ChevronDown
-                  size={16}
-                  className={`transition-transform ${open ? "rotate-180" : ""}`}
-                />
-              </button>
+          <a
+            href="#categorias"
+            className="transition hover:text-white"
+          >
+            Categorías
+          </a>
 
-              {open && (
-                <div className="absolute left-1/2 top-full mt-3 w-56 -translate-x-1/2 overflow-hidden rounded-3xl border border-[var(--w-border)] bg-white/95 p-2 shadow-[var(--w-shadow-medium)] backdrop-blur-xl">
-                  {catalogItems.map((item) => (
-                    <Link
-                      key={item.href}
-                      to={item.href}
-                      onClick={() => setOpen(false)}
-                      className="block rounded-2xl px-4 py-3 text-sm font-bold text-[var(--w-text)] transition hover:bg-[var(--w-primary-soft)] hover:text-[var(--w-primary-dark)]"
-                    >
-                      {item.label}
-                    </Link>
-                  ))}
-                </div>
-              )}
-            </div>
+          <a
+            href="#como-comprar"
+            className="transition hover:text-white"
+          >
+            ¿Cómo comprar?
+          </a>
+        </div>
 
-            {/* Cómo comprar */}
-            <a
-              href="#como-comprar"
-              className="hidden rounded-full px-4 py-2.5 text-sm font-bold text-[var(--w-text)] transition hover:bg-white hover:text-[var(--w-primary-dark)] sm:inline-flex"
-            >
-              Cómo comprar
-            </a>
+        <div className="flex items-center gap-2">
+          <Link
+            to="/catalogo"
+            aria-label="Buscar productos"
+            className="hidden h-11 w-11 items-center justify-center rounded-full border border-white/10 bg-white/5 text-slate-300 transition hover:border-sky-400/50 hover:text-white sm:flex"
+          >
+            <Search size={19} />
+          </Link>
 
-            {/* Bolsa */}
-            <button
-              type="button"
-              onClick={onCartClick}
-              className="relative inline-flex h-11 w-11 items-center justify-center rounded-full border border-[var(--w-border)] bg-white text-[var(--w-primary-dark)] shadow-sm transition hover:scale-105 hover:bg-[var(--w-primary-soft)] hover:shadow-md"
-              aria-label="Abrir bolsa"
-            >
-              <ShoppingBag size={21} />
+          <button
+            type="button"
+            onClick={onCartClick}
+            className="relative flex h-11 w-11 items-center justify-center rounded-full border border-white/10 bg-white/5 text-white transition hover:border-sky-400/50 hover:bg-white/10"
+            aria-label="Ver carrito"
+          >
+            <ShoppingBag size={20} />
 
-              {cartCount > 0 && (
-                <span className="absolute -right-1 -top-1 flex h-6 min-w-6 items-center justify-center rounded-full bg-[var(--w-primary)] px-1.5 text-[10px] font-black text-white shadow-md ring-2 ring-[var(--w-bg)]">
-                  {cartCount}
-                </span>
-              )}
-            </button>
-          </div>
+            {cartCount > 0 && (
+              <span className="absolute -right-1 -top-1 flex h-6 min-w-6 items-center justify-center rounded-full bg-sky-500 px-1.5 text-[10px] font-black text-white ring-2 ring-slate-950">
+                {cartCount}
+              </span>
+            )}
+          </button>
+
+          <Link
+            to="/catalogo"
+            className="flex h-11 w-11 items-center justify-center rounded-full border border-white/10 bg-white/5 text-white md:hidden"
+            aria-label="Abrir catálogo"
+          >
+            <Menu size={20} />
+          </Link>
         </div>
       </div>
     </nav>
   );
 }
-
-
-

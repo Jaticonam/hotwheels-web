@@ -1,139 +1,93 @@
 import "./HeroSlider.css";
-import { useState } from "react";
+
 import { Link } from "react-router-dom";
-import { MessageCircle, ArrowRight } from "lucide-react";
+import {
+  ArrowRight,
+  Gauge,
+  ShieldCheck,
+  Sparkles,
+} from "lucide-react";
 
 export default function HeroSlider() {
-
-  const [petals] = useState(() =>
-    Array.from({ length: 24 }, (_, index) => {
-      const size = Math.random() * 10 + 8;
-
-      return {
-        id: index,
-        size,
-        left: Math.random() * 100,
-        duration: Math.random() * 8 + 8,
-        delay: index < 6 ? 0 : Math.random() * 2,
-        drift: Math.random() * 140 - 40,
-        opacity: Math.random() * 0.35 + 0.35,
-        blur: Math.random() > 0.75 ? 1.2 : 0,
-        z: Math.random() > 0.65 ? 35 : 25,
-      };
-    })
-  );
-
   return (
-    <section className="relative h-screen w-full flex items-center justify-center overflow-hidden bg-black">
+    <section className="collectibles-hero">
+      <div className="collectibles-hero-grid" />
+      <div className="collectibles-hero-glow collectibles-hero-glow-a" />
+      <div className="collectibles-hero-glow collectibles-hero-glow-b" />
 
-      {/* PÉTALOS */}
-      <div className="absolute inset-0 z-40 pointer-events-none overflow-hidden">
-        {petals.map((petal) => (
-          <span
-            key={petal.id}
-            className="petal"
-            style={
-              {
-                width: `${petal.size}px`,
-                height: `${petal.size}px`,
-                left: `${petal.left}%`,
-                animationDuration: `${petal.duration}s`,
-                animationDelay: `${petal.delay}s`,
-                "--petal-drift": `${petal.drift}px`,
-                "--petal-opacity": petal.opacity,
-                "--petal-blur": `${petal.blur}px`,
-                zIndex: petal.z,
-              } as React.CSSProperties
-            }
-          />
-        ))}
-      </div>
+      <div className="relative z-10 mx-auto grid min-h-[680px] max-w-7xl items-center gap-14 px-5 py-20 md:px-8 lg:grid-cols-[1.08fr_.92fr]">
+        <div>
+          <div className="mb-7 inline-flex items-center gap-2 rounded-full border border-sky-400/20 bg-sky-400/10 px-4 py-2 text-[11px] font-black uppercase tracking-[0.2em] text-sky-300">
+            <Sparkles size={14} />
+            Autos para descubrir y coleccionar
+          </div>
 
-      {/* FONDO */}
-      <div className="absolute inset-0 overflow-hidden">
-        <img
-          src="https://images.unsplash.com/photo-1526047932273-341f2a7631f9?auto=format&fit=crop&q=80&w=1920"
-          alt="Gleemour portada"
-          className="absolute inset-0 w-full h-full object-cover hero-zoom opacity-60"
-        />
-      </div>
+          <h1 className="max-w-4xl text-5xl font-black leading-[.94] tracking-[-0.05em] text-white sm:text-6xl lg:text-8xl">
+            Tu próxima pieza
+            <span className="block text-sky-400">
+              empieza aquí.
+            </span>
+          </h1>
 
-      {/* OVERLAY */}
-      <div className="hero-overlay" />
+          <p className="mt-7 max-w-2xl text-base font-medium leading-8 text-slate-400 md:text-lg">
+            Explora modelos, encuentra tus favoritos y compra
+            unidades seleccionadas directamente desde nuestro catálogo.
+          </p>
 
-      {/* CONTENIDO */}
-      <div className="relative z-30 text-center px-6 max-w-5xl">
+          <div className="mt-9 flex flex-col gap-3 sm:flex-row">
+            <Link
+              to="/catalogo"
+              className="group inline-flex items-center justify-center gap-3 rounded-2xl bg-sky-500 px-7 py-4 text-sm font-black text-white shadow-[0_20px_60px_rgba(14,165,233,.25)] transition hover:-translate-y-1 hover:bg-sky-400"
+            >
+              Explorar catálogo
+              <ArrowRight
+                size={18}
+                className="transition group-hover:translate-x-1"
+              />
+            </Link>
 
-        {/* BADGE */}
-        <div className="fade-up">
-          <span className="hero-badge px-6 py-2 uppercase tracking-[0.4em] text-[10px] md:text-xs font-bold mb-8">
-            ✨ Experiencias que inspiran
-          </span>
+            <a
+              href="#categorias"
+              className="inline-flex items-center justify-center rounded-2xl border border-white/10 bg-white/5 px-7 py-4 text-sm font-black text-white transition hover:bg-white/10"
+            >
+              Ver categorías
+            </a>
+          </div>
+
+          <div className="mt-10 flex flex-wrap gap-6 border-t border-white/10 pt-7 text-xs font-bold text-slate-400">
+            <span className="flex items-center gap-2">
+              <Gauge size={16} className="text-sky-400" />
+              Compra por unidad
+            </span>
+
+            <span className="flex items-center gap-2">
+              <ShieldCheck size={16} className="text-sky-400" />
+              Stock identificado
+            </span>
+          </div>
         </div>
 
-        {/* TÍTULO */}
-        <h1 className="hero-text-glow text-5xl md:text-8xl font-serif font-bold text-white mb-8 leading-[1.1] reveal-up-delayed">
-          Melodías en <br />
-          <span className="relative inline-block italic font-light text-[var(--w-accent)] py-2">
-            Cada Pétalo
-          </span>
-        </h1>
+        <div className="collectibles-hero-display">
+          <div className="collectibles-hero-card">
+            <span className="collectibles-hero-number">
+              1:64
+            </span>
 
-        {/* DESCRIPCIÓN */}
-        <p className="text-white/80 text-lg md:text-xl max-w-2xl mx-auto mb-10 reveal-up-more-delayed font-light tracking-wide">
-          Inspirado en las canciones que guardan los momentos más especiales.
-          Cada creación nace para convertirse en un recuerdo que vive para siempre.
-        </p>
+            <div className="collectibles-car">
+              <div className="collectibles-car-body" />
+              <div className="collectibles-car-window" />
+              <div className="collectibles-wheel collectibles-wheel-left" />
+              <div className="collectibles-wheel collectibles-wheel-right" />
+            </div>
 
-        {/* BOTONES */}
-        <div className="flex flex-col sm:flex-row gap-5 justify-center items-center reveal-up-more-delayed">
-          <Link
-            to="/catalogo"
-            className="group flex items-center gap-2 rounded-full px-10 py-5 font-semibold text-white 
-            bg-[var(--w-primary)] 
-            shadow-[0_18px_45px_rgba(106,90,138,0.35)] 
-            transition-all duration-300 
-            hover:-translate-y-1 
-            hover:bg-[var(--w-secondary)] 
-            hover:shadow-[0_18px_45px_rgba(154,139,186,0.35)] 
-            active:scale-95 
-            active:bg-[var(--w-secondary)]"
-          >
-            Ver Catálogo
-            <ArrowRight
-              size={18}
-              className="opacity-80 transition-transform group-hover:translate-x-1"
-            />
-          </Link>
-          <a
-            href="https://wa.me/51948122060"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="group flex items-center gap-3 rounded-full border border-white/30 px-10 py-5 font-semibold text-white/90 backdrop-blur-lg transition-all duration-300 hover:-translate-y-1 hover:bg-white/10 active:scale-95"
-          >
-            <MessageCircle size={20} className="text-[var(--w-whatsapp)]" />
-            WhatsApp Directo
-          </a>
+            <div className="collectibles-hero-card-copy">
+              <span>CATÁLOGO</span>
+              <strong>COLECCIONABLES</strong>
+              <small>Encuentra tu próxima pieza</small>
+            </div>
+          </div>
         </div>
       </div>
-
-      {/* SCROLL */}
-      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-30 flex flex-col items-center gap-3 opacity-60">
-        <span className="text-white text-[9px] uppercase tracking-[0.5em]">
-          Deslizar
-        </span>
-
-        <div className="w-6 h-10 border-2 border-white/30 rounded-full flex justify-center p-1">
-          <div className="w-1 h-2 bg-[var(--w-accent)] rounded-full animate-bounce-y" />
-        </div>
-      </div>
-
     </section>
   );
 }
-
-
-
-
-
-

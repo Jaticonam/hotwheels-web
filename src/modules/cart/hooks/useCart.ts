@@ -12,7 +12,7 @@ import type {
 import { getEffectivePrice } from "@/domain/product/pricing";
 
 const CART_KEY =
-  "gleemour_cart_v1";
+  "hotwheels_cart_v1";
 
 const LEGACY_CART_KEY =
   "jung_cart";

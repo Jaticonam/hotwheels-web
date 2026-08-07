@@ -1,15 +1,11 @@
-import HeroSlider from "../sections/HeroSlider";
-import CategoriesSection from "../sections/CategoriesSection";
-import HowToBuySection from "../sections/HowToBuySection";
-import StatsSection from "../sections/StatsSection";
-import ShippingSection from "../sections/ShippingSection";
-import CorporateSection from "../sections/CorporateSection";
-import BrandStorySection from "../sections/BrandStorySection";
-import SocialSection from "../sections/SocialSection";
-import LocationSection from "../sections/LocationSection";
-import HomeNav from "../components/HomeNav";
-import HomeFooter from "../components/HomeFooter";
-import HomeFloatingButtons from "../components/HomeFloatingButtons";
+import HeroSlider from "../sections/HeroSlider/HeroSlider";
+import BenefitsSection from "../sections/BenefitsSection/BenefitsSection";
+import CategoriesSection from "../sections/CategoriesSection/CategoriesSection";
+import HowToBuySection from "../sections/HowToBuySection/HowToBuySection";
+
+import HomeNav from "../components/HomeNav/HomeNav";
+import HomeFooter from "../components/HomeFooter/HomeFooter";
+import HomeFloatingButtons from "../components/HomeFloatingButtons/HomeFloatingButtons";
 
 import { useCart } from "@/modules/cart/hooks/useCart";
 
@@ -21,22 +17,18 @@ export default function HomePage() {
   };
 
   return (
-    <div className="min-h-screen bg-background font-sans overflow-x-clip">
-      <HeroSlider />
-
+    <div className="min-h-screen overflow-x-clip bg-slate-950 font-sans text-white">
       <HomeNav
         cartCount={totalItems}
         onCartClick={handleCartClick}
       />
 
-      <CategoriesSection />
-      <HowToBuySection />
-      <CorporateSection />
-      <StatsSection />
-      <ShippingSection />
-      <LocationSection />
-      <BrandStorySection />
-      <SocialSection />
+      <main>
+        <HeroSlider />
+        <BenefitsSection />
+        <CategoriesSection />
+        <HowToBuySection />
+      </main>
 
       <HomeFooter />
       <HomeFloatingButtons />

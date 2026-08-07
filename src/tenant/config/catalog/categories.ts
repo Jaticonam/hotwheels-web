@@ -1,16 +1,5 @@
-import { Category } from "@/shared/types/product";
+import type { Category } from "@/shared/types/product";
 
-/**
- * Categorías oficiales del catálogo.
- *
- * id:
- * - Identificador técnico interno.
- * - Se usa para rutas, filtros y lógica.
- *
- * sheetLabel:
- * - Texto humano permitido en Google Sheets.
- * - Facilita operación comercial sin usar slugs técnicos.
- */
 export interface CatalogCategory extends Category {
   sheetLabel: string;
 }
@@ -20,96 +9,107 @@ export const CATEGORIES: CatalogCategory[] = [
     id: "todas",
     name: "Todos",
     sheetLabel: "Todos",
+    icon: "🏁",
+    description: "Explora todos los autos disponibles en el catálogo.",
+  },
+  {
+    id: "deportivos",
+    name: "Deportivos",
+    sheetLabel: "Deportivos",
+    icon: "🏎️",
+    description: "Velocidad, diseño y alto desempeño.",
+  },
+  {
+    id: "coleccionables",
+    name: "Coleccionables",
+    sheetLabel: "Coleccionables",
+    icon: "💎",
+    description: "Piezas que destacan dentro de una colección.",
+  },
+  {
+    id: "tematicos",
+    name: "Temáticos",
+    sheetLabel: "Temáticos",
+    icon: "🎬",
+    description: "Modelos inspirados en personajes y franquicias.",
+  },
+  {
+    id: "clasicos",
+    name: "Clásicos",
+    sheetLabel: "Clásicos",
+    icon: "🚗",
+    description: "Diseños legendarios que nunca pasan de moda.",
+  },
+  {
+    id: "premium",
+    name: "Premium",
+    sheetLabel: "Premium",
     icon: "✨",
-    description: "Explora cada emoción especial.",
+    description: "Mayor detalle, acabados y presentaciones especiales.",
   },
   {
-    id: "para-enamorar",
-    name: "Para enamorar",
-    sheetLabel: "Para enamorar",
-    icon: "💘",
-    description: "Conquista corazones con detalles únicos.",
+    id: "x-caja",
+    name: "x Caja",
+    sheetLabel: "x Caja",
+    icon: "📦",
+    description: "Opciones disponibles para compra por caja.",
   },
   {
-    id: "momentos-especiales",
-    name: "Momentos especiales",
-    sheetLabel: "Momentos especiales",
-    icon: "✨",
-    description: "Fechas llenas de emoción inolvidable.",
-  },
-  {
-    id: "para-sorprender",
-    name: "Para sorprender",
-    sheetLabel: "Para sorprender",
-    icon: "🎁",
-    description: "Sorprende con gestos inolvidables siempre.",
-  },
-  {
-    id: "para-celebrar",
-    name: "Para celebrar",
-    sheetLabel: "Para celebrar",
-    icon: "🎉",
-    description: "Celebra momentos felices con estilo.",
-  },
-  {
-    id: "para-agradecer",
-    name: "Para agradecer",
-    sheetLabel: "Para agradecer",
-    icon: "💌",
-    description: "Agradece con detalles llenos amor.",
-  },
-  {
-    id: "pedir-perdon",
-    name: "Pedir perdón",
-    sheetLabel: "Pedir perdón",
-    icon: "🌷",
-    description: "Reconecta desde el corazón nuevamente.",
-  },
-  {
-    id: "para-acompanar",
-    name: "Para acompañar",
-    sheetLabel: "Para acompañar",
-    icon: "🤍",
-    description: "Acompaña momentos sensibles con cariño.",
+    id: "ofertas",
+    name: "Ofertas",
+    sheetLabel: "Ofertas",
+    icon: "🔥",
+    description: "Oportunidades y precios especiales disponibles.",
   },
 ];
 
-/**
- * Obtiene categoría por id técnico.
- */
-export function getCategoryById(categoryId?: string | null) {
-  if (!categoryId) return null;
-
-  return (
-    CATEGORIES.find((category) => category.id === categoryId) || null
-  );
-}
-
-/**
- * Convierte texto humano de Google Sheets en id técnico.
- */
-export function getCategoryIdFromSheetLabel(label?: string | null): string {
-  if (!label) return "";
-
-  const normalized = label.trim().toLowerCase();
+export function getCategoryById(
+  categoryId?: string | null,
+): CatalogCategory | null {
+  if (!categoryId) {
+    return null;
+  }
 
   return (
     CATEGORIES.find(
       (category) =>
-        category.sheetLabel.trim().toLowerCase() === normalized
-    )?.id || ""
+        category.id === categoryId,
+    ) ?? null
   );
 }
 
-/**
- * Obtiene nombre visible desde id técnico.
- */
-export function getCategoryName(categoryId?: string | null) {
+export function getCategoryIdFromSheetLabel(
+  label?: string | null,
+): string {
+  if (!label) {
+    return "";
+  }
+
+  const normalized = label
+    .trim()
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .toLowerCase();
+
   return (
-    getCategoryById(categoryId)?.name ||
-    "Detalle especial"
+    CATEGORIES.find((category) => {
+      const normalizedSheetLabel =
+        category.sheetLabel
+          .trim()
+          .normalize("NFD")
+          .replace(/[\u0300-\u036f]/g, "")
+          .toLowerCase();
+
+      return normalizedSheetLabel === normalized;
+    })?.id ?? ""
   );
 }
 
-
-
+export function getCategoryName(
+  categoryId?: string | null,
+): string {
+  return (
+    getCategoryById(categoryId)?.name ??
+    "Coleccionable"
+  );
+}

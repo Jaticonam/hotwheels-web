@@ -16,8 +16,8 @@ import { ACTIVITY_CONFIG } from "@/tenant/config/activity";
  * consuman una sola fuente: BRAND_CONFIG.
  */
 export const BRAND_CONFIG = {
-  slug: "gleemour",
-  name: "Gleemour",
+  slug: "hotwheels",
+  name: "Coleccionables",
 
   contact: {
     whatsapp: WHATSAPP_NUMBER,
@@ -27,9 +27,9 @@ export const BRAND_CONFIG = {
   checkout: CHECKOUT_CONFIG,
   cart: CART_CONFIG,
   productCard: {
-    whatsappDefault: "Hola, quiero enviar este detalle",
-    whatsappPreventa: "Hola, quiero consultar este detalle",
-    whatsappRestock: "Hola, quiero saber si pueden preparar nuevamente este detalle",
+    whatsappDefault: "Hola, quiero consultar por este auto coleccionable",
+    whatsappPreventa: "Hola, quiero consultar la preventa de este auto coleccionable",
+    whatsappRestock: "Hola, quiero saber si este auto coleccionable volverá a estar disponible",
   },
   assets: ASSETS_CONFIG,
   search: UI_CONFIG.search,

@@ -1,234 +1,159 @@
-/* ========================================
-   HERO GLEEMOUR
-======================================== */
+.collectibles-hero {
+  position: relative;
+  overflow: hidden;
+  background:
+    radial-gradient(circle at 50% -20%, rgba(14, 165, 233, 0.18), transparent 34%),
+    #020617;
+}
 
+.collectibles-hero-grid {
+  position: absolute;
+  inset: 0;
+  opacity: 0.14;
+  background-image:
+    linear-gradient(rgba(148, 163, 184, 0.16) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(148, 163, 184, 0.16) 1px, transparent 1px);
+  background-size: 48px 48px;
+  mask-image: linear-gradient(to bottom, black, transparent 82%);
+}
 
-  /* ===== ZOOM DE FONDO ===== */
+.collectibles-hero-glow {
+  position: absolute;
+  width: 32rem;
+  height: 32rem;
+  border-radius: 999px;
+  filter: blur(110px);
+  pointer-events: none;
+}
 
-  @keyframes heroZoomSlow {
-    0% {
-      transform: scale(1) translate3d(0, 0, 0);
-    }
+.collectibles-hero-glow-a {
+  right: -10rem;
+  top: 1rem;
+  background: rgba(14, 165, 233, 0.14);
+}
 
-    50% {
-      transform: scale(1.04) translate3d(-1%, -1%, 0);
-    }
+.collectibles-hero-glow-b {
+  left: -14rem;
+  bottom: -16rem;
+  background: rgba(59, 130, 246, 0.1);
+}
 
-    100% {
-      transform: scale(1.08) translate3d(1%, 1%, 0);
-    }
+.collectibles-hero-display {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  perspective: 1200px;
+}
+
+.collectibles-hero-card {
+  position: relative;
+  width: min(100%, 430px);
+  aspect-ratio: 0.74;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 34px;
+  background:
+    linear-gradient(145deg, rgba(14, 165, 233, 0.17), transparent 45%),
+    linear-gradient(180deg, #111827, #020617);
+  box-shadow:
+    0 40px 100px rgba(0, 0, 0, 0.45),
+    inset 0 1px 0 rgba(255, 255, 255, 0.08);
+  transform: rotateY(-7deg) rotateX(3deg);
+}
+
+.collectibles-hero-number {
+  position: absolute;
+  right: 22px;
+  top: 18px;
+  font-size: clamp(3.5rem, 9vw, 6.8rem);
+  font-weight: 950;
+  line-height: 1;
+  letter-spacing: -0.08em;
+  color: rgba(255, 255, 255, 0.055);
+}
+
+.collectibles-car {
+  position: absolute;
+  left: 50%;
+  top: 47%;
+  width: 72%;
+  height: 26%;
+  transform: translate(-50%, -50%);
+}
+
+.collectibles-car-body {
+  position: absolute;
+  left: 5%;
+  top: 35%;
+  width: 90%;
+  height: 42%;
+  border-radius: 52% 24% 18% 24% / 45% 48% 35% 40%;
+  background: linear-gradient(135deg, #38bdf8, #0284c7 65%, #075985);
+  box-shadow: 0 18px 55px rgba(14, 165, 233, 0.28);
+}
+
+.collectibles-car-window {
+  position: absolute;
+  left: 34%;
+  top: 18%;
+  width: 38%;
+  height: 30%;
+  transform: skewX(-22deg);
+  border-radius: 60% 30% 10% 20%;
+  background: linear-gradient(160deg, #cbd5e1, #334155 60%);
+}
+
+.collectibles-wheel {
+  position: absolute;
+  bottom: 4%;
+  width: 19%;
+  aspect-ratio: 1;
+  border: 8px solid #020617;
+  border-radius: 50%;
+  background: #334155;
+  box-shadow: inset 0 0 0 5px #94a3b8;
+}
+
+.collectibles-wheel-left {
+  left: 18%;
+}
+
+.collectibles-wheel-right {
+  right: 12%;
+}
+
+.collectibles-hero-card-copy {
+  position: absolute;
+  left: 30px;
+  right: 30px;
+  bottom: 32px;
+  display: flex;
+  flex-direction: column;
+}
+
+.collectibles-hero-card-copy span {
+  margin-bottom: 5px;
+  font-size: 10px;
+  font-weight: 900;
+  letter-spacing: 0.28em;
+  color: #38bdf8;
+}
+
+.collectibles-hero-card-copy strong {
+  font-size: clamp(1.8rem, 5vw, 3rem);
+  line-height: 0.95;
+  letter-spacing: -0.04em;
+  color: white;
+}
+
+.collectibles-hero-card-copy small {
+  margin-top: 10px;
+  color: #94a3b8;
+}
+
+@media (max-width: 1023px) {
+  .collectibles-hero-card {
+    max-width: 360px;
+    transform: none;
   }
-
-  .hero-zoom {
-    animation: heroZoomSlow 18s ease-in-out infinite alternate;
-    will-change: transform;
-  }
-
-  /* ===== OVERLAY PREMIUM ===== */
-
-  .hero-overlay {
-    position: absolute;
-    inset: 0;
-    z-index: 10;
-    background:
-      radial-gradient(
-        circle at center,
-        rgba(246, 173, 151, 0.18),
-        transparent 32%
-      ),
-      radial-gradient(
-        circle at top,
-        rgba(236, 164, 194, 0.24),
-        transparent 38%
-      ),
-      linear-gradient(
-        to bottom,
-        rgba(106, 90, 138, 0.28),
-        rgba(20, 12, 24, 0.72)
-      );
-  }
-
-  .hero-overlay::after {
-    content: "";
-    position: absolute;
-    inset: 0;
-    background:
-      linear-gradient(
-        to right,
-        rgba(0, 0, 0, 0.28),
-        transparent 28%,
-        rgba(0, 0, 0, 0.26)
-      ),
-      radial-gradient(
-        circle at center,
-        transparent 0%,
-        rgba(0, 0, 0, 0.24) 78%
-      );
-    pointer-events: none;
-  }
-
-  /* ===== ENTRADAS ===== */
-
-  @keyframes heroFadeUp {
-    from {
-      opacity: 0;
-      transform: translateY(26px);
-    }
-
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
-  }
-
-  .hero-reveal {
-    animation: heroFadeUp 0.8s ease-out both;
-  }
-
-  .hero-reveal-delay {
-    opacity: 0;
-    animation: heroFadeUp 0.85s ease-out 0.18s forwards;
-  }
-
-  .hero-reveal-more-delay {
-    opacity: 0;
-    animation: heroFadeUp 0.9s ease-out 0.35s forwards;
-  }
-
-  /* ===== TEXTO PREMIUM ===== */
-
-  .hero-text-glow {
-    text-shadow:
-      0 4px 24px rgba(0, 0, 0, 0.58),
-      0 0 34px rgba(236, 164, 194, 0.28);
-  }
-
-  .hero-highlight-underline {
-    position: absolute;
-    left: 50%;
-    bottom: -0.35rem;
-    width: 86%;
-    height: 0.8rem;
-    transform: translateX(-50%);
-    color: rgba(246, 173, 151, 0.58);
-    pointer-events: none;
-  }
-
-  /* ===== BADGE HERO ===== */
-
-  .hero-badge {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 9999px;
-    border: 1px solid rgba(246, 173, 151, 0.38);
-    background: rgba(255, 255, 255, 0.11);
-    color: var(--w-accent);
-    box-shadow:
-      inset 0 1px 0 rgba(255, 255, 255, 0.24),
-      0 16px 40px rgba(0, 0, 0, 0.16);
-    backdrop-filter: blur(14px);
-  }
-
-  /* ===== BOTONES HERO ===== */
-
-  .hero-cta:hover {
-    transform: translateY(-2px) scale(1.04);
-    background:
-      linear-gradient(
-        135deg,
-        var(--w-primary-dark),
-        var(--w-primary)
-      );
-    box-shadow:
-      0 24px 60px rgba(106, 90, 138, 0.55);
-  }
-
-  .hero-cta::before {
-    content: "";
-    position: absolute;
-    inset: 0;
-    transform: translateX(-120%);
-    background: linear-gradient(
-      90deg,
-      transparent,
-      rgba(255, 255, 255, 0.32),
-      transparent
-    );
-    transition: transform 0.65s ease;
-  }
-
-  .hero-cta:hover::before {
-    transform: translateX(120%);
-  }
-
-  .hero-cta:hover {
-    transform: translateY(-2px) scale(1.03);
-  }
-
-  .hero-glass-btn {
-    background: rgba(255, 255, 255, 0.11);
-    border: 1px solid rgba(255, 255, 255, 0.28);
-    box-shadow:
-      inset 0 1px 0 rgba(255, 255, 255, 0.20),
-      0 18px 45px rgba(0, 0, 0, 0.20);
-    backdrop-filter: blur(16px);
-  }
-
-  .hero-glass-btn:hover {
-    background: rgba(255, 255, 255, 0.19);
-    transform: translateY(-2px) scale(1.03);
-  }
-
-  /* ===== PÉTALOS PREMIUM ===== */
-
-  .petal {
-    position: absolute;
-    top: -12vh;
-    pointer-events: none;
-    opacity: 0;
-    background:
-      linear-gradient(
-        135deg,
-        rgba(236, 164, 194, 0.96),
-        rgba(246, 173, 151, 0.72)
-      );
-    border-radius: 150% 0 150% 0;
-    filter: blur(var(--petal-blur, 0px));
-    animation-name: petalFall;
-    animation-timing-function: linear;
-    animation-iteration-count: infinite;
-    transform: translate3d(0, 0, 0);
-    will-change: transform, opacity;
-  }
-
-  @keyframes petalFall {
-    0% {
-      transform: translate3d(0, -12vh, 0) rotate(0deg);
-      opacity: 0;
-    }
-
-    10% {
-      opacity: var(--petal-opacity, 0.55);
-    }
-
-    50% {
-      transform: translate3d(var(--petal-drift, 80px), 55vh, 0)
-        rotate(180deg);
-    }
-
-    90% {
-      opacity: var(--petal-opacity, 0.55);
-    }
-
-    100% {
-      transform: translate3d(
-          calc(var(--petal-drift, 80px) * 1.6),
-          115vh,
-          0
-        )
-        rotate(360deg);
-      opacity: 0;
-    }
-  }
-
+}

@@ -1,18 +1,15 @@
 /**
  * Textos generales de interfaz.
- * Agrupa elementos pequeños de UI para mantener los componentes limpios.
+ * La identidad visual definitiva podrá cambiar sin afectar los componentes.
  */
 export const UI_CONFIG = {
   search: {
-    placeholder: "Cual es la ocasión o emoción...",
+    placeholder: "Busca modelo, serie o código...",
   },
 
   floating: {
-    cartLabel: "Mi pedido",
+    cartLabel: "Mi carrito",
     catalogLabel: "Ver catálogo",
-    whatsappLabel: "Te ayudamos",
+    whatsappLabel: "Consultar",
   },
 } as const;
-
-
-

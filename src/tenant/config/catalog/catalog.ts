@@ -1,14 +1,9 @@
 /**
  * Configuración comercial del catálogo.
- * Cambiar estos textos permite adaptar la experiencia por marca o país
- * sin tocar componentes ni lógica de negocio.
  */
 export const CATALOG_CONFIG = {
-  title: "Elige el detalle perfecto",
+  title: "Explora nuestros coleccionables",
   description:
-    "Encuentra regalos listos para sorprender, agradecer, celebrar o decir eso que a veces cuesta poner en palabras.",
-  kicker: "Catálogo emocional",
+    "Descubre autos a escala 1:64, encuentra tus modelos favoritos y arma tu próxima selección.",
+  kicker: "Catálogo de coleccionables",
 } as const;
-
-
-

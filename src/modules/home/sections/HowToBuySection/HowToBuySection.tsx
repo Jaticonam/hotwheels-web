@@ -1,35 +1,39 @@
+import { Link } from "react-router-dom";
 import {
-  CheckCircle2,
-  Gift,
   MessageCircle,
-  Send,
-  ShoppingBag,
+  Search,
+  ShoppingCart,
+  Truck,
 } from "lucide-react";
-import { HomeSectionHeader } from "../../components/HomeSectionHeader";
-
-const WHATSAPP_URL =
-  "https://wa.me/51948122060?text=Hola%20Gleemour,%20quiero%20hacer%20un%20pedido";
 
 const steps = [
   {
-    number: "1",
-    title: "Elige tu detalle",
-    description:
-      "Explora naturales, artificiales o corporativos y encuentra el ideal.",
-    icon: ShoppingBag,
+    number: "01",
+    icon: Search,
+    title: "Explora",
+    text: "Busca modelos y revisa las categorías disponibles.",
+    emoji: "🔎",
   },
   {
-    number: "2",
-    title: "Escríbenos por WhatsApp",
-    description: "Confirmamos disponibilidad, precio y entrega contigo.",
+    number: "02",
+    icon: ShoppingCart,
+    title: "Selecciona",
+    text: "Agrega al carrito las unidades que deseas comprar.",
+    emoji: "🛒",
+  },
+  {
+    number: "03",
     icon: MessageCircle,
+    title: "Confirma",
+    text: "Envía tu pedido y confirma disponibilidad por WhatsApp.",
+    emoji: "💬",
   },
   {
-    number: "3",
-    title: "Nosotros lo entregamos",
-    description:
-      "Preparamos tu detalle y coordinamos el envío para que llegue a tiempo.",
-    icon: Send,
+    number: "04",
+    icon: Truck,
+    title: "Recibe",
+    text: "Coordinamos entrega o envío según tu ubicación.",
+    emoji: "📦",
   },
 ];
 
@@ -37,81 +41,65 @@ export default function HowToBuySection() {
   return (
     <section
       id="como-comprar"
-      className="relative overflow-hidden border-t border-[var(--w-border)] bg-gradient-to-b from-white via-[var(--w-bg)] to-[var(--w-bg)] py-16 md:py-20"
+      className="border-t border-white/10 bg-slate-900"
     >
-      <div className="pointer-events-none absolute left-1/2 top-0 h-full w-full max-w-5xl -translate-x-1/2 bg-[radial-gradient(ellipse_at_top,rgba(236,164,194,0.12),transparent_70%)]" />
+      <div className="mx-auto max-w-7xl px-5 py-20 md:px-8 md:py-28">
+        <div className="text-center">
+          <span className="text-[11px] font-black uppercase tracking-[0.24em] text-sky-400">
+            Fácil y directo
+          </span>
 
-      <div className="home-container relative z-10">
-        <div className="mb-12 text-center">
-          <HomeSectionHeader
-            icon={Gift}
-            kicker="Cómo comprar"
-            title="Elige lo que sientes, nosotros lo entregamos."
-            description="Convierte tu intención en un detalle listo para sorprender, en pocos pasos."
-            align="center"
-          />
+          <h2 className="mt-4 text-3xl font-black tracking-[-0.04em] text-white md:text-5xl">
+            ¿Cómo comprar?
+          </h2>
 
-          <div className="mx-auto mt-7 h-1.5 w-24 rounded-full bg-gradient-to-r from-[var(--w-highlight)] via-[var(--w-secondary)] to-[var(--w-primary)]" />
+          <p className="mx-auto mt-5 max-w-2xl text-sm leading-7 text-slate-400 md:text-base">
+            Elige tus piezas, arma tu pedido y termina la compra directamente con nosotros.
+          </p>
         </div>
 
-        <div className="grid gap-5 md:grid-cols-3 md:gap-6">
-          {steps.map((item) => {
-            const Icon = item.icon;
+        <div className="mt-14 grid gap-4 md:grid-cols-2 lg:grid-cols-4">
+          {steps.map((step) => {
+            const Icon = step.icon;
 
             return (
-              <div
-                key={item.number}
-                className="group relative overflow-hidden rounded-[30px] border border-[var(--w-border)] bg-white/90 p-7 shadow-[var(--w-shadow-soft)] backdrop-blur-xl transition-all duration-300 hover:-translate-y-2 hover:border-[var(--w-secondary)] hover:shadow-[var(--w-shadow-medium)]"
+              <article
+                key={step.number}
+                className="relative rounded-[28px] border border-white/10 bg-white/[0.035] p-7"
               >
-                {/* número gigante */}
-                <div className="pointer-events-none absolute -right-4 top-8 text-[120px] font-black leading-none text-slate-300/60 transition-colors duration-500 group-hover:text-slate-400/70">
-                  {item.number}
+                <span className="absolute right-6 top-5 text-5xl font-black tracking-[-0.08em] text-white/[0.035]">
+                  {step.number}
+                </span>
+
+                <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-sky-400/10 text-sky-400">
+                  <Icon size={21} />
                 </div>
 
-                <div className="relative z-10">
-                  <div className="mb-6 flex h-16 w-16 items-center justify-center rounded-full bg-[var(--w-secondary-soft)] text-[var(--w-primary)] shadow-sm transition-all duration-300 group-hover:scale-105 group-hover:bg-[var(--w-secondary)] group-hover:text-white">
-                    <Icon size={30} strokeWidth={1.8} />
-                  </div>
+                <h3 className="mt-7 text-lg font-black text-white">
+                  {step.title}
+                </h3>
 
-                  <span className="mb-2 inline-flex rounded-full bg-[var(--w-secondary-soft)] px-3 py-1 text-[10px] font-black uppercase tracking-[0.16em] text-[var(--w-secondary)] transition-colors duration-300 group-hover:bg-[var(--w-secondary)] group-hover:text-white">
-                    Paso {item.number}
-                  </span>
+                <p className="mt-3 text-sm leading-6 text-slate-400">
+                  {step.text}
+                </p>
 
-                  <h3 className="mb-3 text-2xl font-bold tracking-tight text-[var(--w-heading)]">
-                    {item.title}
-                  </h3>
-
-                  <p className="text-sm leading-relaxed text-[var(--w-muted)]">
-                    {item.description}
-                  </p>
-                </div>
-              </div>
+                <span className="mt-7 block text-2xl">
+                  {step.emoji}
+                </span>
+              </article>
             );
           })}
         </div>
 
-        <div className="mx-auto mt-10 max-w-3xl rounded-[30px] border border-[var(--w-border)] bg-white/80 p-6 text-center shadow-[var(--w-shadow-soft)] backdrop-blur-xl">
-          <div className="mb-5 flex items-center justify-center gap-2 text-sm font-bold text-[var(--w-primary)]">
-            <CheckCircle2 size={18} className="text-[var(--w-highlight)]" />
-            Atención rápida, entregas coordinadas y detalles preparados con cuidado.
-          </div>
-
-          <a
-            href={WHATSAPP_URL}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center justify-center gap-3 rounded-full bg-[var(--w-primary)] px-8 py-4 text-sm font-bold text-white shadow-[0_18px_45px_rgba(106,90,138,0.35)] transition-all duration-300 hover:-translate-y-1 hover:bg-[var(--w-secondary)] active:scale-95"
+        <div className="mt-12 flex justify-center">
+          <Link
+            to="/catalogo"
+            className="rounded-2xl bg-sky-500 px-8 py-4 text-sm font-black text-white transition hover:bg-sky-400"
           >
-            <MessageCircle size={19} />
-            Pedir por WhatsApp ahora
-          </a>
+            Ir al catálogo
+          </Link>
         </div>
       </div>
     </section>
   );
 }
-
-
-
-
-

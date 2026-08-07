@@ -237,16 +237,15 @@ export default function CatalogPage() {
       <main className="catalog-main">
         <section className="catalog-hero">
           <p className="catalog-kicker">
-            Catálogo
+            {BRAND_CONFIG.catalog.kicker}
           </p>
 
           <h1>
-            Explora nuestros productos
+            {BRAND_CONFIG.catalog.title}
           </h1>
 
           <p>
-            Selecciona una categoría
-            para comenzar.
+            {BRAND_CONFIG.catalog.description}
           </p>
         </section>
 
