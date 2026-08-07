@@ -1,18 +1,19 @@
-import type { Addon, Product } from "@/shared/types/product";
-import { parseMusicIds } from "@/domain/music";
+import type { Product } from "@/shared/types/product";
 
 import { getCategoryIdFromSheetLabel } from "@/tenant/config/catalog";
 
 type CsvRow = Record<string, string>;
 
 export type SheetProduct = Product;
-export type SheetAddon = Addon;
 
 function cleanText(value: unknown): string {
   return String(value ?? "").trim();
 }
 
-function getRowValue(row: CsvRow, ...keys: string[]): string {
+function getRowValue(
+  row: CsvRow,
+  ...keys: string[]
+): string {
   for (const key of keys) {
     const value = row[key.toLowerCase()];
 
@@ -29,110 +30,102 @@ function slugify(value: unknown): string {
     .toLowerCase()
     .normalize("NFD")
     .replace(/[\u0300-\u036f]/g, "")
+    .replace(/_/g, "-")
     .replace(/\s+/g, "-")
-    .replace(/[^\w-]+/g, "");
+    .replace(/[^\w-]+/g, "")
+    .replace(/-+/g, "-")
+    .replace(/^-|-$/g, "");
 }
 
-function parseNumber(value: unknown): number | null {
-  const cleaned = cleanText(value).replace(/\s/g, "").replace(",", ".");
+function parseNumber(
+  value: unknown,
+): number | null {
+  const cleaned = cleanText(value)
+    .replace(/\s/g, "")
+    .replace(",", ".");
 
   if (!cleaned) return null;
 
-  const num = Number(cleaned);
-  return Number.isFinite(num) ? num : null;
+  const number = Number(cleaned);
+
+  return Number.isFinite(number)
+    ? number
+    : null;
 }
 
-function parseRequiredNumber(value: unknown): number {
+function parseRequiredNumber(
+  value: unknown,
+): number {
   return parseNumber(value) ?? 0;
 }
 
-function parsePipeList(value: unknown): string[] {
+function parsePipeList(
+  value: unknown,
+): string[] {
   return cleanText(value)
     .split("|")
     .map((item) => item.trim())
     .filter(Boolean);
 }
 
-function normalizeListItemKey(value: string): string {
-  return value
-    .normalize("NFD")
-    .replace(/[\u0300-\u036f]/g, "")
-    .toLowerCase();
-}
-
-function parseUniquePipeList(value: unknown): string[] {
+function parseUniqueList(
+  value: unknown,
+): string[] {
   const seen = new Set<string>();
 
   return parsePipeList(value).filter((item) => {
-    const key = normalizeListItemKey(item);
+    const key = item
+      .normalize("NFD")
+      .replace(/[\u0300-\u036f]/g, "")
+      .toLowerCase();
 
-    if (seen.has(key)) return false;
+    if (seen.has(key)) {
+      return false;
+    }
 
     seen.add(key);
     return true;
   });
 }
 
-function parseCategories(value: unknown): string[] {
-  return parsePipeList(value).map(getCategoryIdFromSheetLabel).filter(Boolean);
+function parseCategories(
+  value: unknown,
+): string[] {
+  return parsePipeList(value)
+    .map(getCategoryIdFromSheetLabel)
+    .filter(Boolean);
 }
 
-function parseBadges(value: unknown): string[] {
-  return parsePipeList(value);
+function parseBadges(
+  value: unknown,
+): string[] {
+  return parseUniqueList(value);
 }
 
-function parseCampaigns(value: unknown): string[] {
-  return Array.from(new Set(parsePipeList(value).map(slugify).filter(Boolean)));
-}
-
-function normalizeAttribute(value: unknown): string {
-  const slug = slugify(value);
-
-  const map: Record<string, string> = {
-    natural: "natural",
-    naturales: "natural",
-
-    artificial: "artificial",
-    artificiales: "artificial",
-
-    corporativo: "corporate",
-    corporativos: "corporate",
-    corporate: "corporate",
-
-    premium: "premium",
-    vip: "premium",
-
-    express: "express",
-    rapido: "express",
-    rapida: "express",
-    "entrega-rapida": "express",
-  };
-
-  return map[slug] ?? slug;
-}
-
-function parseAttributes(value: unknown): string[] {
+function parseAttributes(
+  value: unknown,
+): string[] {
   return Array.from(
-    new Set(parsePipeList(value).map(normalizeAttribute).filter(Boolean)),
+    new Set(
+      parsePipeList(value)
+        .map(slugify)
+        .filter(Boolean),
+    ),
   );
 }
 
-function parseAddons(value: unknown): string[] {
-  return parsePipeList(value).map(slugify).filter(Boolean);
-}
-
-function normalizeSheetStatus(value: unknown): string {
+function normalizeSheetStatus(
+  value: unknown,
+): string {
   const raw = cleanText(value);
   const slug = slugify(raw);
 
   const map: Record<string, string> = {
     publicado: "Publicado",
     publicada: "Publicado",
-    publica: "Publicado",
     activo: "Publicado",
     activa: "Publicado",
     disponible: "Publicado",
-    visibles: "Publicado",
     visible: "Publicado",
     "en-stock": "Publicado",
 
@@ -147,8 +140,6 @@ function normalizeSheetStatus(value: unknown): string {
 
     oculto: "Oculto",
     oculta: "Oculto",
-    privado: "Oculto",
-    privada: "Oculto",
     inactivo: "Oculto",
     inactiva: "Oculto",
 
@@ -162,12 +153,22 @@ function normalizeSheetStatus(value: unknown): string {
   return map[slug] ?? raw;
 }
 
-export function normalizeProduct(row: CsvRow): SheetProduct {
-  const primaryCategory = getCategoryIdFromSheetLabel(row.category);
-  const extraCategories = parseCategories(row.categories);
+export function normalizeProduct(
+  row: CsvRow,
+): SheetProduct {
+  const primaryCategory =
+    getCategoryIdFromSheetLabel(row.category);
+
+  const extraCategories =
+    parseCategories(row.categories);
 
   const categories = Array.from(
-    new Set([primaryCategory, ...extraCategories].filter(Boolean)),
+    new Set(
+      [
+        primaryCategory,
+        ...extraCategories,
+      ].filter(Boolean),
+    ),
   );
 
   return {
@@ -177,42 +178,28 @@ export function normalizeProduct(row: CsvRow): SheetProduct {
 
     category: primaryCategory,
     categories,
-    subcategories: parseUniquePipeList(row.subcategory),
 
     price: parseRequiredNumber(row.price),
     offer_price: parseNumber(row.offer_price),
 
-    addons: parseAddons(row.addons),
-    music: parseMusicIds(row.music),
-    attributes: parseAttributes(row.attributes),
-
     stock: parseNumber(row.stock),
+
     img: cleanText(row.img),
     images: parsePipeList(row.images),
 
+    priority: parseRequiredNumber(row.priority),
     status: normalizeSheetStatus(row.status),
 
-    // Acepta ambos formatos: badge y badges.
-    badges: parseBadges(getRowValue(row, "badges", "badge")),
+    badges: parseBadges(
+      getRowValue(
+        row,
+        "badges",
+        "badge",
+      ),
+    ),
 
-    campaigns: parseCampaigns(row.campaigns),
-    priority: parseRequiredNumber(row.priority),
+    attributes: parseAttributes(row.attributes),
 
-    occasion: cleanText(row.occasion),
-    message: cleanText(row.message),
-    highlight: cleanText(row.highlight),
     updated_at: cleanText(row.updated_at),
-  };
-}
-
-export function normalizeAddon(row: CsvRow): SheetAddon {
-  return {
-    id: cleanText(row.id),
-    title: cleanText(row.title),
-    price: parseRequiredNumber(row.price),
-    img: cleanText(row.img),
-    category: slugify(row.category),
-    status: normalizeSheetStatus(row.status),
-    priority: parseRequiredNumber(row.priority),
   };
 }

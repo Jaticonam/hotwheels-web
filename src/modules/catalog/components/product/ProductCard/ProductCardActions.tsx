@@ -1,4 +1,7 @@
-import { MessageCircle, Sparkles } from "lucide-react";
+import {
+  Eye,
+  MessageCircle,
+} from "lucide-react";
 
 import { PRODUCT_CARD_CONFIG } from "@/tenant/config/product";
 
@@ -23,10 +26,17 @@ export function ProductCardActions({
           "product-card-button-main",
           "product-card-button-primary",
         ].join(" ")}
-        aria-label={`Personalizar sorpresa: ${productTitle}`}
+        aria-label={`Ver producto ${productTitle}`}
       >
-        <Sparkles className="w-4 h-4" />
-        <span>{PRODUCT_CARD_CONFIG.actions.viewDetail}</span>
+        <Eye className="w-4 h-4" />
+
+        <span>
+          {
+            PRODUCT_CARD_CONFIG
+              .actions
+              .viewDetail
+          }
+        </span>
       </button>
 
       <button

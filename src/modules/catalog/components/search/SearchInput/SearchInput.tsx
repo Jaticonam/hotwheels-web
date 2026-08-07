@@ -107,9 +107,6 @@ export function SearchInput({
           p.id,
           p.category,
           p.description,
-          p.occasion,
-          p.message,
-          p.highlight,
           attributes,
         ];
 

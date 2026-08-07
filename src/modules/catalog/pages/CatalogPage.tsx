@@ -1,146 +1,76 @@
-import { useEffect, useMemo, useState } from "react";
-import { Link } from "react-router-dom";
-import { Sparkles } from "lucide-react";
-
-import { getExperienceUrl } from "@/app/routes/routes";
-
 import {
-  loadAllProducts,
-  loadAllCampaigns,
-} from "@/integrations/sheets/fetchSheets";
-import type { Campaign, Product } from "@/shared/types/product";
-import { BRAND_CONFIG } from "@/tenant/config/brand";
+  useEffect,
+  useMemo,
+  useState,
+} from "react";
 
+import { loadAllProducts } from "@/integrations/sheets/fetchSheets";
+import { productBelongsToCategory } from "@/domain/product/categories";
+import { searchProducts } from "@/shared/lib/search";
+import { sortByCommercialPriority } from "@/shared/lib/sort";
+
+import type { Product } from "@/shared/types/product";
+
+import { BRAND_CONFIG } from "@/tenant/config/brand";
 
 import { ProductCard } from "@/modules/catalog/components/product/ProductCard";
 import { CatalogTopNav } from "@/modules/catalog/components/catalog/CatalogTopNav";
 import { SearchInput } from "@/modules/catalog/components/search/SearchInput";
 
-import { RecentActivity } from "@/modules/catalog/components/overlays/RecentActivity";
-
-import { FloatingButtons } from "@/shared/components/overlays/FloatingButtons";
-import {
-  NotificationStack,
-  showNotification,
-} from "@/shared/components/feedback/NotificationStack";
-
 import { CatalogSkeleton } from "@/shared/components/skeletons/CatalogSkeleton";
-
-function normalizeFilterKey(value: unknown): string {
-  return String(value ?? "")
-    .trim()
-    .toLowerCase()
-    .normalize("NFD")
-    .replace(/[\u0300-\u036f]/g, "")
-    .replace(/_/g, "-")
-    .replace(/\s+/g, "-")
-    .replace(/[^\w-]+/g, "")
-    .replace(/-+/g, "-")
-    .replace(/^-|-$/g, "");
-}
-
-/**
- * Normalizador canónico de campañas.
- *
- * Regla de negocio:
- * El ID técnico de campaña debe quedar corto y comercial.
- *
- * Ejemplos:
- * "Día de la Novia"  -> "dia-novia"
- * "Día del Maestro"  -> "dia-maestro"
- * "Día de la Madre"  -> "dia-madre"
- * "San Valentín"     -> "san-valentin"
- * "Cyber Gleemour"   -> "cyber-gleemour"
- */
-function normalizeCampaignKey(value: unknown): string {
-  const normalized = normalizeFilterKey(value);
-
-  if (!normalized) return "";
-
-  const stopWords = new Set(["de", "del", "la", "el", "las", "los", "al"]);
-
-  return normalized
-    .split("-")
-    .filter((part) => part && !stopWords.has(part))
-    .join("-");
-}
-
-function isPublishedCampaignStatus(value: unknown): boolean {
-  const status = normalizeFilterKey(value);
-
-  return [
-    "publicado",
-    "publicada",
-    "publicadas",
-    "activo",
-    "activa",
-    "active",
-    "published",
-    "visible",
-  ].includes(status);
-}
-
-function titleFromSlug(value: string): string {
-  return value
-    .split("-")
-    .filter(Boolean)
-    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
-    .join(" ");
-}
-
-function productBelongsToCategory(
-  product: Product,
-  categoryId: string,
-): boolean {
-  if (categoryId === "todas") return true;
-
-  const productCategories = Array.isArray(product.categories)
-    ? product.categories
-    : [];
-
-  return (
-    product.category === categoryId || productCategories.includes(categoryId)
-  );
-}
+import { FloatingButtons } from "@/shared/components/overlays/FloatingButtons";
+import { NotificationStack } from "@/shared/components/feedback/NotificationStack";
 
 export default function CatalogPage() {
-  const [products, setProducts] = useState<Product[]>([]);
-  const [campaigns, setCampaigns] = useState<Campaign[]>([]);
-  const [loading, setLoading] = useState(true);
+  const [
+    products,
+    setProducts,
+  ] = useState<Product[]>([]);
 
-  const [searchQuery, setSearchQuery] = useState("");
-  const [activeCampaign, setActiveCampaign] = useState("");
-  const [activeCategory, setActiveCategory] = useState("todas");
+  const [
+    loading,
+    setLoading,
+  ] = useState(true);
 
+  const [
+    searchQuery,
+    setSearchQuery,
+  ] = useState("");
 
+  const [
+    activeCategory,
+    setActiveCategory,
+  ] = useState("todas");
 
-useEffect(() => {
+  useEffect(() => {
     let mounted = true;
 
-    Promise.allSettled([loadAllProducts(), loadAllCampaigns()])
-      .then(([productsResult, campaignsResult]) => {
-        if (!mounted) return;
+    loadAllProducts()
+      .then(
+        (loadedProducts) => {
+          if (!mounted) {
+            return;
+          }
 
-        if (productsResult.status === "fulfilled") {
-          setProducts(productsResult.value);
-        } else {
-          console.error("Error cargando productos:", productsResult.reason);
-          setProducts([]);
-        }
-
-        if (campaignsResult.status === "fulfilled") {
-          setCampaigns(campaignsResult.value);
-        } else {
-          console.warn(
-            "Error cargando campañas. Se usarán campañas detectadas desde productos:",
-            campaignsResult.reason,
+          setProducts(
+            loadedProducts,
           );
-          setCampaigns([]);
+        },
+      )
+      .catch((error) => {
+        console.error(
+          "Error cargando productos:",
+          error,
+        );
+
+        if (mounted) {
+          setProducts([]);
         }
       })
       .finally(() => {
-        if (!mounted) return;
-        setLoading(false);
+        if (mounted) {
+          setLoading(false);
+        }
       });
 
     return () => {
@@ -148,240 +78,211 @@ useEffect(() => {
     };
   }, []);
 
-  const categoryCounts = useMemo(() => {
-    return products.reduce<Record<string, number>>((acc, product) => {
-      acc.todas = (acc.todas ?? 0) + 1;
-
-      const productCategories = Array.isArray(product.categories)
-        ? product.categories
-        : [];
-
-      const categoryIds = Array.from(
-        new Set([product.category, ...productCategories].filter(Boolean)),
-      );
-
-      categoryIds.forEach((categoryId) => {
-        acc[categoryId] = (acc[categoryId] ?? 0) + 1;
-      });
-
-      return acc;
-    }, {});
-  }, [products]);
-
-  const campaignCounts = useMemo(() => {
-    return products.reduce<Record<string, number>>((acc, product) => {
-      const productCampaigns = Array.isArray(product.campaigns)
-        ? product.campaigns
-        : [];
-
-      productCampaigns.forEach((campaign: string) => {
-        const campaignId = normalizeCampaignKey(campaign);
-
-        if (!campaignId) return;
-
-        acc[campaignId] = (acc[campaignId] ?? 0) + 1;
-      });
-
-      return acc;
-    }, {});
-  }, [products]);
-
-  const visibleCampaigns = useMemo(() => {
-    return campaigns
-      .filter((campaign) =>
-        isPublishedCampaignStatus(campaign.publicationStatus),
-      )
-      .map((campaign) => {
-        const possibleIds = [
-          normalizeCampaignKey(campaign.id),
-          normalizeCampaignKey(campaign.name),
-        ].filter(Boolean);
-
-        const countKey = possibleIds.find(
-          (id) => (campaignCounts[id] ?? 0) > 0,
-        );
-
-        if (!countKey) return null;
-
-        return {
-          id: countKey,
-          name: campaign.name,
-          icon: campaign.icon || "✨",
-          colorClass: campaign.colorClass || "catalog-campaign-gleemour",
-          priority: campaign.priority ?? 0,
-        };
-      })
-      .filter(
+  const categoryCounts =
+    useMemo(() => {
+      return products.reduce<
+        Record<string, number>
+      >(
         (
-          campaign,
-        ): campaign is {
-          id: string;
-          name: string;
-          icon: string;
-          colorClass: string;
-          priority: number;
-        } => campaign !== null,
-      )
-      .sort((a, b) => b.priority - a.priority);
-  }, [campaigns, campaignCounts]);
+          counts,
+          product,
+        ) => {
+          counts.todas =
+            (
+              counts.todas ??
+              0
+            ) + 1;
 
-  console.table(
-    campaigns.map((campaign) => ({
-      id: campaign.id,
-      name: campaign.name,
-      publicationStatus: campaign.publicationStatus,
-      computedStatus: campaign.computedStatus,
-      colorClass: campaign.colorClass,
-      countById: campaignCounts[normalizeCampaignKey(campaign.id)] ?? 0,
-      countByName: campaignCounts[normalizeCampaignKey(campaign.name)] ?? 0,
-    })),
-  );
+          const categoryIds =
+            Array.from(
+              new Set(
+                [
+                  product.category,
+                  ...product.categories,
+                ].filter(Boolean),
+              ),
+            );
 
-  const handleCampaignSelect = (campaignId: string) => {
-    setActiveCampaign(campaignId);
-    setActiveCategory("todas");
-    setSearchQuery("");
-  };
-
-  const handleCategorySelect = (categoryId: string) => {
-    setActiveCategory(categoryId);
-    setActiveCampaign("");
-    setSearchQuery("");
-  };
-
-  const visibleProducts = useMemo(() => {
-    const query = searchQuery.trim().toLowerCase();
-    const normalizedActiveCampaign = normalizeCampaignKey(activeCampaign);
-
-    const byCampaign = !normalizedActiveCampaign
-      ? products
-      : products.filter((product) => {
-          const productCampaigns = Array.isArray(product.campaigns)
-            ? product.campaigns
-            : [];
-
-          return productCampaigns
-            .map(normalizeCampaignKey)
-            .includes(normalizedActiveCampaign);
-        });
-
-    const byCategory =
-      activeCategory === "todas"
-        ? byCampaign
-        : byCampaign.filter((product) =>
-            productBelongsToCategory(product, activeCategory),
+          categoryIds.forEach(
+            (categoryId) => {
+              counts[
+                categoryId
+              ] =
+                (
+                  counts[
+                    categoryId
+                  ] ?? 0
+                ) + 1;
+            },
           );
 
-    if (!query) return byCategory;
+          return counts;
+        },
+        {},
+      );
+    }, [products]);
 
-    return byCategory.filter((product) => {
-      const haystack = [
-        product.id,
-        product.title,
-        product.description,
-        product.category,
-        product.occasion,
-        product.message,
-        product.highlight,
-        ...(product.badges ?? []),
-        ...(product.campaigns ?? []),
-      ]
-        .filter(Boolean)
-        .join(" ")
-        .toLowerCase();
+  const visibleProducts =
+    useMemo(() => {
+      const categoryProducts =
+        activeCategory ===
+        "todas"
+          ? products
+          : products.filter(
+              (product) =>
+                productBelongsToCategory(
+                  product,
+                  activeCategory,
+                ),
+            );
 
-      return haystack.includes(query);
-    });
-  }, [products, searchQuery, activeCampaign, activeCategory]);
+      const searchedProducts =
+        searchQuery.trim()
+          ? searchProducts(
+              categoryProducts,
+              searchQuery,
+            )
+          : categoryProducts;
 
+      return sortByCommercialPriority(
+        searchedProducts,
+      );
+    }, [
+      products,
+      activeCategory,
+      searchQuery,
+    ]);
 
-  if (loading) return <CatalogSkeleton />;
+  const visibleCategories =
+    BRAND_CONFIG.categories.filter(
+      (category) =>
+        category.id ===
+          "todas" ||
+        (
+          categoryCounts[
+            category.id
+          ] ?? 0
+        ) > 0,
+    );
+
+  if (loading) {
+    return <CatalogSkeleton />;
+  }
 
   return (
     <div className="catalog-page">
       <NotificationStack />
 
       <CatalogTopNav
-        campaignItems={visibleCampaigns}
-        categoryItems={BRAND_CONFIG.categories.filter(
-          (item) => item.id === "todas" || (categoryCounts[item.id] ?? 0) > 0,
-        )}
-        activeCampaign={activeCampaign}
-        activeCategory={activeCategory}
-        campaignCounts={campaignCounts}
-        categoryCounts={categoryCounts}
-        onCampaignSelect={handleCampaignSelect}
-        onCategorySelect={handleCategorySelect}
+        categoryItems={
+          visibleCategories
+        }
+        activeCategory={
+          activeCategory
+        }
+        categoryCounts={
+          categoryCounts
+        }
+        onCategorySelect={(
+          categoryId,
+        ) => {
+          setActiveCategory(
+            categoryId,
+          );
+
+          setSearchQuery("");
+        }}
         logoSlot={
           <button
             type="button"
             className="catalog-top-nav-brand"
-            onClick={() => (window.location.href = "/")}
+            onClick={() => {
+              window.location.href =
+                "/";
+            }}
             aria-label={`Ir al inicio de ${BRAND_CONFIG.name}`}
           >
-            <img src={BRAND_CONFIG.assets.logo} alt={BRAND_CONFIG.name} />
+            <img
+              src={
+                BRAND_CONFIG
+                  .assets
+                  .logo
+              }
+              alt={
+                BRAND_CONFIG.name
+              }
+            />
           </button>
         }
         searchSlot={
           <SearchInput
-            value={searchQuery}
-            onChange={setSearchQuery}
-            products={products}
-            placeholder={BRAND_CONFIG.search.placeholder}
+            value={
+              searchQuery
+            }
+            onChange={
+              setSearchQuery
+            }
+            products={
+              products
+            }
+            placeholder={
+              BRAND_CONFIG
+                .search
+                .placeholder
+            }
           />
         }
       />
 
       <main className="catalog-main">
-        <section className="catalog-hero" data-aos="fade-up">
-          <p className="catalog-kicker">Catálogo emocional</p>
-          <h1>Elige el detalle perfecto</h1>
-          <p>Ramos, arreglos y detalles para cada momento especial.</p>
+        <section className="catalog-hero">
+          <p className="catalog-kicker">
+            Catálogo
+          </p>
 
-          <Link
-            to={getExperienceUrl("catalogo")}
-            className="mt-5 inline-flex min-h-12 items-center justify-center gap-2 rounded-2xl border border-[rgba(106,90,138,0.18)] bg-[linear-gradient(135deg,var(--w-primary),var(--w-primary-dark))] px-5 py-3 text-sm font-black text-white no-underline shadow-[0_14px_30px_rgba(106,90,138,0.22)] transition-transform hover:-translate-y-0.5"
-          >
-            <Sparkles className="h-5 w-5" aria-hidden="true" />
-            Ayúdame a elegir
-          </Link>
+          <h1>
+            Explora nuestros productos
+          </h1>
+
+          <p>
+            Selecciona una categoría
+            para comenzar.
+          </p>
         </section>
 
-        {visibleProducts.length > 0 ? (
-          <section
-            className="catalog-section"
-            data-aos="fade-up"
-            data-aos-delay="100"
-          >
-            <div
-              className="catalog-grid"
-              data-aos="fade-up"
-              data-aos-delay="150"
-            >
-              {visibleProducts.map((product) => (
-                <ProductCard
-                  key={product.id}
-                  product={product}
-                />
-              ))}
+        {visibleProducts.length >
+        0 ? (
+          <section className="catalog-section">
+            <div className="catalog-grid">
+              {visibleProducts.map(
+                (product) => (
+                  <ProductCard
+                    key={
+                      product.id
+                    }
+                    product={
+                      product
+                    }
+                  />
+                ),
+              )}
             </div>
           </section>
         ) : (
           <div className="catalog-empty">
-            <p>No encontramos detalles con esa búsqueda.</p>
+            <p>
+              No encontramos productos.
+            </p>
+
             <small>
-              Prueba con otra palabra o revisa el catálogo completo.
+              Prueba otra búsqueda
+              o categoría.
             </small>
           </div>
         )}
       </main>
 
       <FloatingButtons />
-
-      <RecentActivity products={visibleProducts} />
-
-
-
     </div>
   );
 }

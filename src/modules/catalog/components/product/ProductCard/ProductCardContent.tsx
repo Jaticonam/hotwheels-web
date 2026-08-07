@@ -1,4 +1,3 @@
-import { getEmotionalHint } from "@/domain/product/emotional";
 import { getCategoryName } from "@/tenant/config/catalog";
 
 import type { Product } from "@/shared/types/product";
@@ -7,18 +6,30 @@ interface ProductCardContentProps {
   product: Product;
 }
 
-export function ProductCardContent({ product }: ProductCardContentProps) {
+export function ProductCardContent({
+  product,
+}: ProductCardContentProps) {
   return (
     <>
       <div className="product-card-emotion">
-        {getCategoryName(product.category)}
+        {getCategoryName(
+          product.category,
+        )}
       </div>
 
-      <h3 className="product-card-title">{product.title}</h3>
+      <h3 className="product-card-title">
+        {product.title}
+      </h3>
 
-      <p className="product-card-hint">{getEmotionalHint(product)}</p>
+      {product.description && (
+        <p className="product-card-hint">
+          {product.description}
+        </p>
+      )}
 
-      <p className="product-card-code">Ref. {product.id}</p>
+      <p className="product-card-code">
+        Ref. {product.id}
+      </p>
     </>
   );
 }

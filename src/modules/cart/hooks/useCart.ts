@@ -11,47 +11,70 @@ import type {
 
 import { getEffectivePrice } from "@/domain/product/pricing";
 
-const CART_KEY = "gleemour_cart_v1";
-const LEGACY_CART_KEY = "jung_cart";
+const CART_KEY =
+  "gleemour_cart_v1";
 
-function parseStoredCart(rawValue: string | null): CartItem[] | null {
+const LEGACY_CART_KEY =
+  "jung_cart";
+
+function parseStoredCart(
+  rawValue: string | null,
+): CartItem[] | null {
   if (!rawValue) {
     return null;
   }
 
   try {
-    const parsed: unknown = JSON.parse(rawValue);
+    const parsed: unknown =
+      JSON.parse(rawValue);
 
     return Array.isArray(parsed)
       ? (parsed as CartItem[])
       : null;
-  } catch {
+  }
+  catch {
     return null;
   }
 }
 
-function loadCart(): CartItem[] {
-  const currentCart = parseStoredCart(
-    localStorage.getItem(CART_KEY)
-  );
+function loadCart():
+CartItem[] {
+  const currentCart =
+    parseStoredCart(
+      localStorage.getItem(
+        CART_KEY,
+      ),
+    );
 
-  if (currentCart !== null) {
+  if (
+    currentCart !== null
+  ) {
     return currentCart;
   }
 
-  const legacyCart = parseStoredCart(
-    localStorage.getItem(LEGACY_CART_KEY)
-  );
+  const legacyCart =
+    parseStoredCart(
+      localStorage.getItem(
+        LEGACY_CART_KEY,
+      ),
+    );
 
-  if (legacyCart !== null) {
+  if (
+    legacyCart !== null
+  ) {
     try {
       localStorage.setItem(
         CART_KEY,
-        JSON.stringify(legacyCart)
+        JSON.stringify(
+          legacyCart,
+        ),
       );
 
-      localStorage.removeItem(LEGACY_CART_KEY);
-    } catch {
+      localStorage.removeItem(
+        LEGACY_CART_KEY,
+      );
+    }
+    catch {
       return legacyCart;
     }
 
@@ -61,230 +84,276 @@ function loadCart(): CartItem[] {
   return [];
 }
 
-function saveCart(cart: CartItem[]): void {
+function saveCart(
+  cart: CartItem[],
+): void {
   try {
     localStorage.setItem(
       CART_KEY,
-      JSON.stringify(cart)
+      JSON.stringify(cart),
     );
-  } catch {
+  }
+  catch {
     return;
   }
 }
 
 export function useCart() {
-  const [cart, setCart] = useState<CartItem[]>(
-    () => loadCart()
-  );
+  const [
+    cart,
+    setCart,
+  ] =
+    useState<CartItem[]>(
+      () => loadCart(),
+    );
 
   useEffect(() => {
     saveCart(cart);
   }, [cart]);
 
   useEffect(() => {
-    const handler = (event: StorageEvent) => {
-      const isCartStorageEvent =
-        event.key === CART_KEY ||
-        event.key === LEGACY_CART_KEY;
+    const handler = (
+      event: StorageEvent,
+    ) => {
+      const isCartEvent =
+        event.key ===
+          CART_KEY ||
+        event.key ===
+          LEGACY_CART_KEY;
 
-      if (!isCartStorageEvent) {
+      if (!isCartEvent) {
         return;
       }
 
-      setCart(loadCart());
+      setCart(
+        loadCart(),
+      );
     };
 
     window.addEventListener(
       "storage",
-      handler
+      handler,
     );
 
     return () => {
       window.removeEventListener(
         "storage",
-        handler
+        handler,
       );
     };
   }, []);
 
-  const addToCart = useCallback(
-    (
-      product: Product,
-      qty: number = 1
-    ) => {
-      const safeQty = Math.max(
-        1,
-        Math.floor(qty)
-      );
-
-      setCart((previousCart) => {
-        const existingItem =
-          previousCart.find(
-            (item) => item.id === product.id
+  const addToCart =
+    useCallback(
+      (
+        product: Product,
+        qty = 1,
+      ) => {
+        const safeQty =
+          Math.max(
+            1,
+            Math.floor(qty),
           );
 
-        if (existingItem) {
-          return previousCart.map((item) =>
-            item.id === product.id
-              ? {
-                  ...item,
-                  qty: item.qty + safeQty,
-                }
-              : item
-          );
-        }
+        setCart(
+          (
+            previousCart,
+          ) => {
+            const existingItem =
+              previousCart.find(
+                (item) =>
+                  item.id ===
+                  product.id,
+              );
 
-        return [
-          ...previousCart,
-          {
-            ...product,
-            qty: safeQty,
-            note: "",
-          },
-        ];
-      });
-    },
-    []
-  );
-
-  const removeFromCart = useCallback(
-    (id: string) => {
-      setCart((previousCart) =>
-        previousCart.filter(
-          (item) => item.id !== id
-        )
-      );
-    },
-    []
-  );
-
-  const changeQty = useCallback(
-    (
-      id: string,
-      delta: number
-    ) => {
-      setCart((previousCart) =>
-        previousCart
-          .map((item) => {
-            if (item.id !== id) {
-              return item;
-            }
-
-            const newQty =
-              item.qty + delta;
-
-            if (newQty <= 0) {
-              return null;
-            }
-
-            return {
-              ...item,
-              qty: newQty,
-            };
-          })
-          .filter(
-            (item): item is CartItem =>
-              item !== null
-          )
-      );
-    },
-    []
-  );
-
-  const setExactQty = useCallback(
-    (
-      id: string,
-      qty: number | null
-    ) => {
-      setCart((previousCart) =>
-        previousCart
-          .map((item) => {
             if (
-              item.id !== id ||
-              qty === null
+              existingItem
             ) {
-              return item;
+              return previousCart.map(
+                (item) =>
+                  item.id ===
+                  product.id
+                    ? {
+                        ...item,
+                        qty:
+                          item.qty +
+                          safeQty,
+                      }
+                    : item,
+              );
             }
 
-            const safeQty =
-              Math.floor(qty);
+            return [
+              ...previousCart,
+              {
+                ...product,
+                qty: safeQty,
+              },
+            ];
+          },
+        );
+      },
+      [],
+    );
 
-            if (safeQty <= 0) {
-              return null;
-            }
+  const removeFromCart =
+    useCallback(
+      (id: string) => {
+        setCart(
+          (previousCart) =>
+            previousCart.filter(
+              (item) =>
+                item.id !==
+                id,
+            ),
+        );
+      },
+      [],
+    );
 
-            return {
-              ...item,
-              qty: safeQty,
-            };
-          })
-          .filter(
-            (item): item is CartItem =>
-              item !== null
-          )
-      );
-    },
-    []
-  );
+  const changeQty =
+    useCallback(
+      (
+        id: string,
+        delta: number,
+      ) => {
+        setCart(
+          (previousCart) =>
+            previousCart
+              .map((item) => {
+                if (
+                  item.id !==
+                  id
+                ) {
+                  return item;
+                }
 
-  const setItemNote = useCallback(
-    (
-      id: string,
-      note: string
-    ) => {
-      setCart((previousCart) =>
-        previousCart.map((item) =>
-          item.id === id
-            ? {
-                ...item,
-                note: note ?? "",
-              }
-            : item
-        )
-      );
-    },
-    []
-  );
+                const newQty =
+                  item.qty +
+                  delta;
 
-  const clearCart = useCallback(() => {
-    setCart([]);
-  }, []);
+                if (
+                  newQty <= 0
+                ) {
+                  return null;
+                }
 
-  const totalItems = cart.reduce(
-    (total, item) =>
-      total + item.qty,
-    0
-  );
+                return {
+                  ...item,
+                  qty: newQty,
+                };
+              })
+              .filter(
+                (
+                  item,
+                ): item is CartItem =>
+                  item !== null,
+              ),
+        );
+      },
+      [],
+    );
 
-  const totalPrice = cart.reduce(
-    (total, item) =>
-      total +
-      getEffectivePrice(item) *
-        item.qty,
-    0
-  );
+  const setExactQty =
+    useCallback(
+      (
+        id: string,
+        qty: number | null,
+      ) => {
+        setCart(
+          (previousCart) =>
+            previousCart
+              .map((item) => {
+                if (
+                  item.id !==
+                    id ||
+                  qty === null
+                ) {
+                  return item;
+                }
 
-  const totalOriginal = cart.reduce(
-    (total, item) =>
-      total +
-      item.price *
-        item.qty,
-    0
-  );
+                const safeQty =
+                  Math.floor(qty);
 
-  const savings = Math.max(
-    0,
-    totalOriginal - totalPrice
-  );
+                if (
+                  safeQty <= 0
+                ) {
+                  return null;
+                }
+
+                return {
+                  ...item,
+                  qty: safeQty,
+                };
+              })
+              .filter(
+                (
+                  item,
+                ): item is CartItem =>
+                  item !== null,
+              ),
+        );
+      },
+      [],
+    );
+
+  const clearCart =
+    useCallback(() => {
+      setCart([]);
+    }, []);
+
+  const totalItems =
+    cart.reduce(
+      (
+        total,
+        item,
+      ) =>
+        total + item.qty,
+      0,
+    );
+
+  const totalPrice =
+    cart.reduce(
+      (
+        total,
+        item,
+      ) =>
+        total +
+        getEffectivePrice(
+          item,
+        ) *
+          item.qty,
+      0,
+    );
+
+  const totalOriginal =
+    cart.reduce(
+      (
+        total,
+        item,
+      ) =>
+        total +
+        item.price *
+          item.qty,
+      0,
+    );
+
+  const savings =
+    Math.max(
+      0,
+      totalOriginal -
+        totalPrice,
+    );
 
   return {
     cart,
+
     addToCart,
     removeFromCart,
     changeQty,
     setExactQty,
-    setItemNote,
     clearCart,
+
     totalItems,
     totalPrice,
     savings,

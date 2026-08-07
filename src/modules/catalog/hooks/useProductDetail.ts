@@ -1,4 +1,8 @@
-import { useEffect, useMemo, useState } from "react";
+import {
+  useEffect,
+  useMemo,
+  useState,
+} from "react";
 
 import { loadAllProducts } from "@/integrations/sheets/fetchSheets";
 
@@ -6,7 +10,6 @@ import {
   getEffectivePrice,
   getOriginalProductPrice,
   getProductState,
-  getRelatedProducts,
   hasOfferPrice,
   isProductAvailable,
 } from "@/domain/product";
@@ -15,23 +18,31 @@ import type { Product } from "@/shared/types/product";
 
 interface UseProductDetailOptions {
   productId?: string;
-  relatedLimit?: number;
 }
 
-function cleanText(value: unknown): string {
+function cleanText(
+  value: unknown,
+): string {
   return String(value ?? "").trim();
 }
 
-function safeDecode(value: string): string {
+function safeDecode(
+  value: string,
+): string {
   try {
     return decodeURIComponent(value);
-  } catch {
+  }
+  catch {
     return value;
   }
 }
 
-function normalizeLookup(value: unknown): string {
-  return safeDecode(cleanText(value))
+function normalizeLookup(
+  value: unknown,
+): string {
+  return safeDecode(
+    cleanText(value),
+  )
     .toLowerCase()
     .normalize("NFD")
     .replace(/[\u0300-\u036f]/g, "")
@@ -42,32 +53,40 @@ function normalizeLookup(value: unknown): string {
     .replace(/^-|-$/g, "");
 }
 
-function matchesProduct(product: Product, productId: string): boolean {
-  const lookup = normalizeLookup(productId);
+function matchesProduct(
+  product: Product,
+  productId: string,
+): boolean {
+  const lookup =
+    normalizeLookup(productId);
 
-  if (!lookup) return false;
+  if (!lookup) {
+    return false;
+  }
 
   const candidates = [
     product.id,
-    normalizeLookup(product.id),
     product.title,
-    normalizeLookup(product.title),
   ];
 
-  return candidates.some((candidate) => {
-    const normalizedCandidate = normalizeLookup(candidate);
-
-    return normalizedCandidate === lookup;
-  });
+  return candidates.some(
+    (candidate) =>
+      normalizeLookup(candidate) ===
+      lookup,
+  );
 }
 
 export function useProductDetail({
   productId,
-  relatedLimit = 4,
 }: UseProductDetailOptions) {
-  const [products, setProducts] = useState<Product[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [loadError, setLoadError] = useState<Error | null>(null);
+  const [products, setProducts] =
+    useState<Product[]>([]);
+
+  const [loading, setLoading] =
+    useState(true);
+
+  const [loadError, setLoadError] =
+    useState<Error | null>(null);
 
   useEffect(() => {
     let mounted = true;
@@ -84,9 +103,18 @@ export function useProductDetail({
       .catch((error) => {
         if (!mounted) return;
 
-        console.error("Error cargando productos para ProductPage:", error);
+        console.error(
+          "Error cargando producto:",
+          error,
+        );
+
         setProducts([]);
-        setLoadError(error instanceof Error ? error : new Error(String(error)));
+
+        setLoadError(
+          error instanceof Error
+            ? error
+            : new Error(String(error)),
+        );
       })
       .finally(() => {
         if (!mounted) return;
@@ -99,40 +127,60 @@ export function useProductDetail({
     };
   }, []);
 
-  const product = useMemo(() => {
-    if (!productId) return undefined;
+  const product =
+    useMemo(() => {
+      if (!productId) {
+        return undefined;
+      }
 
-    const cleanProductId = cleanText(productId);
+      return products.find(
+        (item) =>
+          matchesProduct(
+            item,
+            productId,
+          ),
+      );
+    }, [
+      products,
+      productId,
+    ]);
 
-    return products.find((item) => matchesProduct(item, cleanProductId));
-  }, [products, productId]);
+  const available =
+    product
+      ? isProductAvailable(product)
+      : false;
 
-  const relatedProducts = useMemo(() => {
-    if (!product) return [];
+  const originalPrice =
+    product
+      ? getOriginalProductPrice(product)
+      : 0;
 
-    return getRelatedProducts(product, products, relatedLimit);
-  }, [product, products, relatedLimit]);
+  const finalPrice =
+    product
+      ? getEffectivePrice(product)
+      : 0;
 
-  const available = product ? isProductAvailable(product) : false;
-  const originalPrice = product ? getOriginalProductPrice(product) : 0;
-  const finalPrice = product ? getEffectivePrice(product) : 0;
-  const hasOffer = product ? hasOfferPrice(product) : false;
+  const hasOffer =
+    product
+      ? hasOfferPrice(product)
+      : false;
 
-  const productState = product
-    ? getProductState(product)
-    : {
-        type: "unavailable",
-        label: "No disponible",
-        available: false,
-      };
+  const productState =
+    product
+      ? getProductState(product)
+      : {
+          type: "unavailable",
+          label: "No disponible",
+          available: false,
+        };
 
   return {
-    products,
     product,
     loading,
     loadError,
-    notFound: !loading && !product,
-    relatedProducts,
+    notFound:
+      !loading && !product,
+
     available,
     originalPrice,
     finalPrice,

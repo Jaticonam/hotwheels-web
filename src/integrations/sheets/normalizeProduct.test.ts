@@ -2,52 +2,79 @@ import { describe, expect, it } from "vitest";
 
 import { normalizeProduct } from "./normalizeProduct";
 
-describe("normalizeProduct subcategories", () => {
-  it("convierte products.subcategory separado por pipe en un arreglo", () => {
+describe("normalizeProduct MVP", () => {
+  it("normaliza precios, stock y prioridad", () => {
     const product = normalizeProduct({
-      subcategory: "Amor a distancia|Primer detalle",
+      id: "HW-001",
+      title: "Collector Car",
+      price: "29,90",
+      offer_price: "24.50",
+      stock: "6",
+      priority: "10",
+      status: "Publicado",
     });
 
-    expect(product.subcategories).toEqual([
-      "Amor a distancia",
-      "Primer detalle",
+    expect(product.id).toBe("HW-001");
+    expect(product.price).toBe(29.9);
+    expect(product.offer_price).toBe(24.5);
+    expect(product.stock).toBe(6);
+    expect(product.priority).toBe(10);
+  });
+
+  it("normaliza galería separada por pipe", () => {
+    const product = normalizeProduct({
+      id: "HW-002",
+      title: "Collector Car",
+      price: "20",
+      status: "Publicado",
+      images: "uno.webp|dos.webp|tres.webp",
+    });
+
+    expect(product.images).toEqual([
+      "uno.webp",
+      "dos.webp",
+      "tres.webp",
     ]);
   });
 
-  it("recorta espacios, descarta vacíos y elimina duplicados", () => {
+  it("acepta badge o badges", () => {
     const product = normalizeProduct({
-      subcategory:
-        "  Amor a distancia  ||Primer detalle|amor a distancia|  ",
+      id: "HW-003",
+      title: "Collector Car",
+      price: "20",
+      status: "Publicado",
+      badge: "Nuevo|Premium",
     });
 
-    expect(product.subcategories).toEqual([
-      "Amor a distancia",
-      "Primer detalle",
+    expect(product.badges).toEqual([
+      "Nuevo",
+      "Premium",
     ]);
   });
 
-  it("considera iguales los duplicados con diferencias de acentos y mayúsculas", () => {
+  it("elimina atributos duplicados", () => {
     const product = normalizeProduct({
-      subcategory: "Cumpleaños|cumpleanos|Inauguración",
+      id: "HW-004",
+      title: "Collector Car",
+      price: "20",
+      status: "Publicado",
+      attributes: "Premium|premium|Edición Especial",
     });
 
-    expect(product.subcategories).toEqual([
-      "Cumpleaños",
-      "Inauguración",
+    expect(product.attributes).toEqual([
+      "premium",
+      "edicion-especial",
     ]);
   });
 
-  it("devuelve un arreglo vacío cuando el campo está vacío", () => {
+  it("normaliza estados equivalentes", () => {
     const product = normalizeProduct({
-      subcategory: "",
+      id: "HW-005",
+      title: "Collector Car",
+      price: "20",
+      status: "Disponible",
     });
 
-    expect(product.subcategories).toEqual([]);
-  });
-
-  it("devuelve un arreglo vacío cuando el campo no existe", () => {
-    const product = normalizeProduct({});
-
-    expect(product.subcategories).toEqual([]);
+    expect(product.status).toBe("Publicado");
   });
 });

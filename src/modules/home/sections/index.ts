@@ -1,7 +1,6 @@
 export * from "./BenefitsSection";
 export * from "./BrandStorySection";
 export * from "./CategoriesSection";
-export * from "./ExperienceInvitationSection";
 export * from "./CorporateSection";
 export * from "./HeroSlider";
 export * from "./HowToBuySection";

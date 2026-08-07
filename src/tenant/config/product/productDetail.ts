@@ -1,58 +1,50 @@
-/**
- * Textos configurables para la página de detalle de producto.
- *
- * Este archivo permite adaptar la experiencia por marca, país o vertical
- * sin tocar componentes.
- */
 export const PRODUCT_DETAIL_CONFIG = {
   empty: {
-    title: "Detalle no encontrado",
+    title: "Producto no encontrado",
     backLabel: "Volver al catálogo",
   },
 
   header: {
-    fallbackTitle: "Detalle especial",
+    fallbackTitle: "Producto",
   },
 
   price: {
-    label: "Precio total",
+    label: "Precio",
     oldPricePrefix: "Antes S/",
-    totalLabel: "Total del pedido",
+    totalLabel: "Total",
   },
 
   quantity: {
     label: "Cantidad",
-    invalidMessage: "Ingresa una cantidad válida para continuar",
+    invalidMessage:
+      "Ingresa una cantidad válida para continuar",
   },
 
   actions: {
-    addToCart: "Reservar este detalle",
+    addToCart: "Agregar al carrito",
     invalidQty: "Ingresa una cantidad",
-    whatsappDefault: "Pedir por WhatsApp",
+    whatsappDefault: "Consultar por WhatsApp",
     whatsappPreorder: "Consultar por WhatsApp",
     whatsappSoldOut: "Consultar disponibilidad",
   },
 
   trust: {
-    text: "Coordinamos contigo cada detalle antes de confirmar.",
+    text:
+      "Confirmamos disponibilidad antes de cerrar el pedido.",
   },
 
   description: {
     fallback:
-      "Un detalle pensado para emocionar, sorprender y hacer sentir especial a alguien importante.",
-  },
-
-  related: {
-    title: "Más ideas para regalar",
+      "Consulta los detalles y disponibilidad de este producto.",
   },
 
   notifications: {
     linkCopiedTitle: "Enlace copiado",
-    linkCopiedDescription: "Comparte este detalle",
-    addedToCartTitle: "Agregado al pedido",
-    addedToCartDescription: "Tu detalle ya está en el pedido.",
+    linkCopiedDescription:
+      "Comparte este producto",
+    addedToCartTitle:
+      "Agregado al carrito",
+    addedToCartDescription:
+      "El producto fue agregado al carrito.",
   },
 } as const;
-
-
-

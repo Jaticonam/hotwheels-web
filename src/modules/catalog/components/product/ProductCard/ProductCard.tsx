@@ -1,5 +1,6 @@
 import "./ProductCard.css";
-import { useEffect, useMemo, useState } from "react";
+
+import { useMemo } from "react";
 import { useNavigate } from "react-router-dom";
 
 import { getProductUrl } from "@/app/routes/routes";
@@ -13,72 +14,92 @@ import {
   hasOfferPrice,
   isProductAvailable,
   getProductState,
-  getLiveViewers,
 } from "@/domain/product";
 
 import { buildProductWhatsAppUrl } from "@/integrations/whatsapp/whatsapp";
 
 import { ProductCardImage } from "./ProductCardImage";
-import { ProductCardType } from "./ProductCardType";
 import { ProductCardContent } from "./ProductCardContent";
 import { ProductCardPrice } from "./ProductCardPrice";
-import { ProductCardSocial } from "./ProductCardSocial";
 import { ProductCardActions } from "./ProductCardActions";
 
 import {
   CAMPAIGN_BADGE_KEYS,
   STATE_BADGE_KEYS,
   pickBadgeByKeys,
-  getStockPresentation,
 } from "./ProductCard.utils";
 
 interface ProductCardProps {
   product: Product;
 }
 
-export function ProductCard({ product }: ProductCardProps) {
-  const navigate = useNavigate();
+export function ProductCard({
+  product,
+}: ProductCardProps) {
+  const navigate =
+    useNavigate();
 
-  const available = isProductAvailable(product);
-  const productState = getProductState(product);
-  const isPreventa = productState.type === "preorder";
+  const available =
+    isProductAvailable(product);
 
-  const price = getProductPrice(product);
-  const originalPrice = getOriginalProductPrice(product);
-  const hasOffer = hasOfferPrice(product);
+  const productState =
+    getProductState(product);
 
-  const [viewers, setViewers] = useState(getLiveViewers());
+  const isPreventa =
+    productState.type ===
+    "preorder";
 
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setViewers(getLiveViewers());
-    }, 6500);
+  const price =
+    getProductPrice(product);
 
-    return () => clearInterval(interval);
-  }, []);
+  const originalPrice =
+    getOriginalProductPrice(
+      product,
+    );
 
-  const sortedBadges = useMemo(() => {
-    return sortBadges(product.badges ?? []);
-  }, [product.badges]);
+  const hasOffer =
+    hasOfferPrice(product);
 
-  const campaignBadge = pickBadgeByKeys(sortedBadges, CAMPAIGN_BADGE_KEYS);
-  const stateBadge = pickBadgeByKeys(sortedBadges, STATE_BADGE_KEYS);
-  const primaryAttribute = product.attributes?.[0];
+  const sortedBadges =
+    useMemo(
+      () =>
+        sortBadges(
+          product.badges ?? [],
+        ),
+      [product.badges],
+    );
+
+  const campaignBadge =
+    pickBadgeByKeys(
+      sortedBadges,
+      CAMPAIGN_BADGE_KEYS,
+    );
+
+  const stateBadge =
+    pickBadgeByKeys(
+      sortedBadges,
+      STATE_BADGE_KEYS,
+    );
 
   const handleViewDetail = () => {
-    navigate(getProductUrl(product));
+    navigate(
+      getProductUrl(product),
+    );
   };
 
   const handleWhatsApp = () => {
-    const url = buildProductWhatsAppUrl({
-      product,
-      qty: 1,
-    });
+    const url =
+      buildProductWhatsAppUrl({
+        product,
+        qty: 1,
+      });
 
-    window.open(url, "_blank", "noopener,noreferrer");
+    window.open(
+      url,
+      "_blank",
+      "noopener,noreferrer",
+    );
   };
-
-  const { StockIcon, stockClass } = getStockPresentation(productState.type);
 
   return (
     <article className="product-card">
@@ -86,36 +107,47 @@ export function ProductCard({ product }: ProductCardProps) {
         product={product}
         available={available}
         isPreventa={isPreventa}
-        campaignBadge={campaignBadge}
-        stateBadge={stateBadge}
-        onImageClick={handleViewDetail}
+        campaignBadge={
+          campaignBadge
+        }
+        stateBadge={
+          stateBadge
+        }
+        onImageClick={
+          handleViewDetail
+        }
       />
 
-      <ProductCardType attribute={primaryAttribute} />
-
       <div className="product-card-body">
-        <ProductCardContent product={product} />
-
-        <ProductCardPrice
-          isPreventa={isPreventa}
-          hasOffer={hasOffer}
-          price={price}
-          originalPrice={originalPrice}
+        <ProductCardContent
+          product={product}
         />
 
-        <ProductCardSocial
-          available={available}
-          isPreventa={isPreventa}
-          stockClass={stockClass}
-          StockIcon={StockIcon}
-          productStateLabel={productState.label}
-          viewers={viewers}
+        <ProductCardPrice
+          isPreventa={
+            isPreventa
+          }
+          hasOffer={
+            hasOffer
+          }
+          price={
+            price
+          }
+          originalPrice={
+            originalPrice
+          }
         />
 
         <ProductCardActions
-          productTitle={product.title}
-          onViewDetail={handleViewDetail}
-          onWhatsApp={handleWhatsApp}
+          productTitle={
+            product.title
+          }
+          onViewDetail={
+            handleViewDetail
+          }
+          onWhatsApp={
+            handleWhatsApp
+          }
         />
       </div>
     </article>

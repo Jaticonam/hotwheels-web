@@ -1,31 +1,31 @@
 import { useState } from "react";
-import { Compass, X } from "lucide-react";
+import {
+  Compass,
+  X,
+} from "lucide-react";
 
 import "./CatalogTopNav.css";
 
-import type { CatalogTopNavProps } from "./CatalogTopNav.types";
+import type {
+  CatalogTopNavProps,
+} from "./CatalogTopNav.types";
 
 export function CatalogTopNav({
-  campaignItems,
   categoryItems,
-  activeCampaign = "",
   activeCategory = "todas",
-  campaignCounts = {},
   categoryCounts = {},
-  onCampaignSelect,
   onCategorySelect,
   searchSlot,
   logoSlot,
 }: CatalogTopNavProps) {
-  const [exploreOpen, setExploreOpen] = useState(false);
-  const hasCampaigns = campaignItems.length > 0;
+  const [
+    exploreOpen,
+    setExploreOpen,
+  ] = useState(false);
 
-  const handleCampaignSelect = (id: string) => {
-    onCampaignSelect?.(id);
-    setExploreOpen(false);
-  };
-
-  const handleCategorySelect = (id: string) => {
+  const handleCategorySelect = (
+    id: string,
+  ) => {
     onCategorySelect?.(id);
     setExploreOpen(false);
   };
@@ -35,87 +35,75 @@ export function CatalogTopNav({
       <header className="catalog-top-nav">
         <div className="catalog-top-nav-brand-row">
           {logoSlot}
-          <p>Detalles para emocionar</p>
+          <p>Catálogo de productos</p>
         </div>
 
-        <nav className="catalog-top-nav-categories" aria-label="Categorías">
-          {categoryItems.map((item) => {
-            const isActive = activeCategory === item.id;
+        <nav
+          className="catalog-top-nav-categories"
+          aria-label="Categorías"
+        >
+          {categoryItems.map(
+            (item) => {
+              const isActive =
+                activeCategory ===
+                item.id;
 
-            return (
-              <button
-                key={item.id}
-                type="button"
-                className={[
-                  "catalog-category-chip",
-                  isActive ? "active" : "",
-                ].join(" ")}
-                onClick={() => handleCategorySelect(item.id)}
-              >
-                {item.icon && (
-                  <span className="catalog-category-icon">{item.icon}</span>
-                )}
+              return (
+                <button
+                  key={item.id}
+                  type="button"
+                  className={[
+                    "catalog-category-chip",
+                    isActive
+                      ? "active"
+                      : "",
+                  ].join(" ")}
+                  onClick={() =>
+                    handleCategorySelect(
+                      item.id,
+                    )
+                  }
+                >
+                  {item.icon && (
+                    <span className="catalog-category-icon">
+                      {item.icon}
+                    </span>
+                  )}
 
-                <span>{item.name}</span>
+                  <span>
+                    {item.name}
+                  </span>
 
-                {categoryCounts[item.id] !== undefined && (
-                  <small>({categoryCounts[item.id]})</small>
-                )}
-              </button>
-            );
-          })}
+                  {categoryCounts[
+                    item.id
+                  ] !== undefined && (
+                    <small>
+                      (
+                      {
+                        categoryCounts[
+                          item.id
+                        ]
+                      }
+                      )
+                    </small>
+                  )}
+                </button>
+              );
+            },
+          )}
         </nav>
 
-        {hasCampaigns && (
-          <div className="catalog-top-nav-campaign-row">
-            <span className="catalog-campaign-row-label">
-              Campañas activas
-            </span>
-
-            <div className="catalog-top-nav-campaigns">
-              {campaignItems.map((item) => {
-                const isActive = activeCampaign === item.id;
-
-                return (
-                  <button
-                    key={item.id}
-                    type="button"
-                    className={[
-                      "catalog-campaign-chip",
-                      item.colorClass ?? "",
-                      isActive ? "active" : "",
-                    ].join(" ")}
-                    onClick={() =>
-                      handleCampaignSelect(isActive ? "" : item.id)
-                    }
-                  >
-                    <span className="catalog-campaign-content">
-                      <strong>{item.name}</strong>
-
-                      {campaignCounts[item.id] !== undefined && (
-                        <small>{campaignCounts[item.id]} productos</small>
-                      )}
-                    </span>
-
-                    {item.icon && (
-                      <span className="catalog-campaign-icon">
-                        {item.icon}
-                      </span>
-                    )}
-                  </button>
-                );
-              })}
-            </div>
-          </div>
-        )}
-
-        <div className="catalog-top-nav-search-row">{searchSlot}</div>
+        <div className="catalog-top-nav-search-row">
+          {searchSlot}
+        </div>
       </header>
 
       <button
         type="button"
         className="catalog-explore-fab"
-        onClick={() => setExploreOpen(true)}
+        onClick={() =>
+          setExploreOpen(true)
+        }
       >
         <Compass className="w-4 h-4" />
         Explorar
@@ -126,85 +114,90 @@ export function CatalogTopNav({
           <button
             type="button"
             className="catalog-explore-backdrop"
-            onClick={() => setExploreOpen(false)}
+            onClick={() =>
+              setExploreOpen(false)
+            }
             aria-label="Cerrar explorar"
           />
 
           <div className="catalog-explore-sheet">
             <div className="catalog-explore-header">
               <div>
-                <span>Explorar catálogo</span>
-                <h3>Encuentra el detalle ideal</h3>
+                <span>
+                  Explorar catálogo
+                </span>
+
+                <h3>
+                  Selecciona una categoría
+                </h3>
               </div>
 
-              <button type="button" onClick={() => setExploreOpen(false)}>
+              <button
+                type="button"
+                onClick={() =>
+                  setExploreOpen(false)
+                }
+              >
                 <X className="w-5 h-5" />
               </button>
             </div>
 
             <div className="catalog-explore-group">
-              <p>Categorías emocionales</p>
+              <p>Categorías</p>
 
               <div className="catalog-explore-list">
-                {categoryItems.map((item) => {
-                  const isActive = activeCategory === item.id;
-
-                  return (
-                    <button
-                      key={item.id}
-                      type="button"
-                      className={[
-                        "catalog-explore-chip",
-                        isActive ? "active" : "",
-                      ].join(" ")}
-                      onClick={() => handleCategorySelect(item.id)}
-                    >
-                      <span>{item.icon}</span>
-                      {item.name}
-
-                      {categoryCounts[item.id] !== undefined && (
-                        <small>({categoryCounts[item.id]})</small>
-                      )}
-                    </button>
-                  );
-                })}
-              </div>
-            </div>
-
-            {hasCampaigns && (
-              <div className="catalog-explore-group">
-                <p>Campañas activas</p>
-
-                <div className="catalog-explore-list">
-                  {campaignItems.map((item) => {
-                    const isActive = activeCampaign === item.id;
+                {categoryItems.map(
+                  (item) => {
+                    const isActive =
+                      activeCategory ===
+                        item.id;
 
                     return (
                       <button
-                        key={item.id}
+                        key={
+                          item.id
+                        }
                         type="button"
                         className={[
                           "catalog-explore-chip",
-                          "catalog-explore-campaign-chip",
-                          item.colorClass ?? "",
-                          isActive ? "active" : "",
-                        ].join(" ")}
+                          isActive
+                            ? "active"
+                            : "",
+                        ].join(
+                          " ",
+                        )}
                         onClick={() =>
-                          handleCampaignSelect(isActive ? "" : item.id)
+                          handleCategorySelect(
+                            item.id,
+                          )
                         }
                       >
-                        <span>{item.icon}</span>
+                        <span>
+                          {item.icon}
+                        </span>
+
                         {item.name}
 
-                        {campaignCounts[item.id] !== undefined && (
-                          <small>({campaignCounts[item.id]})</small>
+                        {categoryCounts[
+                          item.id
+                        ] !==
+                          undefined && (
+                          <small>
+                            (
+                            {
+                              categoryCounts[
+                                item.id
+                              ]
+                            }
+                            )
+                          </small>
                         )}
                       </button>
                     );
-                  })}
-                </div>
+                  },
+                )}
               </div>
-            )}
+            </div>
           </div>
         </div>
       )}

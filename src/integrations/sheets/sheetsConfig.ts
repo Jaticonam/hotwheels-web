@@ -3,27 +3,10 @@ export const SHEETS_CONFIG = {
     docId: "141vkBWAieL-IY5vcxNdmV8qtX64YFda6AYRDTsoACYs",
     gid: "223977403",
   },
-
-  subcategories: {
-    docId: "141vkBWAieL-IY5vcxNdmV8qtX64YFda6AYRDTsoACYs",
-    gid: "292799741",
-  },
-
-  addons: {
-    docId: "141vkBWAieL-IY5vcxNdmV8qtX64YFda6AYRDTsoACYs",
-    gid: "301214862",
-  },
-
-  musicLibrary: {
-    docId: "141vkBWAieL-IY5vcxNdmV8qtX64YFda6AYRDTsoACYs",
-    gid: "942450942",
-  },
-
-  campaigns: {
-    docId: "141vkBWAieL-IY5vcxNdmV8qtX64YFda6AYRDTsoACYs",
-    gid: "1364232111",
-  },
 } as const;
 
-export type SheetKey = keyof typeof SHEETS_CONFIG;
-export type SheetSource = (typeof SHEETS_CONFIG)[SheetKey];
+export type SheetKey =
+  keyof typeof SHEETS_CONFIG;
+
+export type SheetSource =
+  (typeof SHEETS_CONFIG)[SheetKey];

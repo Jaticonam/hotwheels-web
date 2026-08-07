@@ -1,6 +1,4 @@
 export type {
-  Addon,
-  Campaign,
   CartItem,
   Category,
   Product,
