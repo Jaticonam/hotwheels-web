@@ -1,88 +1,57 @@
-import { AlertTriangle, CheckCircle, Clock, XCircle } from "lucide-react";
+import type { Product } from "@/shared/types/product";
 
-export const CAMPAIGN_BADGE_KEYS = [
-  "feliz día papa",
-  "feliz dia papa",
-  "día de la madre",
-  "dia de la madre",
-  "san valentín",
-  "san valentin",
-  "flores amarillas",
-  "navidad",
-];
+import {
+  isPreorderStatus,
+  isSoldOutStatus,
+} from "@/tenant/config/product";
 
-export const STATE_BADGE_KEYS = [
-  "oferta",
-  "más vendido",
-  "mas vendido",
-  "nuevo",
-  "premium",
-  "especial",
-  "edición limitada",
-  "edicion limitada",
-  "últimas unidades",
-  "ultimas unidades",
-  "express",
-  "temporada",
-];
-
-export function normalizeBadge(value: string) {
-  return value.trim().toLowerCase();
+export interface ProductCardStockPresentation {
+  label: string;
+  className: string;
 }
 
-export function pickBadgeByKeys(
-  badges: string[],
-  keys: string[],
-) {
-  return badges.find((badge) =>
-    keys.includes(normalizeBadge(badge)),
-  );
-}
-
-export function getStockPresentation(
-  productStateType: string,
-) {
-  switch (productStateType) {
-    case "preorder":
-      return {
-        StockIcon: Clock,
-        stockClass:
-          "product-card-status product-card-status-preorder",
-      };
-
-    case "sold-out":
-      return {
-        StockIcon: XCircle,
-        stockClass:
-          "product-card-status product-card-status-danger",
-      };
-
-    case "last-units":
-      return {
-        StockIcon: AlertTriangle,
-        stockClass:
-          "product-card-status product-card-status-danger",
-      };
-
-    case "limited":
-      return {
-        StockIcon: AlertTriangle,
-        stockClass:
-          "product-card-status product-card-status-warning",
-      };
-
-    case "unavailable":
-      return {
-        StockIcon: Clock,
-        stockClass:
-          "product-card-status product-card-status-muted",
-      };
-
-    default:
-      return {
-        StockIcon: CheckCircle,
-        stockClass:
-          "product-card-status product-card-status-success",
-      };
+export function getProductCardStockPresentation(
+  product: Product,
+): ProductCardStockPresentation {
+  if (isPreorderStatus(product.status)) {
+    return {
+      label: "Preventa",
+      className: "product-card-stock-preorder",
+    };
   }
+
+  if (
+    isSoldOutStatus(product.status) ||
+    product.stock === 0
+  ) {
+    return {
+      label: "Agotado",
+      className: "product-card-stock-soldout",
+    };
+  }
+
+  if (
+    product.stock === null ||
+    product.stock === undefined
+  ) {
+    return {
+      label: "Stock por confirmar",
+      className: "product-card-stock-muted",
+    };
+  }
+
+  if (product.stock <= 3) {
+    return {
+      label:
+        product.stock === 1
+          ? "1 unidad disponible"
+          : `${product.stock} unidades disponibles`,
+      className: "product-card-stock-warning",
+    };
+  }
+
+  return {
+    label: `Stock: ${product.stock}`,
+    className: "product-card-stock-available",
+  };
 }

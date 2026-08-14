@@ -1,72 +1,107 @@
 /* ==========================================
-   Page: Catalog
-   Purpose: Main emotional catalog experience
+   HOT WHEELS WEB
+   Catalog Shell
 ========================================== */
 
 .catalog-page {
   min-height: 100vh;
   padding-bottom: 9rem;
   background:
-    radial-gradient(circle at top left, rgba(236, 164, 194, 0.18), transparent 34rem),
-    radial-gradient(circle at top right, rgba(249, 201, 91, 0.14), transparent 30rem),
-    var(--w-background);
-}
-
-.catalog-sticky-header {
-  position: sticky;
-  top: 0;
-  z-index: 100;
-  width: 100%;
-  background: rgba(255, 255, 255, 0.84);
-  border-bottom: 1px solid rgba(239, 227, 234, 0.72);
-  backdrop-filter: blur(18px);
+    radial-gradient(
+      circle at 10% 0%,
+      rgba(14, 165, 233, 0.12),
+      transparent 30rem
+    ),
+    radial-gradient(
+      circle at 95% 18%,
+      rgba(37, 99, 235, 0.08),
+      transparent 28rem
+    ),
+    #020617;
+  color: #e2e8f0;
 }
 
 .catalog-main {
   width: min(100%, 1280px);
   margin: 0 auto;
-  padding: 2.4rem 1rem 0;
+  padding: 0 1rem;
 }
 
 .catalog-hero {
-  max-width: 780px;
-  margin: 0 auto 2rem;
+  position: relative;
+  overflow: hidden;
+  max-width: 1180px;
+  margin: 0 auto 2.4rem;
+  padding: clamp(3.5rem, 7vw, 6.5rem) 1rem clamp(2.5rem, 5vw, 4.5rem);
   text-align: center;
 }
 
+.catalog-hero::before {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: -14rem;
+  width: 34rem;
+  height: 34rem;
+  transform: translateX(-50%);
+  border-radius: 50%;
+  background: rgba(14, 165, 233, 0.11);
+  filter: blur(100px);
+  pointer-events: none;
+}
+
 .catalog-kicker {
-  margin: 0 0 0.65rem;
-  color: var(--w-secondary-strong);
-  font-size: 0.75rem;
+  position: relative;
+  margin: 0 0 0.9rem;
+  color: #38bdf8;
+  font-size: 0.7rem;
   font-weight: 950;
   text-transform: uppercase;
-  letter-spacing: 0.24em;
+  letter-spacing: 0.26em;
 }
 
 .catalog-hero h1 {
-  margin: 0;
-  color: var(--w-heading);
+  position: relative;
+  max-width: 920px;
+  margin: 0 auto;
+  color: #ffffff;
   font-family: var(--font-brand);
-  font-size: clamp(2.35rem, 5vw, 4.5rem);
+  font-size: clamp(2.7rem, 6vw, 5.7rem);
   font-weight: 950;
-  line-height: 0.95;
-  letter-spacing: -0.06em;
+  line-height: 0.94;
+  letter-spacing: -0.065em;
 }
 
-.catalog-hero p:not(.catalog-kicker) {
-  margin: 1rem auto 0;
-  max-width: 620px;
-  color: var(--w-muted);
-  font-size: 1rem;
+.catalog-hero-description {
+  position: relative;
+  max-width: 650px;
+  margin: 1.35rem auto 0;
+  color: #94a3b8;
+  font-size: clamp(0.95rem, 1.5vw, 1.08rem);
   font-weight: 600;
-  line-height: 1.75;
+  line-height: 1.7;
 }
 
-.catalog-sections {
+.catalog-hero-meta {
+  position: relative;
   display: flex;
-  flex-direction: column;
-  gap: 2.4rem;
-  margin-top: 2rem;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.55rem;
+  margin-top: 1.7rem;
+}
+
+.catalog-hero-meta span {
+  min-height: 2.15rem;
+  display: inline-flex;
+  align-items: center;
+  padding: 0 0.9rem;
+  border: 1px solid rgba(56, 189, 248, 0.16);
+  border-radius: 999px;
+  background: rgba(14, 165, 233, 0.07);
+  color: #bae6fd;
+  font-size: 0.69rem;
+  font-weight: 850;
 }
 
 .catalog-section {
@@ -75,28 +110,31 @@
   gap: 1rem;
 }
 
-.catalog-section-header {
+.catalog-results-header {
   display: flex;
   align-items: flex-end;
   justify-content: space-between;
-  gap: 1rem;
-  padding: 0 0.15rem;
+  padding: 0 0.15rem 0.3rem;
 }
 
-.catalog-section-header h2 {
-  margin: 0;
-  color: var(--w-heading);
-  font-family: var(--font-brand);
-  font-size: clamp(1.35rem, 2vw, 1.8rem);
-  font-weight: 950;
-  letter-spacing: -0.045em;
+.catalog-results-header div {
+  display: flex;
+  align-items: baseline;
+  gap: 0.65rem;
 }
 
-.catalog-section-header p {
-  margin: 0.35rem 0 0;
-  color: var(--w-muted);
-  font-size: 0.82rem;
-  font-weight: 700;
+.catalog-results-header span {
+  color: #64748b;
+  font-size: 0.68rem;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+}
+
+.catalog-results-header strong {
+  color: #e2e8f0;
+  font-size: 0.86rem;
+  font-weight: 900;
 }
 
 .catalog-grid {
@@ -111,68 +149,41 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 0.35rem;
   margin-top: 2rem;
   padding: 2rem;
   text-align: center;
+  border: 1px solid rgba(148, 163, 184, 0.12);
   border-radius: 2rem;
-  background: rgba(255, 255, 255, 0.72);
-  border: 1px solid rgba(239, 227, 234, 0.8);
-  box-shadow: var(--w-shadow-soft);
+  background: rgba(15, 23, 42, 0.72);
+}
+
+.catalog-empty-symbol {
+  width: 5rem;
+  height: 5rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1rem;
+  border: 1px solid rgba(56, 189, 248, 0.2);
+  border-radius: 50%;
+  background: rgba(14, 165, 233, 0.08);
+  color: #38bdf8;
+  font-size: 0.9rem;
+  font-weight: 950;
 }
 
 .catalog-empty p {
   margin: 0;
-  color: var(--w-heading);
+  color: #ffffff;
   font-size: 1rem;
   font-weight: 950;
 }
 
 .catalog-empty small {
-  color: var(--w-muted);
+  margin-top: 0.35rem;
+  color: #64748b;
   font-size: 0.78rem;
   font-weight: 700;
-}
-
-/* ==========================================
-   Catalog Hero Compact
-========================================== */
-
-.catalog-hero {
-  padding-top: clamp(1.8rem, 3vw, 3rem);
-  padding-bottom: clamp(1.2rem, 2.4vw, 2rem);
-}
-
-.catalog-hero p:last-child {
-  max-width: 42rem;
-  margin-inline: auto;
-}
-
-.catalog-hero h1 {
-  max-width: 58rem;
-  margin-inline: auto;
-}
-
-.catalog-hero > p:last-child {
-  max-width: 42rem;
-  margin-inline: auto;
-  font-size: clamp(0.95rem, 1.4vw, 1.08rem);
-  line-height: 1.55;
-}
-
-@media (max-width: 720px) {
-  .catalog-hero {
-    padding-top: 1.6rem;
-    padding-bottom: 1.25rem;
-  }
-
-  .catalog-section-header-clean {
-    margin-bottom: 1rem;
-  }
-
-  .catalog-section-header-clean h2 {
-    font-size: 1.65rem;
-  }
 }
 
 @media (max-width: 1080px) {
@@ -183,23 +194,33 @@
 
 @media (max-width: 760px) {
   .catalog-main {
-    padding: 1.35rem 0.75rem 0;
+    padding: 0 0.75rem;
   }
 
   .catalog-hero {
-    margin-bottom: 1.45rem;
+    margin-bottom: 1.5rem;
+    padding-top: 2.8rem;
   }
 
   .catalog-hero h1 {
-    font-size: clamp(2.1rem, 12vw, 3.2rem);
+    font-size: clamp(2.4rem, 13vw, 3.5rem);
   }
 
-  .catalog-hero p:not(.catalog-kicker) {
+  .catalog-hero-description {
     font-size: 0.9rem;
   }
 
-  .catalog-section-header {
+  .catalog-hero-meta {
+    margin-top: 1.25rem;
+  }
+
+  .catalog-results-header div {
     display: block;
+  }
+
+  .catalog-results-header strong {
+    display: block;
+    margin-top: 0.25rem;
   }
 
   .catalog-grid {
@@ -212,5 +233,3 @@
     border-radius: 1.5rem;
   }
 }
-
-

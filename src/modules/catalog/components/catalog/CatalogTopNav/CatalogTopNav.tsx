@@ -35,7 +35,7 @@ export function CatalogTopNav({
       <header className="catalog-top-nav">
         <div className="catalog-top-nav-brand-row">
           {logoSlot}
-          <p>Catálogo de productos</p>
+          <p>Catálogo de coleccionables</p>
         </div>
 
         <nav

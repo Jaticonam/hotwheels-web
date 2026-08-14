@@ -14,18 +14,22 @@ interface SearchInputProps {
 
 const MAX_SUGGESTIONS = 6;
 
-const QUICK_SEARCHES = ["Naturales", "Artificiales", "Corporativo"];
+const QUICK_SEARCHES = ["Deportivos", "Premium", "Clásicos"];
 
 const SEARCH_SYNONYMS: Record<string, string[]> = {
-  natural: ["natural", "naturales"],
-  naturales: ["natural", "naturales"],
+  deportivo: ["deportivo", "deportivos", "sport", "sports"],
+  deportivos: ["deportivo", "deportivos", "sport", "sports"],
 
-  artificial: ["artificial", "artificiales"],
-  artificiales: ["artificial", "artificiales"],
+  coleccionable: ["coleccionable", "coleccionables"],
+  coleccionables: ["coleccionable", "coleccionables"],
 
-  corporativo: ["corporativo", "corporativos", "corporate"],
-  corporativos: ["corporativo", "corporativos", "corporate"],
-  corporate: ["corporativo", "corporativos", "corporate"],
+  tematico: ["tematico", "tematicos"],
+  tematicos: ["tematico", "tematicos"],
+
+  clasico: ["clasico", "clasicos"],
+  clasicos: ["clasico", "clasicos"],
+
+  premium: ["premium"],
 };
 
 function normalizeSearchText(value: unknown): string {

@@ -1,144 +1,63 @@
 import {
   useCallback,
   useEffect,
-  useState,
+  useSyncExternalStore,
 } from "react";
 
 import type {
-  CartItem,
   Product,
 } from "@/shared/types/product";
 
-import { getEffectivePrice } from "@/domain/product/pricing";
-
-const CART_KEY =
-  "hotwheels_cart_v1";
-
-const LEGACY_CART_KEY =
-  "jung_cart";
-
-function parseStoredCart(
-  rawValue: string | null,
-): CartItem[] | null {
-  if (!rawValue) {
-    return null;
-  }
-
-  try {
-    const parsed: unknown =
-      JSON.parse(rawValue);
-
-    return Array.isArray(parsed)
-      ? (parsed as CartItem[])
-      : null;
-  }
-  catch {
-    return null;
-  }
-}
-
-function loadCart():
-CartItem[] {
-  const currentCart =
-    parseStoredCart(
-      localStorage.getItem(
-        CART_KEY,
-      ),
-    );
-
-  if (
-    currentCart !== null
-  ) {
-    return currentCart;
-  }
-
-  const legacyCart =
-    parseStoredCart(
-      localStorage.getItem(
-        LEGACY_CART_KEY,
-      ),
-    );
-
-  if (
-    legacyCart !== null
-  ) {
-    try {
-      localStorage.setItem(
-        CART_KEY,
-        JSON.stringify(
-          legacyCart,
-        ),
-      );
-
-      localStorage.removeItem(
-        LEGACY_CART_KEY,
-      );
-    }
-    catch {
-      return legacyCart;
-    }
-
-    return legacyCart;
-  }
-
-  return [];
-}
-
-function saveCart(
-  cart: CartItem[],
-): void {
-  try {
-    localStorage.setItem(
-      CART_KEY,
-      JSON.stringify(cart),
-    );
-  }
-  catch {
-    return;
-  }
-}
+import {
+  CART_STORAGE_KEY,
+  LEGACY_CART_STORAGE_KEY,
+  addProductToCart,
+  changeProductQty,
+  clearCartItems,
+  getCartSnapshot,
+  getCartTotals,
+  getServerCartSnapshot,
+  removeProductFromCart,
+  setProductQty,
+  subscribeCart,
+  syncCartFromStorage,
+} from "@/modules/cart/store/cartStore";
 
 export function useCart() {
-  const [
-    cart,
-    setCart,
-  ] =
-    useState<CartItem[]>(
-      () => loadCart(),
+  const cart =
+    useSyncExternalStore(
+      subscribeCart,
+      getCartSnapshot,
+      getServerCartSnapshot,
     );
 
   useEffect(() => {
-    saveCart(cart);
-  }, [cart]);
+    const handleStorage =
+      (
+        event: StorageEvent,
+      ) => {
+        const isCartEvent =
+          event.key ===
+            CART_STORAGE_KEY ||
+          event.key ===
+            LEGACY_CART_STORAGE_KEY;
 
-  useEffect(() => {
-    const handler = (
-      event: StorageEvent,
-    ) => {
-      const isCartEvent =
-        event.key ===
-          CART_KEY ||
-        event.key ===
-          LEGACY_CART_KEY;
+        if (!isCartEvent) {
+          return;
+        }
 
-      if (!isCartEvent) {
-        return;
-      }
-
-      setCart(
-        loadCart(),
-      );
-    };
+        syncCartFromStorage();
+      };
 
     window.addEventListener(
       "storage",
-      handler,
+      handleStorage,
     );
 
     return () => {
       window.removeEventListener(
         "storage",
-        handler,
+        handleStorage,
       );
     };
   }, []);
@@ -149,48 +68,9 @@ export function useCart() {
         product: Product,
         qty = 1,
       ) => {
-        const safeQty =
-          Math.max(
-            1,
-            Math.floor(qty),
-          );
-
-        setCart(
-          (
-            previousCart,
-          ) => {
-            const existingItem =
-              previousCart.find(
-                (item) =>
-                  item.id ===
-                  product.id,
-              );
-
-            if (
-              existingItem
-            ) {
-              return previousCart.map(
-                (item) =>
-                  item.id ===
-                  product.id
-                    ? {
-                        ...item,
-                        qty:
-                          item.qty +
-                          safeQty,
-                      }
-                    : item,
-              );
-            }
-
-            return [
-              ...previousCart,
-              {
-                ...product,
-                qty: safeQty,
-              },
-            ];
-          },
+        return addProductToCart(
+          product,
+          qty,
         );
       },
       [],
@@ -199,13 +79,8 @@ export function useCart() {
   const removeFromCart =
     useCallback(
       (id: string) => {
-        setCart(
-          (previousCart) =>
-            previousCart.filter(
-              (item) =>
-                item.id !==
-                id,
-            ),
+        removeProductFromCart(
+          id,
         );
       },
       [],
@@ -217,38 +92,9 @@ export function useCart() {
         id: string,
         delta: number,
       ) => {
-        setCart(
-          (previousCart) =>
-            previousCart
-              .map((item) => {
-                if (
-                  item.id !==
-                  id
-                ) {
-                  return item;
-                }
-
-                const newQty =
-                  item.qty +
-                  delta;
-
-                if (
-                  newQty <= 0
-                ) {
-                  return null;
-                }
-
-                return {
-                  ...item,
-                  qty: newQty,
-                };
-              })
-              .filter(
-                (
-                  item,
-                ): item is CartItem =>
-                  item !== null,
-              ),
+        changeProductQty(
+          id,
+          delta,
         );
       },
       [],
@@ -260,38 +106,9 @@ export function useCart() {
         id: string,
         qty: number | null,
       ) => {
-        setCart(
-          (previousCart) =>
-            previousCart
-              .map((item) => {
-                if (
-                  item.id !==
-                    id ||
-                  qty === null
-                ) {
-                  return item;
-                }
-
-                const safeQty =
-                  Math.floor(qty);
-
-                if (
-                  safeQty <= 0
-                ) {
-                  return null;
-                }
-
-                return {
-                  ...item,
-                  qty: safeQty,
-                };
-              })
-              .filter(
-                (
-                  item,
-                ): item is CartItem =>
-                  item !== null,
-              ),
+        setProductQty(
+          id,
+          qty,
         );
       },
       [],
@@ -299,51 +116,15 @@ export function useCart() {
 
   const clearCart =
     useCallback(() => {
-      setCart([]);
+      clearCartItems();
     }, []);
 
-  const totalItems =
-    cart.reduce(
-      (
-        total,
-        item,
-      ) =>
-        total + item.qty,
-      0,
-    );
-
-  const totalPrice =
-    cart.reduce(
-      (
-        total,
-        item,
-      ) =>
-        total +
-        getEffectivePrice(
-          item,
-        ) *
-          item.qty,
-      0,
-    );
-
-  const totalOriginal =
-    cart.reduce(
-      (
-        total,
-        item,
-      ) =>
-        total +
-        item.price *
-          item.qty,
-      0,
-    );
-
-  const savings =
-    Math.max(
-      0,
-      totalOriginal -
-        totalPrice,
-    );
+  const {
+    totalItems,
+    totalPrice,
+    savings,
+  } =
+    getCartTotals(cart);
 
   return {
     cart,

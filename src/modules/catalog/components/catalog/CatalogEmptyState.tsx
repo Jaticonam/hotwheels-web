@@ -9,7 +9,7 @@ export function CatalogEmptyState() {
       </div>
 
       <p>Sin resultados</p>
-      <small>Prueba con otra palabra o elige una categoría emocional.</small>
+      <small>Prueba con otra palabra o selecciona otra categoría.</small>
     </div>
   );
 }

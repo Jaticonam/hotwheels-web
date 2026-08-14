@@ -1,50 +1,41 @@
-/* ===== CATEGORY PAGE ===== */
+/* ==========================================
+   HOT WHEELS WEB
+   Category Page
+========================================== */
 
 @layer components {
   .category-page {
     min-height: 100vh;
-    padding-bottom: 10rem;
-
+    padding-bottom: 9rem;
     background:
       radial-gradient(
-        circle at top left,
-        rgba(236, 164, 194, 0.14),
-        transparent 32rem
-      ),
-      radial-gradient(
-        circle at top right,
-        rgba(106, 90, 138, 0.1),
+        circle at 8% 0%,
+        rgba(14, 165, 233, 0.1),
         transparent 28rem
       ),
-      var(--w-bg);
+      #020617;
+    color: #e2e8f0;
   }
 
   .category-page-header {
     position: sticky;
     top: 0;
     z-index: 100;
-
     width: 100%;
-
-    display: flex;
-    flex-direction: column;
-
-    box-shadow: var(--w-shadow-soft);
+    border-bottom: 1px solid rgba(148, 163, 184, 0.12);
+    background: rgba(2, 6, 23, 0.94);
+    backdrop-filter: blur(20px);
+    box-shadow: 0 14px 36px rgba(0, 0, 0, 0.18);
   }
 
   .category-page-header-inner {
-    border-bottom: 1px solid var(--w-border);
-
-    background: rgba(255, 255, 255, 0.9);
-
-    backdrop-filter: blur(18px);
+    background: transparent;
   }
 
   .category-page-header-row {
     max-width: 1280px;
     margin: 0 auto;
     padding: 0.9rem 1rem;
-
     display: flex;
     align-items: center;
     gap: 1rem;
@@ -52,93 +43,69 @@
 
   .category-page-title-wrap {
     min-width: 0;
-    max-width: 44%;
-
+    max-width: 46%;
     display: flex;
     align-items: center;
     gap: 0.85rem;
-
     flex: 0 0 auto;
   }
 
   .category-page-back {
     width: 2.7rem;
     height: 2.7rem;
-
     flex-shrink: 0;
-
     display: inline-flex;
     align-items: center;
     justify-content: center;
-
-    border-radius: var(--w-radius-md);
-
-    background: var(--w-surface-soft);
-    color: var(--w-primary);
-
-    border: 1px solid var(--w-border);
-
-    box-shadow: var(--w-shadow-soft);
-
+    border: 1px solid rgba(148, 163, 184, 0.14);
+    border-radius: 0.9rem;
+    background: rgba(15, 23, 42, 0.78);
+    color: #38bdf8;
     cursor: pointer;
-
     transition:
-      transform var(--w-transition-fast),
-      background var(--w-transition),
-      color var(--w-transition),
-      box-shadow var(--w-transition);
+      transform 180ms ease,
+      border-color 180ms ease,
+      background 180ms ease;
   }
 
   .category-page-back:hover {
     transform: translateY(-2px);
-
-    background: var(--w-secondary-soft);
-    color: var(--w-secondary-strong);
-
-    box-shadow: var(--w-shadow-medium);
+    border-color: rgba(56, 189, 248, 0.4);
+    background: rgba(14, 165, 233, 0.1);
   }
 
   .category-page-title-wrap h1 {
     margin: 0;
-
-    color: var(--w-heading);
-
-    font-family: var(--font-brand);
-    font-size: 1.15rem;
-    font-weight: 900;
+    color: #ffffff;
+    font-size: 1.08rem;
+    font-weight: 950;
     line-height: 1.1;
   }
 
   .category-page-title-wrap p {
-    margin: 0.25rem 0 0;
-
-    color: var(--w-muted);
-
-    font-size: 0.75rem;
+    margin: 0.28rem 0 0;
+    color: #64748b;
+    font-size: 0.72rem;
     line-height: 1.35;
-    font-weight: 600;
+    font-weight: 650;
   }
 
   .category-page-title-wrap span {
     display: inline-flex;
-
-    margin-top: 0.3rem;
-    padding: 0.22rem 0.52rem;
-
-    border-radius: var(--w-radius-full);
-
-    background: var(--w-secondary-soft);
-    color: var(--w-secondary-strong);
-
-    font-size: 0.58rem;
-    font-weight: 900;
+    margin-top: 0.35rem;
+    padding: 0.25rem 0.55rem;
+    border: 1px solid rgba(56, 189, 248, 0.16);
+    border-radius: 999px;
+    background: rgba(14, 165, 233, 0.08);
+    color: #7dd3fc;
+    font-size: 0.56rem;
+    font-weight: 950;
     text-transform: uppercase;
-    letter-spacing: 0.12em;
+    letter-spacing: 0.13em;
   }
 
   .category-page-search {
     position: relative;
-
     min-width: 0;
     flex: 1;
   }
@@ -146,7 +113,7 @@
   .category-page-main {
     max-width: 1280px;
     margin: 0 auto;
-    padding: 1.8rem 1rem 0;
+    padding: 1.5rem 1rem 0;
   }
 
   .category-page-grid {
@@ -158,85 +125,32 @@
   .category-page-empty {
     min-height: 22rem;
     padding: 3rem 1rem;
-
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     gap: 0.65rem;
-
     text-align: center;
-
-    color: var(--w-muted);
+    color: #64748b;
   }
 
-  .category-page-empty > div {
-    width: 5rem;
-    height: 5rem;
-
-    margin-bottom: 0.35rem;
-
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-
-    border-radius: var(--w-radius-full);
-
-    background: var(--w-secondary-soft);
-    color: var(--w-secondary-strong);
-
-    box-shadow: var(--w-shadow-soft);
+  .category-page-empty svg {
+    color: #38bdf8;
   }
 
   .category-page-empty p {
     margin: 0;
-
-    color: var(--w-heading);
-
+    color: #ffffff;
     font-size: 1rem;
-    font-weight: 900;
+    font-weight: 950;
   }
 
   .category-page-empty small {
     max-width: 320px;
-
-    color: var(--w-muted);
-
+    color: #64748b;
     font-size: 0.78rem;
-    font-weight: 600;
+    font-weight: 650;
     line-height: 1.5;
-  }
-
-  .category-page-empty button {
-    margin-top: 0.85rem;
-    padding: 0.75rem 1.05rem;
-
-    border-radius: var(--w-radius-md);
-
-    background: linear-gradient(
-      135deg,
-      var(--w-primary-dark),
-      var(--w-primary)
-    );
-
-    color: #ffffff;
-
-    font-size: 0.82rem;
-    font-weight: 900;
-
-    box-shadow: var(--w-shadow-medium);
-
-    cursor: pointer;
-
-    transition:
-      transform var(--w-transition-fast),
-      box-shadow var(--w-transition);
-  }
-
-  .category-page-empty button:hover {
-    transform: translateY(-2px);
-
-    box-shadow: var(--w-shadow-strong);
   }
 
   @media (max-width: 1024px) {
@@ -252,7 +166,6 @@
   @media (max-width: 760px) {
     .category-page-header-row {
       padding: 0.8rem;
-
       flex-direction: column;
       align-items: stretch;
       gap: 0.8rem;
@@ -267,20 +180,12 @@
     }
 
     .category-page-grid {
-      grid-template-columns: repeat(1, minmax(0, 1fr));
+      grid-template-columns: 1fr;
       gap: 0.75rem;
     }
 
     .category-page-title-wrap h1 {
       font-size: 1rem;
-    }
-
-    .category-page-title-wrap p {
-      font-size: 0.7rem;
-    }
-
-    .category-page-title-wrap span {
-      font-size: 0.54rem;
     }
   }
 }

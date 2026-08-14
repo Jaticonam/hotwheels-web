@@ -3,7 +3,7 @@ export const PRODUCT_CARD_CONFIG = {
     preorder: "Consultar",
     preorderHelp: "Consulta disponibilidad",
     offerText: "Precio especial",
-    defaultText: "Precio",
+    defaultText: "Precio unitario",
   },
 
   actions: {
@@ -12,6 +12,7 @@ export const PRODUCT_CARD_CONFIG = {
     whatsappSoldOut: "Consultar disponibilidad",
     addMore: "Agregar más",
     addToCart: "Agregar al carrito",
+    whatsapp: "Consulta WhatsApp",
     soldOut: "Agotado",
   },
 } as const;

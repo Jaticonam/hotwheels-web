@@ -9,14 +9,15 @@ import { sortBadges } from "@/tenant/config/product";
 import type { Product } from "@/shared/types/product";
 
 import {
-  getProductPrice,
   getOriginalProductPrice,
+  getProductPrice,
+  getProductState,
   hasOfferPrice,
   isProductAvailable,
-  getProductState,
 } from "@/domain/product";
 
 import { buildProductWhatsAppUrl } from "@/integrations/whatsapp/whatsapp";
+import { showNotification } from "@/shared/components/feedback/NotificationStack";
 
 import { ProductCardImage } from "./ProductCardImage";
 import { ProductCardContent } from "./ProductCardContent";
@@ -24,20 +25,22 @@ import { ProductCardPrice } from "./ProductCardPrice";
 import { ProductCardActions } from "./ProductCardActions";
 
 import {
-  CAMPAIGN_BADGE_KEYS,
-  STATE_BADGE_KEYS,
-  pickBadgeByKeys,
+  getProductCardStockPresentation,
 } from "./ProductCard.utils";
 
 interface ProductCardProps {
   product: Product;
+  onAddToCart?: (
+    product: Product,
+    qty?: number,
+  ) => boolean | void;
 }
 
 export function ProductCard({
   product,
+  onAddToCart,
 }: ProductCardProps) {
-  const navigate =
-    useNavigate();
+  const navigate = useNavigate();
 
   const available =
     isProductAvailable(product);
@@ -60,30 +63,65 @@ export function ProductCard({
   const hasOffer =
     hasOfferPrice(product);
 
-  const sortedBadges =
+  const visibleBadges =
     useMemo(
       () =>
         sortBadges(
           product.badges ?? [],
-        ),
+        ).slice(0, 2),
       [product.badges],
     );
 
-  const campaignBadge =
-    pickBadgeByKeys(
-      sortedBadges,
-      CAMPAIGN_BADGE_KEYS,
+  const stockPresentation =
+    getProductCardStockPresentation(
+      product,
     );
 
-  const stateBadge =
-    pickBadgeByKeys(
-      sortedBadges,
-      STATE_BADGE_KEYS,
-    );
+  const canAddToCart =
+    available &&
+    Boolean(onAddToCart);
+
+  const addToCartLabel =
+    available
+      ? "Agregar al carrito"
+      : isPreventa
+        ? "Preventa"
+        : "Agotado";
 
   const handleViewDetail = () => {
     navigate(
       getProductUrl(product),
+    );
+  };
+
+  const handleAddToCart = () => {
+    if (
+      !available ||
+      !onAddToCart
+    ) {
+      return;
+    }
+
+    const added =
+      onAddToCart(
+        product,
+        1,
+      );
+
+    if (
+      added === false
+    ) {
+      showNotification(
+        "Stock máximo alcanzado",
+        `Ya tienes el máximo disponible de ${product.title}.`,
+      );
+
+      return;
+    }
+
+    showNotification(
+      "Agregado al carrito",
+      `${product.title} se agregó correctamente.`,
     );
   };
 
@@ -107,12 +145,7 @@ export function ProductCard({
         product={product}
         available={available}
         isPreventa={isPreventa}
-        campaignBadge={
-          campaignBadge
-        }
-        stateBadge={
-          stateBadge
-        }
+        badges={visibleBadges}
         onImageClick={
           handleViewDetail
         }
@@ -121,6 +154,12 @@ export function ProductCard({
       <div className="product-card-body">
         <ProductCardContent
           product={product}
+          stockPresentation={
+            stockPresentation
+          }
+          onViewDetail={
+            handleViewDetail
+          }
         />
 
         <ProductCardPrice
@@ -130,9 +169,7 @@ export function ProductCard({
           hasOffer={
             hasOffer
           }
-          price={
-            price
-          }
+          price={price}
           originalPrice={
             originalPrice
           }
@@ -142,8 +179,14 @@ export function ProductCard({
           productTitle={
             product.title
           }
-          onViewDetail={
-            handleViewDetail
+          canAddToCart={
+            canAddToCart
+          }
+          addToCartLabel={
+            addToCartLabel
+          }
+          onAddToCart={
+            handleAddToCart
           }
           onWhatsApp={
             handleWhatsApp

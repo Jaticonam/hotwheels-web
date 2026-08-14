@@ -1,6 +1,6 @@
 export const BADGE_PRESENTATION = {
   nuevo: {
-    icon: "🌸",
+    icon: "🆕",
     label: "Nuevo",
     className: "product-badge--new",
   },
@@ -20,14 +20,24 @@ export const BADGE_PRESENTATION = {
     className: "product-badge--premium",
   },
   oferta: {
-    icon: "🎉",
+    icon: "🏷️",
     label: "Oferta",
     className: "product-badge--offer",
   },
   especial: {
-    icon: "💝",
+    icon: "⭐",
     label: "Especial",
     className: "product-badge--special",
+  },
+  "edición limitada": {
+    icon: "💎",
+    label: "Edición limitada",
+    className: "product-badge--limited",
+  },
+  "edicion limitada": {
+    icon: "💎",
+    label: "Edición limitada",
+    className: "product-badge--limited",
   },
   "últimas unidades": {
     icon: "⏳",
@@ -40,47 +50,75 @@ export const BADGE_PRESENTATION = {
     className: "product-badge--last",
   },
   express: {
-    icon: "🚚",
+    icon: "⚡",
     label: "Express",
     className: "product-badge--express",
   },
   temporada: {
-    icon: "🌼",
+    icon: "🏁",
     label: "Temporada",
     className: "product-badge--season",
   },
 } as const;
 
-export function getBadgePresentation(badge: string) {
-  const key = badge.trim().toLowerCase();
+export function getBadgePresentation(
+  badge: string,
+) {
+  const key =
+    badge
+      .trim()
+      .toLowerCase();
 
   return (
-    BADGE_PRESENTATION[key as keyof typeof BADGE_PRESENTATION] ?? {
-      icon: "💐",
+    BADGE_PRESENTATION[
+      key as keyof typeof BADGE_PRESENTATION
+    ] ?? {
+      icon: "🏷️",
       label: badge,
-      className: "product-badge--default",
+      className:
+        "product-badge--default",
     }
   );
 }
 
-export function sortBadges(badges: string[] = []) {
+export function sortBadges(
+  badges: string[] = [],
+) {
   const priority = [
     "oferta",
+    "edición limitada",
+    "edicion limitada",
     "más vendido",
     "mas vendido",
     "premium",
     "especial",
     "nuevo",
-    "express",
     "últimas unidades",
     "ultimas unidades",
+    "express",
     "temporada",
   ];
 
-  return [...badges].sort((a, b) => {
-    const aIndex = priority.indexOf(a.trim().toLowerCase());
-    const bIndex = priority.indexOf(b.trim().toLowerCase());
+  return [...badges].sort(
+    (a, b) => {
+      const aIndex =
+        priority.indexOf(
+          a.trim().toLowerCase(),
+        );
 
-    return (aIndex === -1 ? 999 : aIndex) - (bIndex === -1 ? 999 : bIndex);
-  });
+      const bIndex =
+        priority.indexOf(
+          b.trim().toLowerCase(),
+        );
+
+      return (
+        (aIndex === -1
+          ? 999
+          : aIndex) -
+        (bIndex === -1
+          ? 999
+          : bIndex)
+      );
+    },
+  );
 }

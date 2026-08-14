@@ -30,9 +30,18 @@ import { ProductCard } from "@/modules/catalog/components/product/ProductCard";
 import { SearchInput } from "@/modules/catalog/components/search/SearchInput";
 
 import { FloatingButtons } from "@/shared/components/overlays/FloatingButtons";
+import { NotificationStack } from "@/shared/components/feedback/NotificationStack";
+import { useCart } from "@/modules/cart/hooks/useCart";
+import { CartSidebar } from "@/modules/cart/components/CartSidebar";
 import { CategorySkeleton } from "@/shared/components/skeletons/CategorySkeleton";
 
 export default function CategoryPage() {
+  const cart = useCart();
+
+  const [
+    cartOpen,
+    setCartOpen,
+  ] = useState(false);
   const {
     id: paramCategoryId,
   } =
@@ -205,6 +214,7 @@ export default function CategoryPage() {
 
   return (
     <div className="category-page">
+      <NotificationStack />
       <header className="category-page-header">
         <div className="category-page-header-inner">
           <div className="category-page-header-row">
@@ -328,6 +338,9 @@ export default function CategoryPage() {
                   product={
                     product
                   }
+                  onAddToCart={
+                    cart.addToCart
+                  }
                 />
               ),
             )}
@@ -335,7 +348,43 @@ export default function CategoryPage() {
         )}
       </main>
 
-      <FloatingButtons />
+      <FloatingButtons
+        cartCount={
+          cart.totalItems
+        }
+        onCartClick={() =>
+          setCartOpen(true)
+        }
+      />
+
+      <CartSidebar
+        isOpen={cartOpen}
+        onClose={() =>
+          setCartOpen(false)
+        }
+        onContinueShopping={() =>
+          setCartOpen(false)
+        }
+        cart={cart.cart}
+        totalItems={
+          cart.totalItems
+        }
+        totalPrice={
+          cart.totalPrice
+        }
+        savings={
+          cart.savings
+        }
+        onRemove={
+          cart.removeFromCart
+        }
+        onChangeQty={
+          cart.changeQty
+        }
+        onSetQty={
+          cart.setExactQty
+        }
+      />
     </div>
   );
 }

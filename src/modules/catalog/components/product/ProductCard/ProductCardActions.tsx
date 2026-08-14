@@ -1,53 +1,56 @@
 import {
-  Eye,
   MessageCircle,
+  ShoppingCart,
 } from "lucide-react";
-
-import { PRODUCT_CARD_CONFIG } from "@/tenant/config/product";
 
 interface ProductCardActionsProps {
   productTitle: string;
-  onViewDetail: () => void;
+  canAddToCart: boolean;
+  addToCartLabel: string;
+  onAddToCart: () => void;
   onWhatsApp: () => void;
 }
 
 export function ProductCardActions({
   productTitle,
-  onViewDetail,
+  canAddToCart,
+  addToCartLabel,
+  onAddToCart,
   onWhatsApp,
 }: ProductCardActionsProps) {
   return (
     <div className="product-card-actions">
       <button
         type="button"
-        onClick={onViewDetail}
+        onClick={onAddToCart}
+        disabled={!canAddToCart}
         className={[
           "product-card-button",
-          "product-card-button-main",
-          "product-card-button-primary",
+          "product-card-button-cart",
+          !canAddToCart
+            ? "product-card-button-disabled"
+            : "",
         ].join(" ")}
-        aria-label={`Ver producto ${productTitle}`}
+        aria-label={`${addToCartLabel}: ${productTitle}`}
       >
-        <Eye className="w-4 h-4" />
+        <ShoppingCart className="w-4 h-4" />
 
         <span>
-          {
-            PRODUCT_CARD_CONFIG
-              .actions
-              .viewDetail
-          }
+          {addToCartLabel}
         </span>
       </button>
 
       <button
         type="button"
         onClick={onWhatsApp}
-        className="product-card-button-wa"
+        className="product-card-button product-card-button-whatsapp"
         aria-label={`Consultar ${productTitle} por WhatsApp`}
-        title="Consultar por WhatsApp"
       >
         <MessageCircle className="w-4 h-4" />
-        <span>WhatsApp</span>
+
+        <span>
+          Consulta WhatsApp
+        </span>
       </button>
     </div>
   );

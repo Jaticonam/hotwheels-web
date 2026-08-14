@@ -20,43 +20,32 @@ import { SearchInput } from "@/modules/catalog/components/search/SearchInput";
 import { CatalogSkeleton } from "@/shared/components/skeletons/CatalogSkeleton";
 import { FloatingButtons } from "@/shared/components/overlays/FloatingButtons";
 import { NotificationStack } from "@/shared/components/feedback/NotificationStack";
+import { useCart } from "@/modules/cart/hooks/useCart";
+import { CartSidebar } from "@/modules/cart/components/CartSidebar";
 
 export default function CatalogPage() {
-  const [
-    products,
-    setProducts,
-  ] = useState<Product[]>([]);
+  const cart = useCart();
 
   const [
-    loading,
-    setLoading,
-  ] = useState(true);
-
-  const [
-    searchQuery,
-    setSearchQuery,
-  ] = useState("");
-
-  const [
-    activeCategory,
-    setActiveCategory,
-  ] = useState("todas");
+    cartOpen,
+    setCartOpen,
+  ] = useState(false);
+  const [products, setProducts] = useState<Product[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [activeCategory, setActiveCategory] = useState("todas");
 
   useEffect(() => {
     let mounted = true;
 
     loadAllProducts()
-      .then(
-        (loadedProducts) => {
-          if (!mounted) {
-            return;
-          }
+      .then((loadedProducts) => {
+        if (!mounted) {
+          return;
+        }
 
-          setProducts(
-            loadedProducts,
-          );
-        },
-      )
+        setProducts(loadedProducts);
+      })
       .catch((error) => {
         console.error(
           "Error cargando productos:",
@@ -78,91 +67,64 @@ export default function CatalogPage() {
     };
   }, []);
 
-  const categoryCounts =
-    useMemo(() => {
-      return products.reduce<
-        Record<string, number>
-      >(
-        (
-          counts,
-          product,
-        ) => {
-          counts.todas =
-            (
-              counts.todas ??
-              0
-            ) + 1;
+  const categoryCounts = useMemo(() => {
+    return products.reduce<Record<string, number>>(
+      (counts, product) => {
+        counts.todas = (counts.todas ?? 0) + 1;
 
-          const categoryIds =
-            Array.from(
-              new Set(
-                [
-                  product.category,
-                  ...product.categories,
-                ].filter(Boolean),
-              ),
-            );
+        const categoryIds = Array.from(
+          new Set(
+            [
+              product.category,
+              ...product.categories,
+            ].filter(Boolean),
+          ),
+        );
 
-          categoryIds.forEach(
-            (categoryId) => {
-              counts[
-                categoryId
-              ] =
-                (
-                  counts[
-                    categoryId
-                  ] ?? 0
-                ) + 1;
-            },
+        categoryIds.forEach((categoryId) => {
+          counts[categoryId] =
+            (counts[categoryId] ?? 0) + 1;
+        });
+
+        return counts;
+      },
+      {},
+    );
+  }, [products]);
+
+  const visibleProducts = useMemo(() => {
+    const categoryProducts =
+      activeCategory === "todas"
+        ? products
+        : products.filter((product) =>
+            productBelongsToCategory(
+              product,
+              activeCategory,
+            ),
           );
 
-          return counts;
-        },
-        {},
-      );
-    }, [products]);
+    const searchedProducts =
+      searchQuery.trim()
+        ? searchProducts(
+            categoryProducts,
+            searchQuery,
+          )
+        : categoryProducts;
 
-  const visibleProducts =
-    useMemo(() => {
-      const categoryProducts =
-        activeCategory ===
-        "todas"
-          ? products
-          : products.filter(
-              (product) =>
-                productBelongsToCategory(
-                  product,
-                  activeCategory,
-                ),
-            );
-
-      const searchedProducts =
-        searchQuery.trim()
-          ? searchProducts(
-              categoryProducts,
-              searchQuery,
-            )
-          : categoryProducts;
-
-      return sortByCommercialPriority(
-        searchedProducts,
-      );
-    }, [
-      products,
-      activeCategory,
-      searchQuery,
-    ]);
+    return sortByCommercialPriority(
+      searchedProducts,
+    );
+  }, [
+    products,
+    activeCategory,
+    searchQuery,
+  ]);
 
   const visibleCategories =
     BRAND_CONFIG.categories.filter(
       (category) =>
-        category.id ===
-          "todas" ||
-        (
-          categoryCounts[
-            category.id
-          ] ?? 0
-        ) > 0,
+        category.id === "todas" ||
+        (categoryCounts[category.id] ?? 0) > 0,
     );
 
   if (loading) {
@@ -174,22 +136,11 @@ export default function CatalogPage() {
       <NotificationStack />
 
       <CatalogTopNav
-        categoryItems={
-          visibleCategories
-        }
-        activeCategory={
-          activeCategory
-        }
-        categoryCounts={
-          categoryCounts
-        }
-        onCategorySelect={(
-          categoryId,
-        ) => {
-          setActiveCategory(
-            categoryId,
-          );
-
+        categoryItems={visibleCategories}
+        activeCategory={activeCategory}
+        categoryCounts={categoryCounts}
+        onCategorySelect={(categoryId) => {
+          setActiveCategory(categoryId);
           setSearchQuery("");
         }}
         logoSlot={
@@ -197,38 +148,26 @@ export default function CatalogPage() {
             type="button"
             className="catalog-top-nav-brand"
             onClick={() => {
-              window.location.href =
-                "/";
+              window.location.href = "/";
             }}
-            aria-label={`Ir al inicio de ${BRAND_CONFIG.name}`}
+            aria-label="Ir al inicio"
           >
-            <img
-              src={
-                BRAND_CONFIG
-                  .assets
-                  .logo
-              }
-              alt={
-                BRAND_CONFIG.name
-              }
-            />
+            <span className="catalog-brand-mark">
+              Coleccionables
+            </span>
+
+            <span className="catalog-brand-subtitle">
+              Escala 1:64
+            </span>
           </button>
         }
         searchSlot={
           <SearchInput
-            value={
-              searchQuery
-            }
-            onChange={
-              setSearchQuery
-            }
-            products={
-              products
-            }
+            value={searchQuery}
+            onChange={setSearchQuery}
+            products={products}
             placeholder={
-              BRAND_CONFIG
-                .search
-                .placeholder
+              BRAND_CONFIG.search.placeholder
             }
           />
         }
@@ -244,44 +183,111 @@ export default function CatalogPage() {
             {BRAND_CONFIG.catalog.title}
           </h1>
 
-          <p>
+          <p className="catalog-hero-description">
             {BRAND_CONFIG.catalog.description}
           </p>
+
+          <div className="catalog-hero-meta">
+            <span>
+              {products.length}{" "}
+              {products.length === 1
+                ? "modelo disponible"
+                : "modelos disponibles"}
+            </span>
+
+            <span>
+              Compra por unidad
+            </span>
+
+            <span>
+              Escala 1:64
+            </span>
+          </div>
         </section>
 
-        {visibleProducts.length >
-        0 ? (
+        {visibleProducts.length > 0 ? (
           <section className="catalog-section">
+            <div className="catalog-results-header">
+              <div>
+                <span>
+                  Selección actual
+                </span>
+
+                <strong>
+                  {visibleProducts.length}{" "}
+                  {visibleProducts.length === 1
+                    ? "producto"
+                    : "productos"}
+                </strong>
+              </div>
+            </div>
+
             <div className="catalog-grid">
-              {visibleProducts.map(
-                (product) => (
-                  <ProductCard
-                    key={
-                      product.id
-                    }
-                    product={
-                      product
-                    }
-                  />
-                ),
-              )}
+              {visibleProducts.map((product) => (
+                <ProductCard
+                  key={product.id}
+                  product={product}
+                  onAddToCart={
+                    cart.addToCart
+                  }
+                />
+              ))}
             </div>
           </section>
         ) : (
           <div className="catalog-empty">
+            <div className="catalog-empty-symbol">
+              1:64
+            </div>
+
             <p>
               No encontramos productos.
             </p>
 
             <small>
-              Prueba otra búsqueda
-              o categoría.
+              Prueba otra búsqueda o categoría.
             </small>
           </div>
         )}
       </main>
 
-      <FloatingButtons />
+      <FloatingButtons
+        cartCount={
+          cart.totalItems
+        }
+        onCartClick={() =>
+          setCartOpen(true)
+        }
+      />
+
+      <CartSidebar
+        isOpen={cartOpen}
+        onClose={() =>
+          setCartOpen(false)
+        }
+        onContinueShopping={() =>
+          setCartOpen(false)
+        }
+        cart={cart.cart}
+        totalItems={
+          cart.totalItems
+        }
+        totalPrice={
+          cart.totalPrice
+        }
+        savings={
+          cart.savings
+        }
+        onRemove={
+          cart.removeFromCart
+        }
+        onChangeQty={
+          cart.changeQty
+        }
+        onSetQty={
+          cart.setExactQty
+        }
+      />
     </div>
   );
 }

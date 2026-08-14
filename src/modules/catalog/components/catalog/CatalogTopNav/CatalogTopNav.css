@@ -1,52 +1,32 @@
 /* ==========================================
-   CatalogTopNav.css
-   Gleemour Catalog Header / Campaign Nav
-   ------------------------------------------------
-   Objetivo:
-   - Header sticky premium.
-   - Categorías limpias y legibles.
-   - Campañas con colores completos desde Google Sheets.
-   - Mobile con panel "Explorar".
-   - CSS sin duplicados ni overrides fantasma.
-========================================== */
-
-/* ==========================================
-   01. Header principal
+   HOT WHEELS WEB
+   Catalog Top Navigation
 ========================================== */
 
 .catalog-top-nav {
   position: sticky;
   top: 0;
   z-index: 120;
-  padding: 0.85rem 1rem 0.75rem;
-  background:
-    radial-gradient(
-      circle at top left,
-      rgba(236, 164, 194, 0.14),
-      transparent 28rem
-    ),
-    rgba(255, 255, 255, 0.96);
-  border-bottom: 1px solid rgba(239, 227, 234, 0.78);
-  backdrop-filter: blur(18px);
+  padding: 0.8rem 1rem 0.85rem;
+  border-bottom: 1px solid rgba(148, 163, 184, 0.12);
+  background: rgba(2, 6, 23, 0.92);
+  backdrop-filter: blur(20px);
+  box-shadow: 0 14px 38px rgba(0, 0, 0, 0.18);
 }
-
-/* ==========================================
-   02. Logo / marca
-========================================== */
 
 .catalog-top-nav-brand-row {
   width: min(100%, 1480px);
-  margin: 0 auto 0.7rem;
+  margin: 0 auto 0.75rem;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
 }
 
 .catalog-top-nav-brand {
-  width: 14rem;
-  height: 3.35rem;
+  min-width: 13rem;
+  min-height: 3rem;
   display: inline-flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
   border: 0;
@@ -55,25 +35,33 @@
   cursor: pointer;
 }
 
-.catalog-top-nav-brand img {
-  width: auto;
-  max-width: 100%;
-  max-height: 3.35rem;
-  object-fit: contain;
+.catalog-brand-mark {
+  color: #ffffff;
+  font-size: 1.02rem;
+  font-weight: 950;
+  line-height: 1;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+}
+
+.catalog-brand-subtitle {
+  margin-top: 0.35rem;
+  color: #38bdf8;
+  font-size: 0.55rem;
+  font-weight: 950;
+  line-height: 1;
+  text-transform: uppercase;
+  letter-spacing: 0.3em;
 }
 
 .catalog-top-nav-brand-row p {
-  margin: 0.15rem 0 0;
-  color: rgba(106, 90, 138, 0.7);
-  font-size: 0.72rem;
-  font-weight: 800;
-  letter-spacing: 0.14em;
+  margin: 0.38rem 0 0;
+  color: #64748b;
+  font-size: 0.6rem;
+  font-weight: 850;
+  letter-spacing: 0.17em;
   text-transform: uppercase;
 }
-
-/* ==========================================
-   03. Categorías desktop
-========================================== */
 
 .catalog-top-nav-categories {
   width: min(100%, 1480px);
@@ -81,7 +69,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 0.55rem;
+  gap: 0.45rem;
   overflow-x: auto;
   scrollbar-width: none;
 }
@@ -92,708 +80,79 @@
 
 .catalog-category-chip {
   flex-shrink: 0;
-  min-height: 2.45rem;
+  min-height: 2.4rem;
   display: inline-flex;
   align-items: center;
-  gap: 0.45rem;
-  padding: 0 0.95rem;
+  gap: 0.4rem;
+  padding: 0 0.9rem;
+  border: 1px solid rgba(148, 163, 184, 0.14);
   border-radius: 999px;
-  border: 1px solid rgba(106, 90, 138, 0.14);
-  background: rgba(255, 255, 255, 0.92);
-  color: var(--w-heading);
-  font-size: 0.82rem;
-  font-weight: 750;
+  background: rgba(15, 23, 42, 0.72);
+  color: #94a3b8;
+  font-size: 0.77rem;
+  font-weight: 850;
   cursor: pointer;
   transition:
     transform 180ms ease,
-    box-shadow 180ms ease,
     background 180ms ease,
     border-color 180ms ease,
-    color 180ms ease;
+    color 180ms ease,
+    box-shadow 180ms ease;
 }
 
-.catalog-category-chip:hover,
-.catalog-category-chip.active {
-  background: var(--w-primary);
-  border-color: var(--w-primary);
-  color: #ffffff;
-  box-shadow: 0 10px 22px rgba(106, 90, 138, 0.18);
+.catalog-category-chip:hover {
   transform: translateY(-1px);
+  border-color: rgba(56, 189, 248, 0.4);
+  color: #e0f2fe;
+}
+
+.catalog-category-chip.active {
+  transform: translateY(-1px);
+  border-color: #0ea5e9;
+  background: #0ea5e9;
+  color: #ffffff;
+  box-shadow: 0 10px 28px rgba(14, 165, 233, 0.22);
 }
 
 .catalog-category-chip small {
-  opacity: 0.78;
-  font-size: 0.72rem;
+  opacity: 0.72;
+  font-size: 0.66rem;
   font-weight: 900;
 }
 
 .catalog-category-icon {
-  font-size: 0.95rem;
+  font-size: 0.9rem;
 }
-
-/* ==========================================
-   04. Fila de campañas desktop
-========================================== */
-
-.catalog-top-nav-campaign-row {
-  width: min(100%, 1480px);
-  margin: 0.95rem auto 0;
-}
-
-.catalog-campaign-row-label {
-  position: relative;
-  width: min(100%, 980px);
-  margin: 0 auto 0.9rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.85rem;
-  color: var(--w-primary);
-  font-size: 0.74rem;
-  font-weight: 850;
-  letter-spacing: 0.18em;
-  text-align: center;
-  text-transform: uppercase;
-}
-
-.catalog-campaign-row-label::before,
-.catalog-campaign-row-label::after {
-  content: "";
-  height: 1px;
-  flex: 1;
-  max-width: 20rem;
-  background: linear-gradient(90deg, transparent, rgba(236, 164, 194, 0.45));
-}
-
-.catalog-campaign-row-label::after {
-  background: linear-gradient(90deg, rgba(236, 164, 194, 0.45), transparent);
-}
-
-.catalog-top-nav-campaigns {
-  width: min(100%, 1220px);
-  margin: 0 auto;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.7rem;
-  overflow-x: auto;
-  scrollbar-width: none;
-}
-
-.catalog-top-nav-campaigns::-webkit-scrollbar {
-  display: none;
-}
-
-/* ==========================================
-   05. Chip de campaña base
-   ------------------------------------------------
-   El color real viene por variables:
-   --campaign-bg
-   --campaign-text
-   --campaign-icon-bg
-========================================== */
-
-.catalog-campaign-chip {
-  --campaign-bg: linear-gradient(135deg, #6a5a8a, #9a8bba);
-  --campaign-text: #ffffff;
-  --campaign-icon-bg: rgba(255, 255, 255, 0.16);
-
-  position: relative;
-  overflow: hidden;
-  flex-shrink: 0;
-  min-width: 13.9rem;
-  min-height: 4.05rem;
-  display: inline-flex;
-  align-items: stretch;
-  justify-content: space-between;
-  gap: 0.75rem;
-  padding: 0.62rem 0.65rem 0.62rem 0.9rem;
-  border: 0;
-  border-radius: 0.9rem;
-  background: var(--campaign-bg);
-  color: var(--campaign-text);
-  box-shadow: 0 10px 24px rgba(30, 22, 42, 0.12);
-  cursor: pointer;
-  transition:
-    transform 180ms ease,
-    box-shadow 180ms ease,
-    filter 180ms ease;
-}
-
-.catalog-campaign-chip:hover,
-.catalog-campaign-chip.active {
-  transform: translateY(-2px);
-  filter: saturate(1.04);
-  box-shadow: 0 15px 34px rgba(30, 22, 42, 0.18);
-}
-
-.catalog-campaign-chip.active {
-  outline: 2px solid rgba(255, 255, 255, 0.72);
-  outline-offset: -4px;
-}
-
-.catalog-campaign-content {
-  min-width: 0;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  justify-content: center;
-  line-height: 1.05;
-  color: inherit;
-}
-
-.catalog-campaign-content strong {
-  color: inherit;
-  font-size: 0.95rem;
-  font-weight: 900;
-  letter-spacing: -0.025em;
-  line-height: 1.05;
-}
-
-.catalog-campaign-content small {
-  margin-top: 0.2rem;
-  color: inherit;
-  font-size: 0.74rem;
-  font-weight: 750;
-  line-height: 1;
-  opacity: 0.94;
-}
-
-.catalog-campaign-icon {
-  width: 3.05rem;
-  min-height: 100%;
-  flex-shrink: 0;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 0.78rem;
-  font-size: 1.8rem;
-  background: var(--campaign-icon-bg);
-  color: inherit;
-  box-shadow: inset 1px 0 0 rgba(255, 255, 255, 0.16);
-}
-
-/* ==========================================
-   06. Buscador
-========================================== */
 
 .catalog-top-nav-search-row {
   width: min(100%, 920px);
-  margin: 0.8rem auto 0;
+  margin: 0.75rem auto 0;
 }
 
-/* ==========================================
-   07. Botón flotante mobile
-========================================== */
-
-.catalog-explore-fab {
-  display: none;
-}
-
+.catalog-explore-fab,
 .catalog-explore-overlay {
   display: none;
 }
 
-/* ==========================================
-   Campaign Palette A-Z
-   Gleemour Campaign Color System
-   ------------------------------------------
-   Uso:
-   Google Sheets color -> campaignColors.ts -> catalog-campaign-*
-========================================== */
-
-/* Base visual para cualquier campaña */
-.catalog-campaign-chip,
-.catalog-explore-campaign-chip {
-  --campaign-bg: linear-gradient(135deg, #6a5a8a, #9a8bba);
-  --campaign-text: #ffffff;
-  --campaign-icon-bg: rgba(255, 255, 255, 0.16);
-}
-
-/* Aplica color completo al chip desktop */
-.catalog-campaign-chip[class*="catalog-campaign-"] {
-  background: var(--campaign-bg);
-  color: var(--campaign-text);
-}
-
-/* Aplica color completo al chip mobile */
-.catalog-explore-campaign-chip[class*="catalog-campaign-"] {
-  background: var(--campaign-bg);
-  color: var(--campaign-text);
-  border-color: transparent;
-}
-
-/* Icono interno desktop */
-.catalog-campaign-chip[class*="catalog-campaign-"] .catalog-campaign-icon {
-  background: var(--campaign-icon-bg);
-  color: inherit;
-}
-
-/* Active state desktop */
-.catalog-campaign-chip.active {
-  outline: 2px solid rgba(255, 255, 255, 0.72);
-  outline-offset: -4px;
-}
-
-/* Active state mobile */
-.catalog-explore-campaign-chip.active {
-  background: var(--campaign-bg);
-  color: var(--campaign-text);
-  filter: saturate(1.08);
-  box-shadow: 0 14px 30px rgba(30, 22, 42, 0.18);
-}
-
-/* ==========================================
-   A
-========================================== */
-
-/* amarillo */
-.catalog-campaign-yellow {
-  --campaign-bg: linear-gradient(135deg, #ffd84d, #f9c95b);
-  --campaign-text: #4b3510;
-  --campaign-icon-bg: rgba(75, 53, 16, 0.1);
-}
-
-/* aqua */
-.catalog-campaign-aqua {
-  --campaign-bg: linear-gradient(135deg, #00b4d8, #90e0ef);
-  --campaign-text: #073b4c;
-  --campaign-icon-bg: rgba(7, 59, 76, 0.1);
-}
-
-/* azul */
-.catalog-campaign-blue {
-  --campaign-bg: linear-gradient(135deg, #2f64cf, #3f7ee8);
-  --campaign-text: #ffffff;
-  --campaign-icon-bg: rgba(255, 255, 255, 0.16);
-}
-
-/* azul bebe */
-.catalog-campaign-baby-blue {
-  --campaign-bg: linear-gradient(135deg, #93c5fd, #bfdbfe);
-  --campaign-text: #17365f;
-  --campaign-icon-bg: rgba(23, 54, 95, 0.1);
-}
-
-/* azul cielo */
-.catalog-campaign-sky {
-  --campaign-bg: linear-gradient(135deg, #37aee2, #68c7f5);
-  --campaign-text: #ffffff;
-  --campaign-icon-bg: rgba(255, 255, 255, 0.16);
-}
-
-/* azul cobalto */
-.catalog-campaign-cobalt {
-  --campaign-bg: linear-gradient(135deg, #0047ab, #2f6fed);
-  --campaign-text: #ffffff;
-  --campaign-icon-bg: rgba(255, 255, 255, 0.16);
-}
-
-/* azul electrico */
-.catalog-campaign-electric-blue {
-  --campaign-bg: linear-gradient(135deg, #0077ff, #00c2ff);
-  --campaign-text: #ffffff;
-  --campaign-icon-bg: rgba(255, 255, 255, 0.16);
-}
-
-/* azul hielo */
-.catalog-campaign-ice-blue {
-  --campaign-bg: linear-gradient(135deg, #dbeafe, #eff6ff);
-  --campaign-text: #1e3a8a;
-  --campaign-icon-bg: rgba(30, 58, 138, 0.1);
-}
-
-/* azul marino */
-.catalog-campaign-navy {
-  --campaign-bg: linear-gradient(135deg, #0f172a, #1e3a8a);
-  --campaign-text: #ffffff;
-  --campaign-icon-bg: rgba(255, 255, 255, 0.16);
-}
-
-/* azul petroleo */
-.catalog-campaign-petrol {
-  --campaign-bg: linear-gradient(135deg, #005f73, #0a9396);
-  --campaign-text: #ffffff;
-  --campaign-icon-bg: rgba(255, 255, 255, 0.16);
-}
-
-/* azul rey */
-.catalog-campaign-royal-blue {
-  --campaign-bg: linear-gradient(135deg, #1d4ed8, #2563eb);
-  --campaign-text: #ffffff;
-  --campaign-icon-bg: rgba(255, 255, 255, 0.16);
-}
-
-/* ==========================================
-   B
-========================================== */
-
-/* blanco */
-.catalog-campaign-white {
-  --campaign-bg: linear-gradient(135deg, #ffffff, #f8fafc);
-  --campaign-text: #2f2437;
-  --campaign-icon-bg: rgba(47, 36, 55, 0.08);
-}
-
-/* borgona */
-.catalog-campaign-burgundy {
-  --campaign-bg: linear-gradient(135deg, #58111a, #8a2332);
-  --campaign-text: #ffffff;
-  --campaign-icon-bg: rgba(255, 255, 255, 0.16);
-}
-
-/* ==========================================
-   C
-========================================== */
-
-/* celeste */
-.catalog-campaign-sky {
-  --campaign-bg: linear-gradient(135deg, #37aee2, #68c7f5);
-  --campaign-text: #ffffff;
-  --campaign-icon-bg: rgba(255, 255, 255, 0.16);
-}
-
-/* champagne */
-.catalog-campaign-champagne {
-  --campaign-bg: linear-gradient(135deg, #e8c98a, #fff1c7);
-  --campaign-text: #4b3510;
-  --campaign-icon-bg: rgba(75, 53, 16, 0.1);
-}
-
-/* cobre */
-.catalog-campaign-copper {
-  --campaign-bg: linear-gradient(135deg, #b66a42, #cf7d52);
-  --campaign-text: #ffffff;
-  --campaign-icon-bg: rgba(255, 255, 255, 0.16);
-}
-
-/* coral */
-.catalog-campaign-coral {
-  --campaign-bg: linear-gradient(135deg, #ff6f61, #ff9a8b);
-  --campaign-text: #ffffff;
-  --campaign-icon-bg: rgba(255, 255, 255, 0.16);
-}
-
-/* crema */
-.catalog-campaign-cream {
-  --campaign-bg: linear-gradient(135deg, #f7e7ce, #fff8e7);
-  --campaign-text: #4b3510;
-  --campaign-icon-bg: rgba(75, 53, 16, 0.1);
-}
-
-/* ==========================================
-   D
-========================================== */
-
-/* dorado */
-.catalog-campaign-gold {
-  --campaign-bg: linear-gradient(135deg, #f2b84d, #f9c95b);
-  --campaign-text: #4b3510;
-  --campaign-icon-bg: rgba(75, 53, 16, 0.1);
-}
-
-/* durazno */
-.catalog-campaign-peach {
-  --campaign-bg: linear-gradient(135deg, #f6ad97, #ffd1bd);
-  --campaign-text: #5a2c1e;
-  --campaign-icon-bg: rgba(90, 44, 30, 0.1);
-}
-
-/* ==========================================
-   E
-========================================== */
-
-/* elegante */
-.catalog-campaign-elegant {
-  --campaign-bg: linear-gradient(135deg, #2f2437, #6a5a8a);
-  --campaign-text: #ffffff;
-  --campaign-icon-bg: rgba(255, 255, 255, 0.16);
-}
-
-/* esmeralda */
-.catalog-campaign-emerald {
-  --campaign-bg: linear-gradient(135deg, #0f8f72, #16aa88);
-  --campaign-text: #ffffff;
-  --campaign-icon-bg: rgba(255, 255, 255, 0.16);
-}
-
-/* ==========================================
-   F
-========================================== */
-
-/* fucsia */
-.catalog-campaign-fuchsia {
-  --campaign-bg: linear-gradient(135deg, #d946ef, #ec5ff4);
-  --campaign-text: #ffffff;
-  --campaign-icon-bg: rgba(255, 255, 255, 0.16);
-}
-
-/* ==========================================
-   G
-========================================== */
-
-/* gleemour */
-.catalog-campaign-gleemour {
-  --campaign-bg: linear-gradient(135deg, #6a5a8a, #eca4c2);
-  --campaign-text: #ffffff;
-  --campaign-icon-bg: rgba(255, 255, 255, 0.16);
-}
-
-/* gris */
-.catalog-campaign-gray {
-  --campaign-bg: linear-gradient(135deg, #6b7280, #9ca3af);
-  --campaign-text: #ffffff;
-  --campaign-icon-bg: rgba(255, 255, 255, 0.16);
-}
-
-/* ==========================================
-   H
-========================================== */
-
-/* halloween */
-.catalog-campaign-halloween {
-  --campaign-bg: linear-gradient(135deg, #111827, #f97316);
-  --campaign-text: #ffffff;
-  --campaign-icon-bg: rgba(255, 255, 255, 0.16);
-}
-
-/* ==========================================
-   J
-========================================== */
-
-/* jade */
-.catalog-campaign-jade {
-  --campaign-bg: linear-gradient(135deg, #00a86b, #34d399);
-  --campaign-text: #ffffff;
-  --campaign-icon-bg: rgba(255, 255, 255, 0.16);
-}
-
-/* ==========================================
-   L
-========================================== */
-
-/* lavanda */
-.catalog-campaign-lavender {
-  --campaign-bg: linear-gradient(135deg, #8b7cf6, #c4b5fd);
-  --campaign-text: #ffffff;
-  --campaign-icon-bg: rgba(255, 255, 255, 0.16);
-}
-
-/* lila */
-.catalog-campaign-lilac {
-  --campaign-bg: linear-gradient(135deg, #b794f4, #d8b4fe);
-  --campaign-text: #3b2a52;
-  --campaign-icon-bg: rgba(59, 42, 82, 0.1);
-}
-
-/* lima */
-.catalog-campaign-lime {
-  --campaign-bg: linear-gradient(135deg, #a3e635, #d9f99d);
-  --campaign-text: #365314;
-  --campaign-icon-bg: rgba(54, 83, 20, 0.1);
-}
-
-/* ==========================================
-   M
-========================================== */
-
-/* magenta */
-.catalog-campaign-magenta {
-  --campaign-bg: linear-gradient(135deg, #c026d3, #e879f9);
-  --campaign-text: #ffffff;
-  --campaign-icon-bg: rgba(255, 255, 255, 0.16);
-}
-
-/* menta */
-.catalog-campaign-mint {
-  --campaign-bg: linear-gradient(135deg, #99f6e4, #ccfbf1);
-  --campaign-text: #064e3b;
-  --campaign-icon-bg: rgba(6, 78, 59, 0.1);
-}
-
-/* morado */
-.catalog-campaign-purple {
-  --campaign-bg: linear-gradient(135deg, #6a5a8a, #8b6ff4);
-  --campaign-text: #ffffff;
-  --campaign-icon-bg: rgba(255, 255, 255, 0.16);
-}
-
-/* ==========================================
-   N
-========================================== */
-
-/* naranja */
-.catalog-campaign-orange {
-  --campaign-bg: linear-gradient(135deg, #ef7d1a, #f59a3d);
-  --campaign-text: #ffffff;
-  --campaign-icon-bg: rgba(255, 255, 255, 0.16);
-}
-
-/* navidad */
-.catalog-campaign-christmas {
-  --campaign-bg: linear-gradient(135deg, #0f5132, #dc3545);
-  --campaign-text: #ffffff;
-  --campaign-icon-bg: rgba(255, 255, 255, 0.16);
-}
-
-/* negro */
-.catalog-campaign-dark {
-  --campaign-bg: linear-gradient(135deg, #252525, #3d3d3d);
-  --campaign-text: #ffffff;
-  --campaign-icon-bg: rgba(255, 255, 255, 0.16);
-}
-
-/* ==========================================
-   O
-========================================== */
-
-/* oliva */
-.catalog-campaign-olive {
-  --campaign-bg: linear-gradient(135deg, #6b8e23, #9caf3c);
-  --campaign-text: #ffffff;
-  --campaign-icon-bg: rgba(255, 255, 255, 0.16);
-}
-
-/* ==========================================
-   P
-========================================== */
-
-/* palo rosa */
-.catalog-campaign-dusty-rose {
-  --campaign-bg: linear-gradient(135deg, #c98da3, #e8b7c8);
-  --campaign-text: #4a2533;
-  --campaign-icon-bg: rgba(74, 37, 51, 0.1);
-}
-
-/* premium */
-.catalog-campaign-premium {
-  --campaign-bg: linear-gradient(135deg, #111827, #d4af37);
-  --campaign-text: #ffffff;
-  --campaign-icon-bg: rgba(255, 255, 255, 0.16);
-}
-
-/* primavera */
-.catalog-campaign-spring {
-  --campaign-bg: linear-gradient(135deg, #86efac, #f9a8d4);
-  --campaign-text: #24422d;
-  --campaign-icon-bg: rgba(36, 66, 45, 0.1);
-}
-
-/* ==========================================
-   R
-========================================== */
-
-/* rojo */
-.catalog-campaign-red {
-  --campaign-bg: linear-gradient(135deg, #dc3545, #ef5c66);
-  --campaign-text: #ffffff;
-  --campaign-icon-bg: rgba(255, 255, 255, 0.16);
-}
-
-/* rosa pastel */
-.catalog-campaign-soft-pink {
-  --campaign-bg: linear-gradient(135deg, #f9a8d4, #fbcfe8);
-  --campaign-text: #5b2445;
-  --campaign-icon-bg: rgba(91, 36, 69, 0.1);
-}
-
-/* rosado */
-.catalog-campaign-pink {
-  --campaign-bg: linear-gradient(135deg, #e94fb5, #f06abf);
-  --campaign-text: #ffffff;
-  --campaign-icon-bg: rgba(255, 255, 255, 0.16);
-}
-
-/* ==========================================
-   S
-========================================== */
-
-/* salmon */
-.catalog-campaign-salmon {
-  --campaign-bg: linear-gradient(135deg, #fa8072, #ffb199);
-  --campaign-text: #ffffff;
-  --campaign-icon-bg: rgba(255, 255, 255, 0.16);
-}
-
-/* ==========================================
-   T
-========================================== */
-
-/* terracota */
-.catalog-campaign-terracotta {
-  --campaign-bg: linear-gradient(135deg, #b85c38, #d9825b);
-  --campaign-text: #ffffff;
-  --campaign-icon-bg: rgba(255, 255, 255, 0.16);
-}
-
-/* turquesa */
-.catalog-campaign-teal {
-  --campaign-bg: linear-gradient(135deg, #269f98, #37b8b0);
-  --campaign-text: #ffffff;
-  --campaign-icon-bg: rgba(255, 255, 255, 0.16);
-}
-
-/* ==========================================
-   V
-========================================== */
-
-/* verde */
-.catalog-campaign-green {
-  --campaign-bg: linear-gradient(135deg, #13a77f, #2dbc9a);
-  --campaign-text: #ffffff;
-  --campaign-icon-bg: rgba(255, 255, 255, 0.16);
-}
-
-/* verano */
-.catalog-campaign-summer {
-  --campaign-bg: linear-gradient(135deg, #facc15, #fb923c);
-  --campaign-text: #4b3510;
-  --campaign-icon-bg: rgba(75, 53, 16, 0.1);
-}
-
-/* vino */
-.catalog-campaign-wine {
-  --campaign-bg: linear-gradient(135deg, #7f1734, #9f2448);
-  --campaign-text: #ffffff;
-  --campaign-icon-bg: rgba(255, 255, 255, 0.16);
-}
-
-/* violeta */
-.catalog-campaign-violet {
-  --campaign-bg: linear-gradient(135deg, #7c3aed, #a78bfa);
-  --campaign-text: #ffffff;
-  --campaign-icon-bg: rgba(255, 255, 255, 0.16);
-}
-
-/* ==========================================
-   09. Mobile
-========================================== */
-
 @media (max-width: 720px) {
   .catalog-top-nav {
-    padding: 0.75rem 0.75rem 0.85rem;
+    padding: 0.7rem 0.75rem 0.8rem;
   }
 
-  .catalog-top-nav-brand {
-    width: 11.5rem;
-    height: 2.95rem;
-  }
-
-  .catalog-top-nav-brand img {
-    max-height: 2.95rem;
+  .catalog-brand-mark {
+    font-size: 0.92rem;
   }
 
   .catalog-top-nav-brand-row p {
-    font-size: 0.62rem;
+    font-size: 0.55rem;
+  }
+
+  .catalog-top-nav-categories {
+    display: none;
   }
 
   .catalog-top-nav-search-row {
-    margin-top: 0.65rem;
-  }
-
-  .catalog-top-nav-categories,
-  .catalog-top-nav-campaign-row {
-    display: none;
+    margin-top: 0.6rem;
   }
 
   .catalog-explore-fab {
@@ -808,12 +167,12 @@
     justify-content: center;
     gap: 0.55rem;
     padding: 0 1.2rem;
-    border: 0;
+    border: 1px solid rgba(125, 211, 252, 0.22);
     border-radius: 999px;
+    background: #0ea5e9;
     color: #ffffff;
-    background: var(--w-primary);
-    box-shadow: 0 18px 42px rgba(106, 90, 138, 0.28);
-    font-size: 0.86rem;
+    box-shadow: 0 18px 42px rgba(14, 165, 233, 0.28);
+    font-size: 0.82rem;
     font-weight: 950;
     cursor: pointer;
   }
@@ -829,8 +188,8 @@
     position: absolute;
     inset: 0;
     border: 0;
-    background: rgba(30, 22, 42, 0.38);
-    backdrop-filter: blur(4px);
+    background: rgba(2, 6, 23, 0.76);
+    backdrop-filter: blur(6px);
   }
 
   .catalog-explore-sheet {
@@ -840,10 +199,12 @@
     bottom: 0;
     max-height: 82vh;
     overflow-y: auto;
-    padding: 1rem 1rem 1.25rem;
-    border-radius: 1.6rem 1.6rem 0 0;
-    background: rgba(255, 255, 255, 0.98);
-    box-shadow: 0 -24px 70px rgba(30, 22, 42, 0.22);
+    padding: 1.1rem 1rem 1.5rem;
+    border: 1px solid rgba(148, 163, 184, 0.14);
+    border-bottom: 0;
+    border-radius: 1.7rem 1.7rem 0 0;
+    background: rgba(15, 23, 42, 0.99);
+    box-shadow: 0 -24px 70px rgba(0, 0, 0, 0.38);
   }
 
   .catalog-explore-header {
@@ -855,32 +216,31 @@
   }
 
   .catalog-explore-header span {
-    color: var(--w-secondary-strong);
-    font-size: 0.72rem;
+    color: #38bdf8;
+    font-size: 0.65rem;
     font-weight: 950;
     text-transform: uppercase;
-    letter-spacing: 0.16em;
+    letter-spacing: 0.18em;
   }
 
   .catalog-explore-header h3 {
-    margin: 0.2rem 0 0;
-    color: var(--w-heading);
-    font-family: var(--font-brand);
+    margin: 0.25rem 0 0;
+    color: #ffffff;
     font-size: 1.45rem;
     font-weight: 950;
     letter-spacing: -0.04em;
   }
 
   .catalog-explore-header button {
-    width: 2.45rem;
-    height: 2.45rem;
+    width: 2.5rem;
+    height: 2.5rem;
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    border: 0;
-    border-radius: 999px;
-    background: rgba(106, 90, 138, 0.08);
-    color: var(--w-heading);
+    border: 1px solid rgba(148, 163, 184, 0.14);
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.04);
+    color: #cbd5e1;
     cursor: pointer;
   }
 
@@ -889,60 +249,43 @@
   }
 
   .catalog-explore-group p {
-    margin: 0 0 0.65rem;
-    color: var(--w-muted);
-    font-size: 0.78rem;
+    margin: 0 0 0.7rem;
+    color: #64748b;
+    font-size: 0.67rem;
     font-weight: 950;
     text-transform: uppercase;
-    letter-spacing: 0.12em;
+    letter-spacing: 0.16em;
   }
 
   .catalog-explore-list {
     display: flex;
     flex-wrap: wrap;
-    gap: 0.55rem;
+    gap: 0.5rem;
   }
 
   .catalog-explore-chip {
     min-height: 2.55rem;
     display: inline-flex;
     align-items: center;
-    gap: 0.45rem;
-    padding: 0 0.85rem;
+    gap: 0.42rem;
+    padding: 0 0.82rem;
+    border: 1px solid rgba(148, 163, 184, 0.14);
     border-radius: 999px;
-    border: 1px solid rgba(106, 90, 138, 0.14);
-    background: rgba(255, 255, 255, 0.92);
-    color: var(--w-heading);
-    font-size: 0.8rem;
+    background: rgba(2, 6, 23, 0.54);
+    color: #cbd5e1;
+    font-size: 0.76rem;
     font-weight: 900;
     cursor: pointer;
-    box-shadow: 0 8px 18px rgba(30, 22, 42, 0.06);
   }
 
   .catalog-explore-chip.active {
-    background: var(--w-primary);
-    border-color: var(--w-primary);
+    border-color: #0ea5e9;
+    background: #0ea5e9;
     color: #ffffff;
   }
 
-  .catalog-explore-campaign-chip {
-    --campaign-bg: linear-gradient(135deg, #6a5a8a, #9a8bba);
-    --campaign-text: #ffffff;
-
-    background: var(--campaign-bg);
-    border-color: transparent;
-    color: var(--campaign-text);
-  }
-
-  .catalog-explore-campaign-chip.active {
-    background: var(--campaign-bg);
-    color: var(--campaign-text);
-    filter: saturate(1.08);
-    box-shadow: 0 14px 30px rgba(30, 22, 42, 0.18);
-  }
-
   .catalog-explore-chip small {
-    opacity: 0.72;
-    font-size: 0.72rem;
+    opacity: 0.7;
+    font-size: 0.66rem;
   }
 }

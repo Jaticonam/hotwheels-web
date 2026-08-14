@@ -7,23 +7,27 @@ import {
 } from "react";
 
 import {
-  ShoppingBag,
-  X,
+  ArrowLeft,
+  MessageCircle,
   Minus,
   Plus,
+  ShoppingCart,
   Trash2,
-  MessageCircle,
+  X,
 } from "lucide-react";
 
 import { BRAND_CONFIG } from "@/tenant/config/brand";
 
-import type { CartItem } from "@/shared/types/product";
+import type {
+  CartItem,
+} from "@/shared/types/product";
 
 import { getEffectivePrice } from "@/domain/product/pricing";
 
 interface CartSidebarProps {
   isOpen: boolean;
   onClose: () => void;
+  onContinueShopping?: () => void;
 
   cart: CartItem[];
 
@@ -57,7 +61,7 @@ function checkout(
   }
 
   let message =
-    "Hola, quiero realizar este pedido:\n\n";
+    "Hola, quiero realizar este pedido de coleccionables:\n\n";
 
   cart.forEach(
     (item) => {
@@ -67,13 +71,14 @@ function checkout(
         );
 
       const subtotal =
-        price * item.qty;
+        price *
+        item.qty;
 
       message +=
         `• *${item.title}*\n`;
 
       message +=
-        `  Código: ${item.id}\n`;
+        `  ID: ${item.id}\n`;
 
       message +=
         `  Cantidad: ${item.qty}\n`;
@@ -90,7 +95,10 @@ function checkout(
     "━━━━━━━━━━━━━━━\n";
 
   message +=
-    `*TOTAL: S/ ${total.toFixed(2)}*`;
+    `*TOTAL: S/ ${total.toFixed(2)}*\n\n`;
+
+  message +=
+    "Quiero confirmar disponibilidad y coordinar mi pedido.";
 
   const url =
     `https://wa.me/${BRAND_CONFIG.contact.whatsapp}?text=${encodeURIComponent(message)}`;
@@ -147,9 +155,12 @@ function QtyInput({
       onFocus={() =>
         setIsEditing(true)
       }
-      onBlur={() =>
-        setIsEditing(false)
-      }
+      onBlur={() => {
+        setIsEditing(false);
+        setQtyInput(
+          String(item.qty),
+        );
+      }}
       onChange={(event) => {
         const value =
           event.target.value;
@@ -158,12 +169,6 @@ function QtyInput({
           value === ""
         ) {
           setQtyInput("");
-
-          onSetQty(
-            item.id,
-            null,
-          );
-
           return;
         }
 
@@ -251,6 +256,15 @@ function CartRow({
     }
   }, [item.qty]);
 
+  const hasStockLimit =
+    item.stock !== null &&
+    item.stock !== undefined;
+
+  const atStockLimit =
+    hasStockLimit &&
+    item.qty >=
+      Number(item.stock);
+
   return (
     <article
       className={[
@@ -267,22 +281,20 @@ function CartRow({
               item.img ||
               "/placeholder.svg"
             }
-            alt={
-              item.title
-            }
+            alt={item.title}
           />
         </div>
 
         <div className="cart-sidebar-item-info">
           <div className="cart-sidebar-item-top">
             <div>
+              <p className="cart-sidebar-item-code">
+                ID {item.id}
+              </p>
+
               <h4>
                 {item.title}
               </h4>
-
-              <p>
-                {item.id}
-              </p>
             </div>
 
             <button
@@ -314,49 +326,58 @@ function CartRow({
             </div>
 
             <div className="cart-sidebar-unit-price">
-              U: S/{" "}
+              S/{" "}
               {activePrice.toFixed(
                 2,
-              )}
+              )} c/u
             </div>
           </div>
-        </div>
-      </div>
 
-      <div className="cart-sidebar-item-controls">
-        <div className="cart-sidebar-qty">
-          <button
-            type="button"
-            onClick={() =>
-              onChangeQty(
-                item.id,
-                -1,
-              )
-            }
-            aria-label={`Disminuir cantidad de ${item.title}`}
-          >
-            <Minus className="w-4 h-4" />
-          </button>
+          <div className="cart-sidebar-item-controls">
+            <div className="cart-sidebar-qty">
+              <button
+                type="button"
+                onClick={() =>
+                  onChangeQty(
+                    item.id,
+                    -1,
+                  )
+                }
+                aria-label={`Disminuir cantidad de ${item.title}`}
+              >
+                <Minus className="w-4 h-4" />
+              </button>
 
-          <QtyInput
-            item={item}
-            onSetQty={
-              onSetQty
-            }
-          />
+              <QtyInput
+                item={item}
+                onSetQty={
+                  onSetQty
+                }
+              />
 
-          <button
-            type="button"
-            onClick={() =>
-              onChangeQty(
-                item.id,
-                1,
-              )
-            }
-            aria-label={`Aumentar cantidad de ${item.title}`}
-          >
-            <Plus className="w-4 h-4" />
-          </button>
+              <button
+                type="button"
+                onClick={() =>
+                  onChangeQty(
+                    item.id,
+                    1,
+                  )
+                }
+                disabled={
+                  atStockLimit
+                }
+                aria-label={`Aumentar cantidad de ${item.title}`}
+              >
+                <Plus className="w-4 h-4" />
+              </button>
+            </div>
+
+            {hasStockLimit && (
+              <span className="cart-sidebar-stock">
+                Stock: {item.stock}
+              </span>
+            )}
+          </div>
         </div>
       </div>
     </article>
@@ -366,6 +387,7 @@ function CartRow({
 export function CartSidebar({
   isOpen,
   onClose,
+  onContinueShopping,
   cart,
   totalItems,
   totalPrice,
@@ -377,6 +399,10 @@ export function CartSidebar({
   if (!isOpen) {
     return null;
   }
+
+  const continueShopping =
+    onContinueShopping ??
+    onClose;
 
   return (
     <div
@@ -390,34 +416,35 @@ export function CartSidebar({
         ) =>
           event.stopPropagation()
         }
+        aria-label="Mi carrito"
       >
         <header className="cart-sidebar-header">
           <div className="cart-sidebar-title-wrap">
             <div className="cart-sidebar-icon">
-              <ShoppingBag className="w-5 h-5" />
+              <ShoppingCart className="w-5 h-5" />
             </div>
 
             <div>
+              <span className="cart-sidebar-kicker">
+                Tu selección
+              </span>
+
               <h2>
-                Tu carrito
+                Mi carrito
               </h2>
 
-              <span>
+              <p>
                 {totalItems}{" "}
-                unidad
-                {totalItems ===
-                1
-                  ? ""
-                  : "es"}
-              </span>
+                {totalItems === 1
+                  ? "unidad"
+                  : "unidades"}
+              </p>
             </div>
           </div>
 
           <button
             type="button"
-            onClick={
-              onClose
-            }
+            onClick={onClose}
             className="cart-sidebar-close"
             aria-label="Cerrar carrito"
           >
@@ -426,34 +453,36 @@ export function CartSidebar({
         </header>
 
         <div className="cart-sidebar-body">
-          {cart.length ===
-          0 ? (
+          {cart.length === 0 ? (
             <div className="cart-sidebar-empty">
-              <ShoppingBag className="w-12 h-12" />
+              <div className="cart-sidebar-empty-icon">
+                <ShoppingCart className="w-8 h-8" />
+              </div>
 
               <p>
-                Tu carrito
-                está vacío
+                Aún no agregaste modelos.
               </p>
 
               <small>
-                Agrega productos
-                desde el catálogo.
+                Explora el catálogo y arma tu selección.
               </small>
+
+              <button
+                type="button"
+                onClick={
+                  continueShopping
+                }
+              >
+                Explorar catálogo
+              </button>
             </div>
           ) : (
             cart.map(
               (item) => (
                 <CartRow
-                  key={
-                    item.id
-                  }
-                  item={
-                    item
-                  }
-                  onRemove={
-                    onRemove
-                  }
+                  key={item.id}
+                  item={item}
+                  onRemove={onRemove}
                   onChangeQty={
                     onChangeQty
                   }
@@ -470,11 +499,11 @@ export function CartSidebar({
           {savings > 0 && (
             <div className="cart-sidebar-benefit">
               <span>
-                Ahorro
+                Ahorro por ofertas
               </span>
 
               <strong>
-                - S/{" "}
+                S/{" "}
                 {savings.toFixed(
                   2,
                 )}
@@ -482,8 +511,18 @@ export function CartSidebar({
             </div>
           )}
 
-          <div className="cart-sidebar-total-row">
+          <div className="cart-sidebar-summary">
             <div>
+              <span>
+                Unidades
+              </span>
+
+              <strong>
+                {totalItems}
+              </strong>
+            </div>
+
+            <div className="cart-sidebar-total-wrap">
               <span>
                 Total
               </span>
@@ -494,23 +533,11 @@ export function CartSidebar({
                 </small>
 
                 <strong>
-                  {
-                    totalPrice.toFixed(
-                      2,
-                    )
-                  }
+                  {totalPrice.toFixed(
+                    2,
+                  )}
                 </strong>
               </div>
-            </div>
-
-            <div className="cart-sidebar-units">
-              <strong>
-                {totalItems}
-              </strong>
-
-              <span>
-                unidades
-              </span>
             </div>
           </div>
 
@@ -523,13 +550,11 @@ export function CartSidebar({
               )
             }
             disabled={
-              cart.length ===
-              0
+              cart.length === 0
             }
             className={[
               "cart-sidebar-checkout",
-              cart.length >
-              0
+              cart.length > 0
                 ? "cart-sidebar-checkout-active"
                 : "cart-sidebar-checkout-disabled",
             ].join(" ")}
@@ -537,10 +562,27 @@ export function CartSidebar({
             <MessageCircle className="w-5 h-5" />
 
             <span>
-              Enviar pedido
-              por WhatsApp
+              Enviar pedido por WhatsApp
             </span>
           </button>
+
+          <button
+            type="button"
+            onClick={
+              continueShopping
+            }
+            className="cart-sidebar-continue"
+          >
+            <ArrowLeft className="w-4 h-4" />
+
+            <span>
+              Seguir comprando
+            </span>
+          </button>
+
+          <p className="cart-sidebar-checkout-note">
+            Confirmaremos stock y disponibilidad antes de cerrar el pedido.
+          </p>
         </footer>
       </aside>
     </div>
