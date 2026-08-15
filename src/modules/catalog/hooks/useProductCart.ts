@@ -1,4 +1,7 @@
-import { useCallback, useState } from "react";
+import {
+  useCallback,
+  useState,
+} from "react";
 
 import { showNotification } from "@/shared/components/feedback/NotificationStack";
 import type { Product } from "@/shared/types/product";
@@ -9,7 +12,11 @@ interface UseProductCartOptions {
   available: boolean;
   isQtyInputValid: boolean;
   parsedQtyInput: number | null;
-  addToCart: (product: Product, qty: number) => void;
+
+  addToCart: (
+    product: Product,
+    qty: number,
+  ) => boolean | void;
 }
 
 export function useProductCart({
@@ -19,26 +26,62 @@ export function useProductCart({
   parsedQtyInput,
   addToCart,
 }: UseProductCartOptions) {
-  const [cartOpen, setCartOpen] = useState(false);
+  const [
+    cartOpen,
+    setCartOpen,
+  ] =
+    useState(false);
 
-  const handleAddToCart = useCallback(() => {
-    if (!product || !available || !isQtyInputValid || parsedQtyInput === null) {
-      return;
-    }
+  const handleAddToCart =
+    useCallback((): boolean => {
+      if (
+        !product ||
+        !available ||
+        !isQtyInputValid ||
+        parsedQtyInput ===
+          null
+      ) {
+        return false;
+      }
 
-    addToCart(product, parsedQtyInput);
+      const added =
+        addToCart(
+          product,
+          parsedQtyInput,
+        );
 
-    showNotification(
-      PRODUCT_DETAIL_CONFIG.notifications.addedToCartTitle,
-      PRODUCT_DETAIL_CONFIG.notifications.addedToCartDescription,
-    );
-  }, [
-    product,
-    available,
-    isQtyInputValid,
-    parsedQtyInput,
-    addToCart,
-  ]);
+      if (
+        added === false
+      ) {
+        showNotification(
+          PRODUCT_DETAIL_CONFIG
+            .notifications
+            .stockLimitTitle,
+          PRODUCT_DETAIL_CONFIG
+            .notifications
+            .stockLimitDescription,
+        );
+
+        return false;
+      }
+
+      showNotification(
+        PRODUCT_DETAIL_CONFIG
+          .notifications
+          .addedToCartTitle,
+        PRODUCT_DETAIL_CONFIG
+          .notifications
+          .addedToCartDescription,
+      );
+
+      return true;
+    }, [
+      product,
+      available,
+      isQtyInputValid,
+      parsedQtyInput,
+      addToCart,
+    ]);
 
   return {
     cartOpen,

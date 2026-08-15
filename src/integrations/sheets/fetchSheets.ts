@@ -30,6 +30,18 @@ const PRODUCT_RECOMMENDED_HEADERS = [
   "badges",
   "priority",
   "attributes",
+
+  "brand",
+  "line",
+  "series",
+  "year",
+  "scale",
+  "mattel_code",
+  "case_code",
+  "rarity",
+  "card_condition",
+  "vehicle_condition",
+
   "updated_at",
 ] as const;
 

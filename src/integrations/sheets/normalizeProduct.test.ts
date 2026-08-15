@@ -77,4 +77,69 @@ describe("normalizeProduct MVP", () => {
 
     expect(product.status).toBe("Publicado");
   });
+
+  it("normaliza metadata propia del coleccionable", () => {
+    const product = normalizeProduct({
+      id: "HW-006",
+      title: "Nissan Skyline GT-R R34",
+      price: "29.90",
+      status: "Publicado",
+
+      brand: "Hot Wheels",
+      line: "Mainline",
+      series: "HW J-Imports",
+      year: "2026",
+      scale: "1:64",
+
+      mattel_code: "HYY00",
+      case_code: "A",
+
+      rarity: "Regular",
+      card_condition: "Nuevo",
+      vehicle_condition: "Nuevo",
+    });
+
+    expect(product.brand).toBe("Hot Wheels");
+    expect(product.line).toBe("Mainline");
+    expect(product.series).toBe("HW J-Imports");
+    expect(product.year).toBe(2026);
+    expect(product.scale).toBe("1:64");
+    expect(product.mattel_code).toBe("HYY00");
+    expect(product.case_code).toBe("A");
+    expect(product.rarity).toBe("Regular");
+    expect(product.card_condition).toBe("Nuevo");
+    expect(product.vehicle_condition).toBe("Nuevo");
+  });
+
+  it("mantiene compatibles filas antiguas sin metadata coleccionable", () => {
+    const product = normalizeProduct({
+      id: "HW-007",
+      title: "Modelo legado",
+      price: "19.90",
+      status: "Publicado",
+    });
+
+    expect(product.brand).toBe("");
+    expect(product.line).toBe("");
+    expect(product.series).toBe("");
+    expect(product.year).toBeNull();
+    expect(product.scale).toBe("");
+    expect(product.mattel_code).toBe("");
+    expect(product.case_code).toBe("");
+    expect(product.rarity).toBe("");
+    expect(product.card_condition).toBe("");
+    expect(product.vehicle_condition).toBe("");
+  });
+
+  it("rechaza años no enteros como metadata válida", () => {
+    const product = normalizeProduct({
+      id: "HW-008",
+      title: "Modelo año inválido",
+      price: "19.90",
+      status: "Publicado",
+      year: "2026.5",
+    });
+
+    expect(product.year).toBeNull();
+  });
 });

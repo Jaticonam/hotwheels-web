@@ -1,50 +1,67 @@
 export const PRODUCT_DETAIL_CONFIG = {
   empty: {
-    title: "Producto no encontrado",
-    backLabel: "Volver al catálogo",
+    title:
+      "Producto no encontrado",
+    backLabel:
+      "Volver al catálogo",
   },
 
   header: {
-    fallbackTitle: "Producto",
+    fallbackTitle:
+      "Producto",
   },
 
   price: {
-    label: "Precio",
-    oldPricePrefix: "Antes S/",
-    totalLabel: "Total",
+    label:
+      "Precio unitario",
+    oldPricePrefix:
+      "Antes S/",
+    totalLabel:
+      "Total",
   },
 
   quantity: {
-    label: "Cantidad",
+    label:
+      "Cantidad",
     invalidMessage:
       "Ingresa una cantidad válida para continuar",
   },
 
   actions: {
-    addToCart: "Agregar al carrito",
-    invalidQty: "Ingresa una cantidad",
-    whatsappDefault: "Consultar por WhatsApp",
-    whatsappPreorder: "Consultar por WhatsApp",
-    whatsappSoldOut: "Consultar disponibilidad",
+    addToCart:
+      "Agregar al carrito",
+    invalidQty:
+      "Ingresa una cantidad",
+    whatsappDefault:
+      "Consultar por WhatsApp",
+    whatsappPreorder:
+      "Consultar por WhatsApp",
+    whatsappSoldOut:
+      "Consultar disponibilidad",
   },
 
   trust: {
     text:
-      "Confirmamos disponibilidad antes de cerrar el pedido.",
+      "Confirmamos stock y disponibilidad antes de cerrar el pedido.",
   },
 
   description: {
     fallback:
-      "Consulta los detalles y disponibilidad de este producto.",
+      "Consulta la información y disponibilidad de este modelo.",
   },
 
   notifications: {
-    linkCopiedTitle: "Enlace copiado",
+    linkCopiedTitle:
+      "Enlace copiado",
     linkCopiedDescription:
       "Comparte este producto",
     addedToCartTitle:
       "Agregado al carrito",
     addedToCartDescription:
       "El producto fue agregado al carrito.",
+    stockLimitTitle:
+      "Stock máximo alcanzado",
+    stockLimitDescription:
+      "Ya tienes en el carrito todas las unidades disponibles.",
   },
 } as const;

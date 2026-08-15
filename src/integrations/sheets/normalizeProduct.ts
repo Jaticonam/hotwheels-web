@@ -59,6 +59,22 @@ function parseRequiredNumber(
   return parseNumber(value) ?? 0;
 }
 
+function parseOptionalInteger(
+  value: unknown,
+): number | null {
+  const number =
+    parseNumber(value);
+
+  if (
+    number === null ||
+    !Number.isInteger(number)
+  ) {
+    return null;
+  }
+
+  return number;
+}
+
 function parsePipeList(
   value: unknown,
 ): string[] {
@@ -199,6 +215,20 @@ export function normalizeProduct(
     ),
 
     attributes: parseAttributes(row.attributes),
+
+    brand: cleanText(row.brand),
+    line: cleanText(row.line),
+    series: cleanText(row.series),
+
+    year: parseOptionalInteger(row.year),
+    scale: cleanText(row.scale),
+
+    mattel_code: cleanText(row.mattel_code),
+    case_code: cleanText(row.case_code),
+
+    rarity: cleanText(row.rarity),
+    card_condition: cleanText(row.card_condition),
+    vehicle_condition: cleanText(row.vehicle_condition),
 
     updated_at: cleanText(row.updated_at),
   };

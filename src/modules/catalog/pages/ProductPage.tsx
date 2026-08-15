@@ -34,21 +34,31 @@ import { NotificationStack } from "@/shared/components/feedback/NotificationStac
 import { ProductSkeleton } from "@/shared/components/skeletons/ProductSkeleton";
 
 export default function ProductPage() {
-  const { id: paramId } =
-    useParams<{ id: string }>();
+  const {
+    id: paramId,
+  } =
+    useParams<{
+      id: string;
+    }>();
 
-  const [searchParams] =
+  const [
+    searchParams,
+  ] =
     useSearchParams();
 
   const navigate =
     useNavigate();
 
   const currentCategory =
-    searchParams.get("cat") || "";
+    searchParams.get(
+      "cat",
+    ) || "";
 
   const productId =
     (
-      searchParams.get("id") ||
+      searchParams.get(
+        "id",
+      ) ||
       paramId ||
       ""
     ).trim();
@@ -66,39 +76,85 @@ export default function ProductPage() {
     productId,
   });
 
+  const cart =
+    useCart();
+
+  const currentCartQty =
+    product
+      ? (
+          cart.cart.find(
+            (item) =>
+              item.id ===
+              product.id,
+          )?.qty ?? 0
+        )
+      : 0;
+
+  const remainingStock =
+    product?.stock ===
+      null ||
+    product?.stock ===
+      undefined
+      ? null
+      : Math.max(
+          0,
+          product.stock -
+            currentCartQty,
+        );
+
+  const canAddToCart =
+    available &&
+    (
+      remainingStock ===
+        null ||
+      remainingStock > 0
+    );
+
   const quantity =
     useProductQuantity({
       initialQty: 1,
-      unitPrice: finalPrice,
+      unitPrice:
+        finalPrice,
+      maxQty:
+        remainingStock,
     });
 
-  const { resetQty } =
+  const {
+    resetQty,
+  } =
     quantity;
 
   const productActions =
     useProductActions({
       product,
-      qty: quantity.effectiveQty,
+      qty:
+        quantity
+          .isQtyInputValid
+          ? quantity
+              .effectiveQty
+          : 1,
     });
-
-  const cart =
-    useCart();
 
   const productCart =
     useProductCart({
       product,
-      available,
+      available:
+        canAddToCart,
       isQtyInputValid:
-        quantity.isQtyInputValid,
+        quantity
+          .isQtyInputValid,
       parsedQtyInput:
-        quantity.parsedQtyInput,
+        quantity
+          .parsedQtyInput,
       addToCart:
         cart.addToCart,
     });
 
   const {
-    className: stockClass,
-    Icon: StockIcon,
+    className:
+      stockClass,
+    Icon:
+      StockIcon,
   } =
     getProductStatusPresentation(
       productState,
@@ -108,7 +164,8 @@ export default function ProductPage() {
     window.scrollTo({
       top: 0,
       left: 0,
-      behavior: "smooth",
+      behavior:
+        "smooth",
     });
 
     resetQty();
@@ -118,7 +175,9 @@ export default function ProductPage() {
   ]);
 
   if (loading) {
-    return <ProductSkeleton />;
+    return (
+      <ProductSkeleton />
+    );
   }
 
   if (
@@ -140,23 +199,39 @@ export default function ProductPage() {
     );
   }
 
-  const handleAddToCart = () => {
-    productCart.handleAddToCart();
-    productCart.setCartOpen(true);
-  };
+  const handleAddToCart =
+    () => {
+      const added =
+        productCart
+          .handleAddToCart();
+
+      if (!added) {
+        return;
+      }
+
+      productCart
+        .setCartOpen(
+          true,
+        );
+    };
 
   return (
     <div className="product-detail-page">
       <NotificationStack />
 
       <ProductHeader
-        title={product.title}
-        code={product.id}
+        title={
+          product.title
+        }
+        code={
+          product.id
+        }
         onBack={() =>
           navigate(-1)
         }
         onShare={
-          productActions.handleShare
+          productActions
+            .handleShare
         }
       />
 
@@ -164,18 +239,24 @@ export default function ProductPage() {
         <section className="product-detail-experience">
           <section
             className="product-detail-configurator"
-            aria-label="Producto"
+            aria-label="Ficha del producto"
           >
             <div className="product-detail-gallery">
               <ProductGallery
-                product={product}
-                available={available}
+                product={
+                  product
+                }
+                available={
+                  available
+                }
               />
             </div>
 
             <div className="product-detail-overview">
               <ProductMeta
-                product={product}
+                product={
+                  product
+                }
                 productState={
                   productState
                 }
@@ -201,13 +282,14 @@ export default function ProductPage() {
                   quantity
                 }
                 available={
-                  available
+                  canAddToCart
                 }
                 onAddToCart={
                   handleAddToCart
                 }
                 onWhatsApp={
-                  productActions.handleWhatsApp
+                  productActions
+                    .handleWhatsApp
                 }
               />
             </div>
@@ -217,10 +299,20 @@ export default function ProductPage() {
 
       <CartSidebar
         isOpen={
-          productCart.cartOpen
+          productCart
+            .cartOpen
         }
         onClose={() =>
-          productCart.setCartOpen(false)
+          productCart
+            .setCartOpen(
+              false,
+            )
+        }
+        onContinueShopping={() =>
+          productCart
+            .setCartOpen(
+              false,
+            )
         }
         cart={
           cart.cart
