@@ -21,22 +21,12 @@ export interface Product {
   attributes: string[];
 
   /**
-   * Metadata propia del dominio de autos coleccionables.
-   * Es opcional para conservar compatibilidad con fuentes MVP antiguas.
+   * Datos coleccionables esenciales del Nivel 1.
    */
-  brand?: string;
-  line?: string;
-  series?: string;
-
   year?: number | null;
-  scale?: string;
-
-  mattel_code?: string;
   case_code?: string;
-
-  rarity?: string;
-  card_condition?: string;
-  vehicle_condition?: string;
+  card_number?: string;
+  mini_series?: string;
 
   updated_at?: string;
 }

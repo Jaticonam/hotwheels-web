@@ -21,28 +21,16 @@ const PRODUCT_REQUIRED_HEADERS = [
 const PRODUCT_RECOMMENDED_HEADERS = [
   "description",
   "category",
-  "categories",
+  "badges",
   "offer_price",
   "stock",
   "img",
-  "images",
-  "badge",
-  "badges",
   "priority",
-  "attributes",
 
-  "brand",
-  "line",
-  "series",
   "year",
-  "scale",
-  "mattel_code",
   "case_code",
-  "rarity",
-  "card_condition",
-  "vehicle_condition",
-
-  "updated_at",
+  "card_number",
+  "mini_series",
 ] as const;
 
 function parseCSVLine(

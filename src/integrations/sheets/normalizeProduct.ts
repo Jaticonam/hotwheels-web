@@ -216,19 +216,10 @@ export function normalizeProduct(
 
     attributes: parseAttributes(row.attributes),
 
-    brand: cleanText(row.brand),
-    line: cleanText(row.line),
-    series: cleanText(row.series),
-
     year: parseOptionalInteger(row.year),
-    scale: cleanText(row.scale),
-
-    mattel_code: cleanText(row.mattel_code),
     case_code: cleanText(row.case_code),
-
-    rarity: cleanText(row.rarity),
-    card_condition: cleanText(row.card_condition),
-    vehicle_condition: cleanText(row.vehicle_condition),
+    card_number: cleanText(row.card_number),
+    mini_series: cleanText(row.mini_series),
 
     updated_at: cleanText(row.updated_at),
   };

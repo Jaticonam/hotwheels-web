@@ -1,7 +1,7 @@
 export const SHEETS_CONFIG = {
   products: {
-    docId: "141vkBWAieL-IY5vcxNdmV8qtX64YFda6AYRDTsoACYs",
-    gid: "223977403",
+    docId: "1tUmp1X1LXVk_qbvwonAZEuBcaWCWJUxHrASU7MR5DL4",
+    gid: "1632634680",
   },
 } as const;
 
