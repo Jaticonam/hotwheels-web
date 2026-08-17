@@ -12,36 +12,83 @@ import {
 } from "react-router-dom";
 
 import {
-  ArrowLeft,
   SearchX,
 } from "lucide-react";
 
-import { BRAND_CONFIG } from "@/tenant/config/brand";
+import {
+  BRAND_CONFIG,
+} from "@/tenant/config/brand";
 
-import { productSource } from "@/infrastructure/catalog/productSource";
-import { productBelongsToCategory } from "@/domain/product/categories";
-import { searchProducts } from "@/shared/lib/search";
-import { sortByCommercialPriority } from "@/shared/lib/sort";
+import {
+  getCategoryUrl,
+} from "@/app/routes/routes";
 
-import type { Product } from "@/shared/types/product";
+import {
+  productSource,
+} from "@/infrastructure/catalog/productSource";
 
-import { CategoryFilter } from "@/modules/catalog/components/filters/CategoryFilter";
-import { ProductCard } from "@/modules/catalog/components/product/ProductCard";
-import { SearchInput } from "@/modules/catalog/components/search/SearchInput";
+import {
+  productBelongsToCategory,
+} from "@/domain/product/categories";
 
-import { FloatingButtons } from "@/shared/components/overlays/FloatingButtons";
-import { NotificationStack } from "@/shared/components/feedback/NotificationStack";
-import { useCart } from "@/modules/cart/hooks/useCart";
-import { CartSidebar } from "@/modules/cart/components/CartSidebar";
-import { CategorySkeleton } from "@/shared/components/skeletons/CategorySkeleton";
+import {
+  searchProducts,
+} from "@/shared/lib/search";
+
+import {
+  sortByCommercialPriority,
+} from "@/shared/lib/sort";
+
+import type {
+  Product,
+} from "@/shared/types/product";
+
+import {
+  CatalogTopNav,
+} from "@/modules/catalog/components/catalog/CatalogTopNav";
+
+import {
+  ProductCard,
+} from "@/modules/catalog/components/product/ProductCard";
+
+import {
+  SearchInput,
+} from "@/modules/catalog/components/search/SearchInput";
+
+import {
+  FloatingButtons,
+} from "@/shared/components/overlays/FloatingButtons";
+
+import {
+  NotificationStack,
+} from "@/shared/components/feedback/NotificationStack";
+
+import {
+  useCart,
+} from "@/modules/cart/hooks/useCart";
+
+import {
+  CartSidebar,
+} from "@/modules/cart/components/CartSidebar";
+
+import {
+  CategorySkeleton,
+} from "@/shared/components/skeletons/CategorySkeleton";
 
 export default function CategoryPage() {
-  const cart = useCart();
+  const cart =
+    useCart();
 
   const [
     cartOpen,
     setCartOpen,
   ] = useState(false);
+
+  const [
+    exploreOpen,
+    setExploreOpen,
+  ] = useState(false);
+
   const {
     id: paramCategoryId,
   } =
@@ -49,7 +96,9 @@ export default function CategoryPage() {
       id: string;
     }>();
 
-  const [searchParams] =
+  const [
+    searchParams,
+  ] =
     useSearchParams();
 
   const navigate =
@@ -77,9 +126,12 @@ export default function CategoryPage() {
   useEffect(() => {
     let mounted = true;
 
-    productSource.loadAllProducts()
+    productSource
+      .loadAllProducts()
       .then((data) => {
-        if (!mounted) return;
+        if (!mounted) {
+          return;
+        }
 
         setProducts(data);
       })
@@ -120,35 +172,65 @@ export default function CategoryPage() {
     "todas";
 
   const categoryInfo =
-    BRAND_CONFIG.categories.find(
-      (category) =>
-        category.id ===
-        activeCategory,
-    );
+    BRAND_CONFIG
+      .categories
+      .find(
+        (category) =>
+          category.id ===
+          activeCategory,
+      );
+
+  const categoryCounts =
+    useMemo(() => {
+      return products.reduce<
+        Record<string, number>
+      >(
+        (counts, product) => {
+          counts.todas =
+            (counts.todas ?? 0) +
+            1;
+
+          const categoryIds =
+            Array.from(
+              new Set(
+                [
+                  product.category,
+                  ...product.categories,
+                ].filter(Boolean),
+              ),
+            );
+
+          categoryIds.forEach(
+            (id) => {
+              counts[id] =
+                (
+                  counts[id] ??
+                  0
+                ) + 1;
+            },
+          );
+
+          return counts;
+        },
+        {},
+      );
+    }, [products]);
 
   const visibleCategories =
     useMemo(() => {
       return BRAND_CONFIG
         .categories
         .filter(
-          (category) => {
-            if (
-              category.id ===
-              "todas"
-            ) {
-              return true;
-            }
-
-            return products.some(
-              (product) =>
-                productBelongsToCategory(
-                  product,
-                  category.id,
-                ),
-            );
-          },
+          (category) =>
+            category.id ===
+              "todas" ||
+            (
+              categoryCounts[
+                category.id
+              ] ?? 0
+            ) > 0,
         );
-    }, [products]);
+    }, [categoryCounts]);
 
   const categoryProducts =
     useMemo(() => {
@@ -201,171 +283,148 @@ export default function CategoryPage() {
         }
 
         navigate(
-          `/catalogo/categoria.html?cat=${encodeURIComponent(id)}`,
+          getCategoryUrl(id),
         );
       },
       [navigate],
     );
 
-  const hasSearch =
-    categorySearch
-      .trim()
-      .length > 0;
-
   return (
     <div className="category-page">
       <NotificationStack />
-      <header className="category-page-header">
-        <div className="category-page-header-inner">
-          <div className="category-page-header-row">
-            <div className="category-page-title-wrap">
-              <button
-                type="button"
-                onClick={() =>
-                  navigate(
-                    "/catalogo",
-                  )
-                }
-                className="category-page-back"
-                aria-label="Volver al catálogo"
-              >
-                <ArrowLeft className="w-5 h-5" />
-              </button>
 
-              <div>
-                <h1>
-                  {categoryInfo
-                    ? `${
-                        categoryInfo
-                          .icon
-                      } ${
-                        categoryInfo
-                          .name
-                      }`
-                    : "Categoría"}
-                </h1>
-
-                <p>
-                  {
-                    categoryInfo
-                      ?.description
-                  }
-                </p>
-
-                <span>
-                  {
-                    filteredProducts.length
-                  }{" "}
-                  producto
-                  {filteredProducts.length ===
-                  1
-                    ? ""
-                    : "s"}
-                </span>
-              </div>
-            </div>
-
-            <div className="category-page-search">
-              <SearchInput
-                value={
-                  categorySearch
-                }
-                onChange={
-                  setCategorySearch
-                }
-                products={
-                  categoryProducts
-                }
-                placeholder="Buscar en esta categoría..."
-              />
-
-              {hasSearch && (
-                <button
-                  type="button"
-                  onClick={() =>
-                    setCategorySearch(
-                      "",
-                    )
-                  }
-                  aria-label="Limpiar búsqueda"
-                >
-                  <SearchX className="w-4 h-4" />
-                </button>
-              )}
-            </div>
-          </div>
-        </div>
-      </header>
-
-      <main className="category-page-main">
-        <CategoryFilter
-          categories={
-            visibleCategories
-          }
-          active={
-            activeCategory
-          }
-          onSelect={
-            handleCategorySelect
-          }
-        />
-
-        {loading ? (
-          <CategorySkeleton />
-        ) : filteredProducts.length ===
-          0 ? (
-          <div className="category-page-empty">
-            <SearchX className="w-10 h-10" />
-
-            <p>
-              No hay productos
-              para mostrar.
-            </p>
-
-            <small>
-              Prueba otra categoría
-              o búsqueda.
-            </small>
-          </div>
-        ) : (
-          <div className="category-page-grid">
-            {filteredProducts.map(
-              (product) => (
-                <ProductCard
-                  key={
-                    product.id
-                  }
-                  product={
-                    product
-                  }
-                  onAddToCart={
-                    cart.addToCart
-                  }
-                />
-              ),
-            )}
-          </div>
-        )}
-      </main>
-
-      <FloatingButtons
-        cartCount={
-          cart.totalItems
+      <CatalogTopNav
+        exploreOpen={
+          exploreOpen
         }
-        onCartClick={() =>
-          setCartOpen(true)
+        onExploreOpenChange={
+          setExploreOpen
         }
+        categoryItems={
+          visibleCategories
+        }
+        activeCategory={
+          activeCategory
+        }
+        categoryCounts={
+          categoryCounts
+        }
+        onCategorySelect={
+          handleCategorySelect
+        }
+        searchSlot={
+          <SearchInput
+            value={
+              categorySearch
+            }
+            onChange={
+              setCategorySearch
+            }
+            products={
+              categoryProducts
+            }
+            placeholder="Buscar en esta categoría..."
+          />
+        }
+        logoSlot={null}
       />
 
+      <main className="category-page-main">
+        <section
+          className="category-page-section"
+          aria-labelledby="category-shelf-title"
+        >
+          <header className="category-page-shelf-heading">
+            <h1 id="category-shelf-title">
+              {categoryInfo?.icon && (
+                <span
+                  aria-hidden="true"
+                >
+                  {
+                    categoryInfo.icon
+                  }
+                </span>
+              )}
+
+              {categoryInfo?.name ??
+                "Categoría"}
+            </h1>
+
+            <span>
+              {loading
+                ? "Cargando..."
+                : `${
+                    filteredProducts.length
+                  } ${
+                    filteredProducts.length ===
+                    1
+                      ? "modelo"
+                      : "modelos"
+                  }`}
+            </span>
+          </header>
+
+          {loading ? (
+            <CategorySkeleton />
+          ) : filteredProducts.length ===
+            0 ? (
+            <div className="category-page-empty">
+              <SearchX className="w-10 h-10" />
+
+              <p>
+                No hay productos para mostrar.
+              </p>
+
+              <small>
+                Prueba otra búsqueda o categoría.
+              </small>
+            </div>
+          ) : (
+            <div className="category-page-grid">
+              {filteredProducts.map(
+                (product) => (
+                  <ProductCard
+                    key={
+                      product.id
+                    }
+                    product={
+                      product
+                    }
+                    onAddToCart={
+                      cart.addToCart
+                    }
+                  />
+                ),
+              )}
+            </div>
+          )}
+        </section>
+      </main>
+
+      {!exploreOpen && (
+        <FloatingButtons
+          cartCount={
+            cart.totalItems
+          }
+          onCartClick={() =>
+            setCartOpen(true)
+          }
+        />
+      )}
+
       <CartSidebar
-        isOpen={cartOpen}
+        isOpen={
+          cartOpen
+        }
         onClose={() =>
           setCartOpen(false)
         }
         onContinueShopping={() =>
           setCartOpen(false)
         }
-        cart={cart.cart}
+        cart={
+          cart.cart
+        }
         totalItems={
           cart.totalItems
         }

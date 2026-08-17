@@ -1,0 +1,503 @@
+.mini-race {
+  order: 2;
+
+  position: relative;
+
+  width: 100%;
+  height: 332px;
+
+  overflow: hidden;
+
+  border:
+    1px solid
+    rgba(125, 211, 252, 0.18);
+
+  border-radius: 1.25rem;
+
+  background:
+    linear-gradient(
+      180deg,
+      rgba(2, 6, 23, 0.96) 0 16%,
+      rgba(15, 23, 42, 0.97) 16% 100%
+    );
+
+  box-shadow:
+    0 32px 74px
+    rgba(0, 0, 0, 0.36);
+
+  backdrop-filter: blur(10px);
+}
+
+.mini-race-header {
+  position: absolute;
+
+  left: 18px;
+  right: 18px;
+  top: 0;
+
+  z-index: 10;
+
+  height: 54px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  pointer-events: none;
+}
+
+.mini-race-header span {
+  color: var(--color-text-muted);
+
+  font-size: 0.57rem;
+  font-weight: 950;
+
+  letter-spacing: 0.18em;
+}
+
+.mini-race-header small {
+  color: var(--color-commerce-bright);
+
+  font-size: 0.53rem;
+  font-weight: 950;
+
+  letter-spacing: 0.16em;
+}
+
+/* ========================================================
+   PISTA
+======================================================== */
+
+.mini-race-track {
+  position: absolute;
+
+  inset:
+    54px
+    0
+    0;
+
+  z-index: 1;
+
+  display: grid;
+
+  grid-template-rows:
+    repeat(
+      4,
+      minmax(0, 1fr)
+    );
+
+  background:
+    linear-gradient(
+      90deg,
+      rgba(15, 23, 42, 0.96),
+      rgba(30, 41, 59, 0.78) 50%,
+      rgba(15, 23, 42, 0.96)
+    );
+}
+
+.mini-race-lane {
+  position: relative;
+
+  min-height: 0;
+
+  overflow: hidden;
+
+  border-top:
+    1px dashed
+    rgba(251, 191, 36, 0.18);
+}
+
+.mini-race-lane:first-child {
+  border-top:
+    1px solid
+    rgba(148, 163, 184, 0.12);
+}
+
+.mini-race-lane::after {
+  content: "";
+
+  position: absolute;
+
+  inset:
+    auto
+    0
+    5px;
+
+  height: 1px;
+
+  background:
+    linear-gradient(
+      90deg,
+      transparent,
+      rgba(148, 163, 184, 0.07),
+      transparent
+    );
+}
+
+.mini-race-lane-label {
+  position: absolute;
+
+  left: 34px;
+  bottom: 6px;
+
+  z-index: 1;
+
+  color:
+    rgba(
+      148,
+      163,
+      184,
+      0.18
+    );
+
+  font-size: 0.47rem;
+  font-weight: 950;
+
+  letter-spacing: 0.18em;
+
+  pointer-events: none;
+}
+
+/* ========================================================
+   SALIDA / META
+======================================================== */
+
+.mini-race-start,
+.mini-race-finish {
+  position: absolute;
+
+  z-index: 9;
+
+  top: 59px;
+
+  pointer-events: none;
+
+  filter:
+    drop-shadow(
+      0 5px 8px
+      rgba(0, 0, 0, 0.42)
+    );
+}
+
+.mini-race-start {
+  right: 9px;
+
+  font-size: 1.18rem;
+}
+
+.mini-race-finish {
+  left: 8px;
+
+  font-size: 1.35rem;
+}
+
+/*
+  Línea vertical de meta.
+*/
+
+.mini-race::after {
+  content: "";
+
+  position: absolute;
+
+  z-index: 3;
+
+  left: 15px;
+  top: 83px;
+  bottom: 14px;
+
+  width: 5px;
+
+  opacity: 0.12;
+
+  background-image:
+    conic-gradient(
+      var(--color-text) 25%,
+      var(--color-bg) 0 50%,
+      var(--color-text) 0 75%,
+      var(--color-bg) 0
+    );
+
+  background-size:
+    6px
+    6px;
+
+  pointer-events: none;
+}
+
+/* ========================================================
+   VEHÍCULOS
+======================================================== */
+
+.mini-race-vehicle {
+  position: absolute;
+
+  z-index: 4;
+
+  left: 108%;
+  top: 50%;
+
+  width: 64px;
+  height: 48px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  translate:
+    0
+    -50%;
+
+  animation-name:
+    miniRaceDrive;
+
+  animation-duration:
+    var(--race-duration);
+
+  animation-delay:
+    var(--race-delay);
+
+  animation-timing-function:
+    linear;
+
+  animation-iteration-count:
+    infinite;
+
+  will-change:
+    left;
+}
+
+/*
+  Estela ligera de velocidad.
+*/
+
+.mini-race-vehicle::before {
+  content: "";
+
+  position: absolute;
+
+  z-index: -1;
+
+  left: 72%;
+  top: 50%;
+
+  width: 34px;
+  height: 2px;
+
+  background:
+    linear-gradient(
+      90deg,
+      rgba(56, 189, 248, 0.24),`n      transparent
+    );
+
+  transform:
+    translateY(-50%);
+
+  opacity: 0.65;
+}
+
+.mini-race-vehicle-emoji {
+  display: inline-block;
+
+  line-height: 1;
+
+  filter:
+    drop-shadow(
+      0 7px 7px
+      rgba(0, 0, 0, 0.32)
+    );
+
+  animation:
+    miniRaceSuspension
+    0.58s
+    ease-in-out
+    infinite;
+}
+
+.mini-race-vehicle-emoji--left {
+  transform:
+    none;
+}
+
+/* ========================================================
+   PERSPECTIVA POR CARRIL
+
+   Superior ligeramente menor.
+   Inferior ligeramente mayor.
+======================================================== */
+
+.mini-race-lane--1
+.mini-race-vehicle-emoji {
+  font-size: 2.3rem;
+}
+
+.mini-race-lane--2
+.mini-race-vehicle-emoji {
+  font-size: 2.48rem;
+}
+
+.mini-race-lane--3
+.mini-race-vehicle-emoji {
+  font-size: 2.62rem;
+}
+
+.mini-race-lane--4
+.mini-race-vehicle-emoji {
+  font-size: 2.78rem;
+}
+
+/* ========================================================
+   ANIMACIÓN
+
+   Cada vehículo de un mismo carril usa:
+   - misma duración
+   - delay calculado según cantidad
+
+   Por tanto:
+   - mantienen orden
+   - no se alcanzan
+   - no se montan
+======================================================== */
+
+@keyframes miniRaceDrive {
+  from {
+    left: 108%;
+  }
+
+  to {
+    left: -16%;
+  }
+}
+
+@keyframes miniRaceSuspension {
+  0%,
+  100% {
+    translate:
+      0
+      0;
+  }
+
+  50% {
+    translate:
+      0
+      -1px;
+  }
+}
+
+/* ========================================================
+   TABLET
+
+   Conserva 4 carriles.
+======================================================== */
+
+@media (max-width: 1023px) {
+  .mini-race {
+    order: 1;
+
+    height: 300px;
+  }
+
+  .mini-race-lane--1
+  .mini-race-vehicle-emoji {
+    font-size: 2.2rem;
+  }
+
+  .mini-race-lane--2
+  .mini-race-vehicle-emoji {
+    font-size: 2.35rem;
+  }
+
+  .mini-race-lane--3
+  .mini-race-vehicle-emoji {
+    font-size: 2.48rem;
+  }
+
+  .mini-race-lane--4
+  .mini-race-vehicle-emoji {
+    font-size: 2.58rem;
+  }
+}
+
+/* ========================================================
+   MOBILE
+
+   3 carriles / 11 vehículos.
+   Se retira WILD para evitar saturación.
+======================================================== */
+
+@media (max-width: 640px) {
+  .mini-race {
+    height: 264px;
+
+    border-radius: 1rem;
+  }
+
+  .mini-race-track {
+    inset:
+      50px
+      0
+      0;
+
+    grid-template-rows:
+      repeat(
+        3,
+        minmax(0, 1fr)
+      );
+  }
+
+  .mini-race-header {
+    height: 50px;
+  }
+
+  .mini-race-lane--mobile-hidden {
+    display: none;
+  }
+
+  .mini-race-start,
+  .mini-race-finish {
+    top: 55px;
+  }
+
+  .mini-race::after {
+    top: 78px;
+  }
+
+  .mini-race-lane--1
+  .mini-race-vehicle-emoji {
+    font-size: 2.08rem;
+  }
+
+  .mini-race-lane--2
+  .mini-race-vehicle-emoji {
+    font-size: 2.2rem;
+  }
+
+  .mini-race-lane--3
+  .mini-race-vehicle-emoji {
+    font-size: 2.34rem;
+  }
+
+  .mini-race-lane-label {
+    left: 28px;
+
+    font-size: 0.43rem;
+  }
+}
+
+/* ========================================================
+   ACCESSIBILITY
+======================================================== */
+
+@media (prefers-reduced-motion: reduce) {
+  .mini-race-vehicle,
+  .mini-race-vehicle-emoji {
+    animation: none;
+  }
+
+  .mini-race-vehicle {
+    left:
+      var(
+        --race-static-left
+      );
+  }
+}

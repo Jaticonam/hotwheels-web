@@ -1,37 +1,64 @@
+import {
+  useState,
+} from "react";
+
 import HeroSlider from "../sections/HeroSlider/HeroSlider";
-import BenefitsSection from "../sections/BenefitsSection/BenefitsSection";
 import CategoriesSection from "../sections/CategoriesSection/CategoriesSection";
 import HowToBuySection from "../sections/HowToBuySection/HowToBuySection";
 
 import HomeNav from "../components/HomeNav/HomeNav";
 import HomeFooter from "../components/HomeFooter/HomeFooter";
-import { FloatingButtons } from "@/shared/components/overlays/FloatingButtons";
 
-import { useCart } from "@/modules/cart/hooks/useCart";
+import {
+  CartSidebar,
+} from "@/modules/cart/components/CartSidebar";
+
+import {
+  useCart,
+} from "@/modules/cart/hooks/useCart";
 
 export default function HomePage() {
-  const { totalItems } = useCart();
+  const cart =
+    useCart();
 
-  const handleCartClick = () => {
-    window.location.href = "/catalogo";
-  };
+  const [
+    cartOpen,
+    setCartOpen,
+  ] = useState(false);
 
   return (
     <div className="min-h-screen overflow-x-clip bg-slate-950 font-sans text-white">
       <HomeNav
-        cartCount={totalItems}
-        onCartClick={handleCartClick}
+        cartCount={cart.totalItems}
+        onCartClick={() =>
+          setCartOpen(true)
+        }
       />
 
       <main>
         <HeroSlider />
-        <BenefitsSection />
         <CategoriesSection />
         <HowToBuySection />
       </main>
 
       <HomeFooter />
-      <FloatingButtons variant="home" />
+
+      <CartSidebar
+        isOpen={cartOpen}
+        onClose={() =>
+          setCartOpen(false)
+        }
+        onContinueShopping={() =>
+          setCartOpen(false)
+        }
+        cart={cart.cart}
+        totalItems={cart.totalItems}
+        totalPrice={cart.totalPrice}
+        savings={cart.savings}
+        onRemove={cart.removeFromCart}
+        onChangeQty={cart.changeQty}
+        onSetQty={cart.setExactQty}
+      />
     </div>
   );
 }

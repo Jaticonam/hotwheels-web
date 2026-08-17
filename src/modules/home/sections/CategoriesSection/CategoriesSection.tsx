@@ -1,73 +1,233 @@
 import "./CategoriesSection.css";
 
-import { Link } from "react-router-dom";
-import { ArrowRight } from "lucide-react";
+import {
+  useEffect,
+  useMemo,
+  useState,
+} from "react";
 
-import { getCategoryUrl } from "@/app/routes/routes";
-import { CATEGORIES } from "@/tenant/config/catalog";
+import {
+  Link,
+} from "react-router-dom";
+
+import {
+  ArrowRight,
+} from "lucide-react";
+
+import {
+  getCategoryUrl,
+} from "@/app/routes/routes";
+
+import {
+  productBelongsToCategory,
+} from "@/domain/product/categories";
+
+import {
+  productSource,
+} from "@/infrastructure/catalog/productSource";
+
+import type {
+  Product,
+} from "@/shared/types/product";
+
+import {
+  BRAND_CONFIG,
+} from "@/tenant/config/brand";
+
+const PREFERRED_HOME_CATEGORY_IDS = [
+  "deportivos",
+  "coleccionables",
+  "premium",
+  "ofertas",
+] as const;
 
 export default function CategoriesSection() {
+  const [
+    products,
+    setProducts,
+  ] = useState<Product[]>([]);
+
+  const [
+    loading,
+    setLoading,
+  ] = useState(true);
+
+  useEffect(() => {
+    let active = true;
+
+    const loadProducts =
+      async () => {
+        try {
+          const loadedProducts =
+            await productSource
+              .loadAllProducts();
+
+          if (!active) {
+            return;
+          }
+
+          setProducts(
+            loadedProducts,
+          );
+        } catch (error) {
+          console.error(
+            "No se pudieron cargar las categorías del Home.",
+            error,
+          );
+
+          if (active) {
+            setProducts([]);
+          }
+        } finally {
+          if (active) {
+            setLoading(false);
+          }
+        }
+      };
+
+    void loadProducts();
+
+    return () => {
+      active = false;
+    };
+  }, []);
+
+  const homeCategories =
+    useMemo(() => {
+      if (loading) {
+        return [];
+      }
+
+      const visibleCatalogCategories =
+        BRAND_CONFIG
+          .categories
+          .filter(
+            (category) =>
+              category.id !==
+                "todas" &&
+              category.id !==
+                "all" &&
+              products.some(
+                (product) =>
+                  productBelongsToCategory(
+                    product,
+                    category.id,
+                  ),
+              ),
+          );
+
+      const preferredCategories =
+        PREFERRED_HOME_CATEGORY_IDS
+          .map(
+            (categoryId) =>
+              visibleCatalogCategories
+                .find(
+                  (category) =>
+                    category.id ===
+                    categoryId,
+                ),
+          )
+          .filter(
+            (
+              category,
+            ): category is NonNullable<
+              typeof category
+            > =>
+              Boolean(category),
+          );
+
+      const preferredIds =
+        new Set(
+          preferredCategories.map(
+            (category) =>
+              category.id,
+          ),
+        );
+
+      const fallbackCategories =
+        visibleCatalogCategories.filter(
+          (category) =>
+            !preferredIds.has(
+              category.id,
+            ),
+        );
+
+      return [
+        ...preferredCategories,
+        ...fallbackCategories,
+      ].slice(
+        0,
+        4,
+      );
+    }, [
+      loading,
+      products,
+    ]);
+
   return (
     <section
       id="categorias"
-      className="home-collectibles-categories"
+      className="home-collectibles-categories home-brand-categories"
     >
-      <div className="mx-auto max-w-7xl px-5 py-20 md:px-8 md:py-28">
-        <div className="max-w-3xl">
-          <span className="text-[11px] font-black uppercase tracking-[0.24em] text-sky-400">
-            Explora
+      <div className="home-collectibles-categories-inner">
+        <div className="home-collectibles-categories-heading">
+          <span className="home-collectibles-categories-eyebrow">
+            Explora por categoría
           </span>
 
-          <h2 className="mt-4 text-3xl font-black tracking-[-0.04em] text-white md:text-5xl">
-            Encuentra el auto que estás buscando.
+          <h2>
+            Encuentra tu próxima pieza.
           </h2>
 
-          <p className="mt-5 max-w-2xl text-sm leading-7 text-slate-400 md:text-base">
-            Navega por nuestras categorías y descubre nuevas piezas para tu colección.
+          <p>
+            Explora nuestras categorías principales y descubre modelos para coleccionar, disfrutar o regalar.
           </p>
         </div>
 
-        <div className="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-          {CATEGORIES.map((category) => {
-            const href =
-              category.id === "todas"
-                ? "/catalogo"
-                : getCategoryUrl(category.id);
+        {!loading &&
+          homeCategories.length > 0 && (
+            <div className="home-collectibles-categories-grid">
+              {homeCategories.map(
+                (category) => (
+                  <Link
+                    key={category.id}
+                    to={getCategoryUrl(
+                      category.id,
+                    )}
+                    className="home-collectibles-category-card"
+                  >
+                    <div className="home-collectibles-category-card-top">
+                      <span
+                        className="home-collectibles-category-icon"
+                        aria-hidden="true"
+                      >
+                        {category.icon}
+                      </span>
 
-            return (
-              <Link
-                key={category.id}
-                to={href}
-                className="home-collectibles-category-card group"
-              >
-                <div className="flex items-start justify-between">
-                  <span className="text-3xl">
-                    {category.icon}
-                  </span>
+                      <span
+                        className="home-collectibles-category-arrow"
+                        aria-hidden="true"
+                      >
+                        <ArrowRight
+                          size={17}
+                        />
+                      </span>
+                    </div>
 
-                  <ArrowRight
-                    size={18}
-                    className="text-slate-600 transition group-hover:translate-x-1 group-hover:text-sky-400"
-                  />
-                </div>
+                    <div className="home-collectibles-category-content">
+                      <h3>
+                        {category.name}
+                      </h3>
 
-                <div className="mt-10">
-                  <span className="text-[10px] font-black uppercase tracking-[0.2em] text-slate-500">
-                    {category.id}
-                  </span>
-
-                  <h3 className="mt-2 text-xl font-black text-white">
-                    {category.name}
-                  </h3>
-
-                  <p className="mt-3 text-sm leading-6 text-slate-400">
-                    {category.description}
-                  </p>
-                </div>
-              </Link>
-            );
-          })}
-        </div>
+                      <p>
+                        {category.description}
+                      </p>
+                    </div>
+                  </Link>
+                ),
+              )}
+            </div>
+          )}
       </div>
     </section>
   );

@@ -1,52 +1,67 @@
-/* ==========================================
+/* ==========================================================
    HOT WHEELS WEB
-   Catalog Top Navigation
-========================================== */
+   STORE NAVIGATION 1.0
+
+   CATEGORÍAS
+       ↓
+   BUSCADOR
+
+   Mobile conserva Explorar como capa adicional.
+========================================================== */
 
 .catalog-top-nav {
   position: sticky;
   top: 0;
   z-index: 120;
-  padding: 0.8rem 1rem 0.85rem;
-  border-bottom: 1px solid rgba(148, 163, 184, 0.12);
-  background: rgba(2, 6, 23, 0.92);
-  backdrop-filter: blur(20px);
-  box-shadow: 0 14px 38px rgba(0, 0, 0, 0.18);
+
+  width: 100%;
+
+  border-bottom:
+    1px solid
+    rgba(148, 163, 184, 0.12);
+
+  background:
+    rgba(2, 6, 23, 0.96);
+
+  backdrop-filter:
+    blur(20px);
+
+  box-shadow:
+    0 10px 30px
+    rgba(0, 0, 0, 0.16);
 }
 
-.catalog-top-nav-brand-row {
-  width: min(100%, 1480px);
-  margin: 0 auto 0.58rem;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+.catalog-top-nav-inner {
+  width:
+    min(
+      100%,
+      1280px
+    );
+
+  margin:
+    0 auto;
+
+  padding:
+    0.7rem
+    1rem
+    0.78rem;
 }
-
-.catalog-top-nav-brand {
-  min-width: 13rem;
-  min-height: 3rem;
-  display: inline-flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  border: 0;
-  padding: 0;
-  background: transparent;
-  cursor: pointer;
-}
-
-
-
 
 .catalog-top-nav-categories {
-  width: min(100%, 1480px);
-  margin: 0 auto;
   display: flex;
+
   align-items: center;
   justify-content: center;
-  gap: 0.45rem;
+
+  gap: 0.42rem;
+
   overflow-x: auto;
+
+  overscroll-behavior-inline:
+    contain;
+
   scrollbar-width: none;
+  scroll-behavior: smooth;
 }
 
 .catalog-top-nav-categories::-webkit-scrollbar {
@@ -55,206 +70,561 @@
 
 .catalog-category-chip {
   flex-shrink: 0;
-  min-height: 2.4rem;
+
+  min-height:
+    2.42rem;
+
   display: inline-flex;
+
   align-items: center;
-  gap: 0.4rem;
-  padding: 0 0.9rem;
-  border: 1px solid rgba(148, 163, 184, 0.14);
-  border-radius: 999px;
-  background: rgba(15, 23, 42, 0.72);
-  color: #94a3b8;
-  font-size: 0.77rem;
-  font-weight: 850;
-  cursor: pointer;
+  justify-content: center;
+
+  gap: 0.38rem;
+
+  padding:
+    0
+    0.82rem;
+
+  border:
+    1px solid
+    rgba(148, 163, 184, 0.14);
+
+  border-radius:
+    999px;
+
+  background:
+    rgba(15, 23, 42, 0.72);
+
+  color:
+    var(--color-text-muted);
+
+  font-size:
+    0.75rem;
+
+  font-weight:
+    850;
+
+  white-space:
+    nowrap;
+
+  cursor:
+    pointer;
+
   transition:
-    transform 180ms ease,
-    background 180ms ease,
-    border-color 180ms ease,
-    color 180ms ease,
-    box-shadow 180ms ease;
+    border-color
+      var(--motion-duration-standard)
+      var(--motion-ease-standard),
+    background
+      var(--motion-duration-standard)
+      var(--motion-ease-standard),
+    color
+      var(--motion-duration-standard)
+      var(--motion-ease-standard);
 }
 
 .catalog-category-chip:hover {
-  transform: translateY(-1px);
-  border-color: rgba(56, 189, 248, 0.4);
-  color: #e0f2fe;
+  border-color:
+    rgba(56, 189, 248, 0.38);
+
+  color:
+    var(--color-commerce-light);
 }
 
 .catalog-category-chip.active {
-  transform: translateY(-1px);
-  border-color: #0ea5e9;
-  background: #0ea5e9;
-  color: #ffffff;
-  box-shadow: 0 10px 28px rgba(14, 165, 233, 0.22);
-}
+  border-color:
+    var(--color-commerce);
 
-.catalog-category-chip small {
-  opacity: 0.72;
-  font-size: 0.66rem;
-  font-weight: 900;
+  background:
+    var(--color-commerce);
+
+  color:
+    #ffffff;
+
+  box-shadow:
+    0 8px 22px
+    rgba(14, 165, 233, 0.18);
 }
 
 .catalog-category-icon {
-  font-size: 0.9rem;
+  font-size:
+    0.88rem;
+
+  line-height:
+    1;
+}
+
+.catalog-category-chip small {
+  min-width:
+    1.2rem;
+
+  display:
+    inline-flex;
+
+  align-items:
+    center;
+
+  justify-content:
+    center;
+
+  padding:
+    0.12rem
+    0.3rem;
+
+  border-radius:
+    999px;
+
+  background:
+    rgba(255, 255, 255, 0.08);
+
+  font-size:
+    0.61rem;
+
+  font-weight:
+    900;
+
+  line-height:
+    1;
+}
+
+.catalog-category-chip.active small {
+  background:
+    rgba(255, 255, 255, 0.16);
+}
+
+.catalog-top-nav-search-tools {
+  width:
+    min(
+      100%,
+      920px
+    );
+
+  margin:
+    0.58rem
+    auto
+    0;
+
+  display:
+    flex;
+
+  align-items:
+    center;
+
+  gap:
+    0.5rem;
 }
 
 .catalog-top-nav-search-row {
-  width: min(100%, 920px);
-  margin: 0.75rem auto 0;
+  min-width:
+    0;
+
+  flex:
+    1;
 }
 
-.catalog-explore-fab,
+.catalog-explore-trigger {
+  display:
+    none;
+}
+
 .catalog-explore-overlay {
-  display: none;
+  display:
+    none;
+}
+
+@media (max-width: 980px) {
+  .catalog-top-nav-categories {
+    justify-content:
+      flex-start;
+  }
 }
 
 @media (max-width: 720px) {
-  .catalog-top-nav {
-    padding: 0.7rem 0.75rem 0.8rem;
+  .catalog-top-nav-inner {
+    padding:
+      0.55rem
+      0.75rem
+      0.62rem;
   }
 
-
-
   .catalog-top-nav-categories {
+    margin-inline:
+      -0.75rem;
+
+    padding-inline:
+      0.75rem;
+
+    scroll-padding-inline:
+      0.75rem;
+
+    scroll-snap-type:
+      x proximity;
+  }
+
+  .catalog-category-chip {
+    min-height:
+      2.28rem;
+
+    padding:
+      0
+      0.7rem;
+
+    font-size:
+      0.69rem;
+
+    scroll-snap-align:
+      start;
+  }
+
+  .catalog-category-chip small {
     display: none;
   }
 
-  .catalog-top-nav-search-row {
-    margin-top: 0.6rem;
+  .catalog-top-nav-search-tools {
+    width:
+      100%;
+
+    margin-top:
+      0.5rem;
+
+    gap:
+      0.45rem;
   }
 
-  .catalog-explore-fab {
-    position: fixed;
-    left: 50%;
-    bottom: 1.15rem;
-    z-index: 220;
-    transform: translateX(-50%);
-    min-height: 3rem;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    gap: 0.55rem;
-    padding: 0 1.2rem;
-    border: 1px solid rgba(125, 211, 252, 0.22);
-    border-radius: 999px;
-    background: #0ea5e9;
-    color: #ffffff;
-    box-shadow: 0 18px 42px rgba(14, 165, 233, 0.28);
-    font-size: 0.82rem;
-    font-weight: 950;
-    cursor: pointer;
+  .catalog-explore-trigger {
+    width:
+      2.75rem;
+
+    height:
+      2.75rem;
+
+    flex:
+      0 0
+      2.75rem;
+
+    display:
+      inline-flex;
+
+    align-items:
+      center;
+
+    justify-content:
+      center;
+
+    border:
+      1px solid
+      rgba(56, 189, 248, 0.32);
+
+    border-radius:
+      0.9rem;
+
+    background:
+      rgba(15, 23, 42, 0.96);
+
+    color:
+      var(--color-commerce-light);
+
+    box-shadow:
+      0 8px 24px
+      rgba(0, 0, 0, 0.2);
+
+    cursor:
+      pointer;
+
+    transition:
+      border-color
+        var(--motion-duration-standard)
+        var(--motion-ease-standard),
+      background
+        var(--motion-duration-standard)
+        var(--motion-ease-standard),
+      color
+        var(--motion-duration-standard)
+        var(--motion-ease-standard),
+      transform
+        var(--motion-duration-standard)
+        var(--motion-ease-standard);
+  }
+
+  .catalog-explore-trigger:active {
+    transform:
+      scale(0.96);
   }
 
   .catalog-explore-overlay {
     position: fixed;
     inset: 0;
+
     z-index: 300;
+
     display: block;
   }
 
   .catalog-explore-backdrop {
     position: absolute;
     inset: 0;
+
     border: 0;
-    background: rgba(2, 6, 23, 0.76);
-    backdrop-filter: blur(6px);
+
+    background:
+      rgba(2, 6, 23, 0.76);
+
+    backdrop-filter:
+      blur(6px);
   }
 
   .catalog-explore-sheet {
     position: absolute;
+
     left: 0;
     right: 0;
     bottom: 0;
-    max-height: 82vh;
-    overflow-y: auto;
-    padding: 1.1rem 1rem 1.5rem;
-    border: 1px solid rgba(148, 163, 184, 0.14);
+
+    max-height:
+      82vh;
+
+    overflow-y:
+      auto;
+
+    padding:
+      1.1rem
+      1rem
+      1.5rem;
+
+    border:
+      1px solid
+      rgba(148, 163, 184, 0.14);
+
     border-bottom: 0;
-    border-radius: 1.7rem 1.7rem 0 0;
-    background: rgba(15, 23, 42, 0.99);
-    box-shadow: 0 -24px 70px rgba(0, 0, 0, 0.38);
+
+    border-radius:
+      1.7rem
+      1.7rem
+      0
+      0;
+
+    background:
+      rgba(15, 23, 42, 0.99);
+
+    box-shadow:
+      0 -24px 70px
+      rgba(0, 0, 0, 0.38);
   }
 
   .catalog-explore-header {
     display: flex;
-    align-items: flex-start;
-    justify-content: space-between;
-    gap: 1rem;
-    margin-bottom: 1rem;
+
+    align-items:
+      flex-start;
+
+    justify-content:
+      space-between;
+
+    gap:
+      1rem;
+
+    margin-bottom:
+      1rem;
   }
 
   .catalog-explore-header span {
-    color: #38bdf8;
-    font-size: 0.65rem;
-    font-weight: 950;
-    text-transform: uppercase;
-    letter-spacing: 0.18em;
+    color:
+      var(--color-commerce-bright);
+
+    font-size:
+      0.65rem;
+
+    font-weight:
+      950;
+
+    text-transform:
+      uppercase;
+
+    letter-spacing:
+      0.18em;
   }
 
   .catalog-explore-header h3 {
-    margin: 0.25rem 0 0;
-    color: #ffffff;
-    font-size: 1.45rem;
-    font-weight: 950;
-    letter-spacing: -0.04em;
+    margin:
+      0.25rem
+      0
+      0;
+
+    color:
+      var(--color-text);
+
+    font-size:
+      1.4rem;
+
+    font-weight:
+      950;
+
+    letter-spacing:
+      -0.04em;
   }
 
-  .catalog-explore-header button {
-    width: 2.5rem;
-    height: 2.5rem;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    border: 1px solid rgba(148, 163, 184, 0.14);
-    border-radius: 50%;
-    background: rgba(255, 255, 255, 0.04);
-    color: #cbd5e1;
-    cursor: pointer;
+  .catalog-explore-close {
+    width:
+      2.5rem;
+
+    height:
+      2.5rem;
+
+    flex-shrink: 0;
+
+    display:
+      inline-flex;
+
+    align-items:
+      center;
+
+    justify-content:
+      center;
+
+    border:
+      1px solid
+      rgba(148, 163, 184, 0.14);
+
+    border-radius:
+      50%;
+
+    background:
+      rgba(255, 255, 255, 0.04);
+
+    color:
+      var(--color-text-secondary);
+
+    cursor:
+      pointer;
   }
 
   .catalog-explore-group {
-    margin-top: 1rem;
+    margin-top:
+      1rem;
   }
 
-  .catalog-explore-group p {
-    margin: 0 0 0.7rem;
-    color: #64748b;
-    font-size: 0.67rem;
-    font-weight: 950;
-    text-transform: uppercase;
-    letter-spacing: 0.16em;
+  .catalog-explore-group > p {
+    margin:
+      0
+      0
+      0.7rem;
+
+    color:
+      var(--color-text-subtle);
+
+    font-size:
+      0.67rem;
+
+    font-weight:
+      950;
+
+    text-transform:
+      uppercase;
+
+    letter-spacing:
+      0.14em;
   }
 
   .catalog-explore-list {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.5rem;
+    display: grid;
+
+    grid-template-columns:
+      repeat(
+        2,
+        minmax(0, 1fr)
+      );
+
+    gap:
+      0.55rem;
   }
 
   .catalog-explore-chip {
-    min-height: 2.55rem;
-    display: inline-flex;
-    align-items: center;
-    gap: 0.42rem;
-    padding: 0 0.82rem;
-    border: 1px solid rgba(148, 163, 184, 0.14);
-    border-radius: 999px;
-    background: rgba(2, 6, 23, 0.54);
-    color: #cbd5e1;
-    font-size: 0.76rem;
-    font-weight: 900;
-    cursor: pointer;
+    min-width: 0;
+
+    min-height:
+      3rem;
+
+    display: flex;
+
+    align-items:
+      center;
+
+    gap:
+      0.5rem;
+
+    padding:
+      0.65rem
+      0.75rem;
+
+    border:
+      1px solid
+      rgba(148, 163, 184, 0.14);
+
+    border-radius:
+      0.9rem;
+
+    background:
+      rgba(2, 6, 23, 0.54);
+
+    color:
+      var(--color-text-secondary);
+
+    text-align:
+      left;
+
+    cursor:
+      pointer;
   }
 
-  .catalog-explore-chip.active {
-    border-color: #0ea5e9;
-    background: #0ea5e9;
-    color: #ffffff;
+  .catalog-explore-chip strong {
+    min-width: 0;
+
+    flex: 1;
+
+    overflow: hidden;
+
+    text-overflow:
+      ellipsis;
+
+    white-space:
+      nowrap;
+
+    font-size:
+      0.74rem;
+
+    font-weight:
+      900;
   }
 
   .catalog-explore-chip small {
-    opacity: 0.7;
-    font-size: 0.66rem;
+    color:
+      var(--color-text-subtle);
+
+    font-size:
+      0.63rem;
+
+    font-weight:
+      900;
+  }
+
+  .catalog-explore-chip.active {
+    border-color:
+      var(--color-commerce);
+
+    background:
+      rgba(14, 165, 233, 0.14);
+
+    color:
+      var(--color-commerce-light);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .catalog-top-nav-categories {
+    scroll-behavior:
+      auto;
+  }
+
+  .catalog-category-chip {
+    transition: none;
   }
 }

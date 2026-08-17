@@ -3,7 +3,7 @@ import {
   Minus,
   Plus,
   ShieldCheck,
-  ShoppingCart,
+  PackagePlus,
 } from "lucide-react";
 
 import {
@@ -121,7 +121,7 @@ export function ProductBuyBox({
             null && (
             <small>
               {noRemainingStock
-                ? "Ya tienes todo el stock disponible en tu carrito."
+                ? "Ya tienes todo el stock disponible en Mi Box."
                 : `Disponible para agregar: ${quantity.maxQty}`}
             </small>
           )}
@@ -230,7 +230,7 @@ export function ProductBuyBox({
               .isQtyInputValid
           }
         >
-          <ShoppingCart className="w-5 h-5" />
+          <PackagePlus className="w-5 h-5" />
 
           Agregar a Mi Box
         </button>

@@ -58,10 +58,10 @@ export const PRODUCT_DETAIL_CONFIG = {
     addedToCartTitle:
       "Agregado a Mi Box",
     addedToCartDescription:
-      "El producto fue agregado al carrito.",
+      "El producto fue agregado a Mi Box.",
     stockLimitTitle:
       "Stock máximo alcanzado",
     stockLimitDescription:
-      "Ya tienes en el carrito todas las unidades disponibles.",
+      "Ya tienes en Mi Box todas las unidades disponibles.",
   },
 } as const;

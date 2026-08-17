@@ -49,9 +49,6 @@ export function ProductCardImage({
         ].join(" ")}
       />
 
-      <div className="product-card-image-overlay">
-        <span>Ver producto</span>
-      </div>
 
       {badges.length > 0 && (
         <div className="product-card-badges">

@@ -11,6 +11,9 @@ import { isVisibleProductStatus } from "@/tenant/config/product/statuses";
 
 type CsvRow = Record<string, string>;
 
+const SHEETS_FETCH_TIMEOUT_MS =
+  10_000;
+
 const PRODUCT_REQUIRED_HEADERS = [
   "id",
   "title",
@@ -206,12 +209,46 @@ Promise<CsvRow[]> {
   const url =
     `https://docs.google.com/spreadsheets/d/${source.docId}/export?format=csv&gid=${source.gid}${cacheBust}`;
 
-  const response = await fetch(
-    url,
-    {
-      cache: "no-store",
-    },
-  );
+  const controller =
+    new AbortController();
+
+  const timeoutId =
+    globalThis.setTimeout(
+      () => {
+        controller.abort();
+      },
+      SHEETS_FETCH_TIMEOUT_MS,
+    );
+
+  let response: Response;
+
+  try {
+    response =
+      await fetch(
+        url,
+        {
+          cache: "no-store",
+          signal:
+            controller.signal,
+        },
+      );
+  }
+  catch (error) {
+    if (
+      controller.signal.aborted
+    ) {
+      throw new Error(
+        `Tiempo de espera agotado cargando products (${SHEETS_FETCH_TIMEOUT_MS} ms)`,
+      );
+    }
+
+    throw error;
+  }
+  finally {
+    globalThis.clearTimeout(
+      timeoutId,
+    );
+  }
 
   if (!response.ok) {
     throw new Error(

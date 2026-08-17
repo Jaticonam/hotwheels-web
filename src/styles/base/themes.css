@@ -1,0 +1,5774 @@
+/* ============================================================
+   HOT WHEELS — THEME SYSTEM V1
+
+   Product decision:
+   LIGHT = primary/default experience
+   DARK  = secondary optional experience
+
+   Brand colors do not change between themes.
+   ============================================================ */
+
+/* ============================================================
+   LIGHT — DEFAULT
+   ============================================================ */
+
+:root,
+html[data-theme="light"] {
+  color-scheme: light;
+
+  /*
+   * Foundation
+   */
+  --color-bg: #f8fafc;
+  --color-bg-deep: #eef2f7;
+
+  --color-surface: #ffffff;
+  --color-surface-raised: #f8fafc;
+  --color-surface-strong: #e2e8f0;
+
+  --color-overlay:
+    rgba(15, 23, 42, 0.42);
+
+  /*
+   * Typography
+   */
+  --color-text: #0f172a;
+  --color-text-secondary: #334155;
+  --color-text-muted: #64748b;
+  --color-text-subtle: #64748b;
+
+  /*
+   * Borders
+   */
+  --color-border:
+    rgba(15, 23, 42, 0.10);
+
+  --color-border-strong:
+    rgba(15, 23, 42, 0.18);
+
+  --color-border-active:
+    var(--brand-primary);
+
+  /*
+   * Primary / commerce
+   *
+   * Filled actions continue using Electric Cyan.
+   * Cyan text becomes deeper for contrast on white.
+   */
+  --color-commerce-strong:
+    var(--brand-primary-deep);
+
+  --color-commerce:
+    var(--brand-primary);
+
+  --color-commerce-bright:
+    var(--brand-primary-deep);
+
+  --color-commerce-light:
+    var(--brand-primary-deep);
+
+  --color-commerce-soft:
+    rgba(14, 165, 233, 0.09);
+
+  --color-commerce-glow:
+    rgba(14, 165, 233, 0.15);
+
+  /*
+   * Identity / Indigo
+   *
+   * Darker in Light mode for readability.
+   */
+  --color-identity-deep:
+    var(--brand-secondary-deep);
+
+  --color-identity:
+    var(--brand-secondary);
+
+  --color-identity-light:
+    var(--brand-secondary);
+
+  --color-identity-soft:
+    rgba(79, 70, 229, 0.08);
+
+  --color-identity-glow:
+    rgba(79, 70, 229, 0.13);
+
+  /*
+   * Collector / Gold
+   *
+   * Deep Gold is used for text on white surfaces.
+   */
+  --color-collector-strong:
+    var(--brand-accent-deep);
+
+  --color-collector:
+    var(--brand-accent-deep);
+
+  --color-collector-light:
+    var(--brand-accent-deep);
+
+  --color-collector-soft:
+    rgba(217, 119, 6, 0.09);
+
+  --color-collector-glow:
+    rgba(217, 119, 6, 0.13);
+
+  /*
+   * Functional colors
+   * Independent from brand identity.
+   */
+  --color-success: #15803d;
+  --color-success-light: #16a34a;
+
+  --color-success-soft:
+    rgba(21, 128, 61, 0.09);
+
+  --color-warning: #b45309;
+
+  --color-danger: #be123c;
+  --color-danger-light: #e11d48;
+
+  --color-danger-soft:
+    rgba(190, 18, 60, 0.09);
+
+  --color-whatsapp: #168f45;
+  --color-whatsapp-dark: #107337;
+
+  /*
+   * Legacy glass/fill bridge.
+   */
+  --theme-fill-soft:
+    rgba(15, 23, 42, 0.035);
+
+  --theme-fill-hover:
+    rgba(15, 23, 42, 0.06);
+
+  --theme-shadow:
+    rgba(15, 23, 42, 0.11);
+
+  /*
+   * Old --w-* consumers follow UI surfaces,
+   * not fixed Midnight.
+   */
+  --w-bg:
+    var(--color-bg);
+
+  --w-surface:
+    var(--color-surface);
+
+  --w-surface-soft:
+    var(--color-surface-raised);
+
+  --w-text:
+    var(--color-text);
+
+  --w-heading:
+    var(--color-text);
+
+  --w-muted:
+    var(--color-text-muted);
+
+  --w-border:
+    var(--color-border);
+}
+
+/* ============================================================
+   DARK — SECONDARY
+   ============================================================ */
+
+html[data-theme="dark"] {
+  color-scheme: dark;
+
+  --color-bg:
+    var(--brand-dark);
+
+  --color-bg-deep:
+    var(--brand-dark);
+
+  --color-surface:
+    var(--brand-surface);
+
+  --color-surface-raised:
+    #1e293b;
+
+  --color-surface-strong:
+    #334155;
+
+  --color-overlay:
+    rgba(2, 6, 23, 0.76);
+
+  --color-text:
+    var(--brand-light);
+
+  --color-text-secondary:
+    #cbd5e1;
+
+  --color-text-muted:
+    #94a3b8;
+
+  --color-text-subtle:
+    #64748b;
+
+  --color-border:
+    rgba(148, 163, 184, 0.14);
+
+  --color-border-strong:
+    rgba(148, 163, 184, 0.24);
+
+  --color-border-active:
+    var(--brand-primary);
+
+  --color-commerce-strong:
+    var(--brand-primary-deep);
+
+  --color-commerce:
+    var(--brand-primary);
+
+  --color-commerce-bright:
+    var(--brand-primary-light);
+
+  --color-commerce-light:
+    var(--brand-primary-soft);
+
+  --color-commerce-soft:
+    rgba(14, 165, 233, 0.10);
+
+  --color-commerce-glow:
+    rgba(14, 165, 233, 0.20);
+
+  --color-identity-deep:
+    var(--brand-secondary-deep);
+
+  --color-identity:
+    var(--brand-secondary);
+
+  --color-identity-light:
+    var(--brand-secondary-light);
+
+  --color-identity-soft:
+    rgba(79, 70, 229, 0.12);
+
+  --color-identity-glow:
+    rgba(79, 70, 229, 0.20);
+
+  --color-collector-strong:
+    var(--brand-accent-deep);
+
+  --color-collector:
+    var(--brand-accent);
+
+  --color-collector-light:
+    var(--brand-accent-light);
+
+  --color-collector-soft:
+    rgba(251, 191, 36, 0.10);
+
+  --color-collector-glow:
+    rgba(251, 191, 36, 0.18);
+
+  --color-success:
+    #22c55e;
+
+  --color-success-light:
+    #86efac;
+
+  --color-success-soft:
+    rgba(34, 197, 94, 0.10);
+
+  --color-warning:
+    #fbbf24;
+
+  --color-danger:
+    #f43f5e;
+
+  --color-danger-light:
+    #fda4af;
+
+  --color-danger-soft:
+    rgba(244, 63, 94, 0.10);
+
+  --color-whatsapp:
+    #25d366;
+
+  --color-whatsapp-dark:
+    #1ead54;
+
+  --theme-fill-soft:
+    rgba(255, 255, 255, 0.04);
+
+  --theme-fill-hover:
+    rgba(255, 255, 255, 0.07);
+
+  --theme-shadow:
+    rgba(0, 0, 0, 0.28);
+
+  --w-bg:
+    var(--color-bg);
+
+  --w-surface:
+    var(--color-surface);
+
+  --w-surface-soft:
+    var(--color-surface-raised);
+
+  --w-text:
+    var(--color-text);
+
+  --w-heading:
+    var(--color-text);
+
+  --w-muted:
+    var(--color-text-muted);
+
+  --w-border:
+    var(--color-border);
+}
+
+/* ============================================================
+   GLOBAL SURFACE
+   ============================================================ */
+
+html,
+body,
+#root {
+  min-height: 100%;
+}
+
+body {
+  background:
+    var(--color-bg);
+
+  color:
+    var(--color-text);
+
+  transition:
+    background-color 180ms ease,
+    color 180ms ease;
+}
+
+/* ============================================================
+   LIGHT BRIDGE — TAILWIND CLASSES FROM DARK-FIRST MVP
+
+   These utilities currently exist in Home TSX.
+   This layer keeps their semantic meaning in Light mode.
+   ============================================================ */
+
+html[data-theme="light"] .bg-slate-950 {
+  background-color:
+    var(--color-bg) !important;
+}
+
+html[data-theme="light"] .bg-slate-900 {
+  background-color:
+    var(--color-surface) !important;
+}
+
+html[data-theme="light"] .bg-slate-800 {
+  background-color:
+    var(--color-surface-raised) !important;
+}
+
+html[data-theme="light"]
+[class*="bg-slate-950/"] {
+  background-color:
+    color-mix(
+      in srgb,
+      var(--color-bg) 94%,
+      transparent
+    ) !important;
+}
+
+html[data-theme="light"]
+[class*="bg-slate-900/"] {
+  background-color:
+    color-mix(
+      in srgb,
+      var(--color-surface) 94%,
+      transparent
+    ) !important;
+}
+
+html[data-theme="light"]
+[class*="bg-slate-800/"] {
+  background-color:
+    color-mix(
+      in srgb,
+      var(--color-surface-raised) 94%,
+      transparent
+    ) !important;
+}
+
+html[data-theme="light"] .text-slate-100 {
+  color:
+    var(--color-text) !important;
+}
+
+html[data-theme="light"] .text-slate-300 {
+  color:
+    var(--color-text-secondary) !important;
+}
+
+html[data-theme="light"] .text-slate-400 {
+  color:
+    var(--color-text-muted) !important;
+}
+
+html[data-theme="light"] .text-slate-500 {
+  color:
+    var(--color-text-subtle) !important;
+}
+
+html[data-theme="light"] .border-slate-700,
+html[data-theme="light"] .border-slate-800 {
+  border-color:
+    var(--color-border-strong) !important;
+}
+
+html[data-theme="light"]
+[class*="border-white/"] {
+  border-color:
+    var(--color-border) !important;
+}
+
+html[data-theme="light"]
+[class*="bg-white/"] {
+  background-color:
+    var(--theme-fill-soft) !important;
+}
+
+html[data-theme="light"]
+[class*="hover:bg-white/"]:hover {
+  background-color:
+    var(--theme-fill-hover) !important;
+}
+
+html[data-theme="light"] .ring-slate-950 {
+  --tw-ring-color:
+    rgba(15, 23, 42, 0.14) !important;
+}
+
+/*
+ * White remains white intentionally.
+ * It is still required over Cyan, WhatsApp,
+ * Gold status pills and photographic overlays.
+ */
+
+/* ============================================================
+   MEDIA / PRODUCT PROTECTION
+
+   Theme must never alter the product photography.
+   ============================================================ */
+
+img,
+picture,
+video {
+  color-scheme: normal;
+}
+
+/* ============================================================
+   LIGHT HYBRID COMPOSITION V1
+
+   Light-first does not mean white-only.
+
+   Dark anchors:
+   - Header
+   - Shipping journey
+   - Footer
+
+   Brand distribution:
+   Cyan   = action
+   Indigo = identity
+   Gold   = value / collector
+   ============================================================ */
+
+/* ------------------------------------------------------------
+   HEADER — MIDNIGHT + INDIGO + CYAN
+   ------------------------------------------------------------ */
+
+html[data-theme="light"]
+.brand-shell-dark {
+  background:
+    radial-gradient(
+      circle at 12% -80%,
+      rgba(14, 165, 233, 0.28),
+      transparent 42%
+    ),
+    radial-gradient(
+      circle at 82% -120%,
+      rgba(79, 70, 229, 0.34),
+      transparent 48%
+    ),
+    linear-gradient(
+      90deg,
+      #020617 0%,
+      #0f172a 55%,
+      #111936 100%
+    ) !important;
+
+  color:
+    var(--brand-light) !important;
+
+  border-color:
+    rgba(129, 140, 248, 0.16) !important;
+
+  box-shadow:
+    0 10px 30px
+    rgba(2, 6, 23, 0.16),
+    inset 0 -1px 0
+    rgba(56, 189, 248, 0.16);
+}
+
+html[data-theme="light"]
+.brand-shell-dark .text-white {
+  color:
+    #ffffff !important;
+}
+
+html[data-theme="light"]
+.brand-shell-dark .text-slate-300 {
+  color:
+    #cbd5e1 !important;
+}
+
+html[data-theme="light"]
+.brand-shell-dark
+[class*="color-identity-light"] {
+  color:
+    var(--brand-secondary-light) !important;
+}
+
+html[data-theme="light"]
+.brand-shell-dark
+[class*="bg-white/"] {
+  background-color:
+    rgba(255, 255, 255, 0.055) !important;
+}
+
+html[data-theme="light"]
+.brand-shell-dark
+[class*="border-white/"] {
+  border-color:
+    rgba(255, 255, 255, 0.12) !important;
+}
+
+html[data-theme="light"]
+.brand-shell-dark
+[class*="hover:bg-white/"]:hover {
+  background-color:
+    rgba(255, 255, 255, 0.10) !important;
+}
+
+html[data-theme="light"]
+.brand-shell-dark
+.ring-slate-950 {
+  --tw-ring-color:
+    #020617 !important;
+}
+
+/* ------------------------------------------------------------
+   LIGHT CONTENT
+   ------------------------------------------------------------ */
+
+html[data-theme="light"] body {
+  background:
+    linear-gradient(
+      180deg,
+      #f8fafc 0%,
+      #ffffff 24%,
+      #f8fafc 100%
+    );
+}
+
+/*
+ * Neutral cards remain white, but avoid the washed-out effect.
+ */
+html[data-theme="light"]
+[class*="border-slate-"] {
+  border-color:
+    rgba(15, 23, 42, 0.11);
+}
+
+/* ------------------------------------------------------------
+   SHIPPING JOURNEY
+   MIDNIGHT + INDIGO + CYAN + GOLD
+   ------------------------------------------------------------ */
+
+html[data-theme="light"]
+.brand-journey-dark {
+  position:
+    relative;
+
+  overflow:
+    hidden;
+
+  background:
+    radial-gradient(
+      circle at 90% 0%,
+      rgba(14, 165, 233, 0.18),
+      transparent 36%
+    ),
+    radial-gradient(
+      circle at 18% 100%,
+      rgba(251, 191, 36, 0.10),
+      transparent 36%
+    ),
+    radial-gradient(
+      circle at 65% 110%,
+      rgba(79, 70, 229, 0.24),
+      transparent 42%
+    ),
+    linear-gradient(
+      135deg,
+      #020617 0%,
+      #0f172a 48%,
+      #17143d 100%
+    ) !important;
+
+  border-color:
+    rgba(129, 140, 248, 0.24) !important;
+
+  box-shadow:
+    0 28px 70px
+    rgba(15, 23, 42, 0.14),
+    inset 0 1px 0
+    rgba(255, 255, 255, 0.05);
+}
+
+html[data-theme="light"]
+.brand-journey-dark .text-white {
+  color:
+    #ffffff !important;
+}
+
+html[data-theme="light"]
+.brand-journey-dark .text-slate-300 {
+  color:
+    #cbd5e1 !important;
+}
+
+html[data-theme="light"]
+.brand-journey-dark .text-slate-400 {
+  color:
+    #94a3b8 !important;
+}
+
+html[data-theme="light"]
+.brand-journey-dark .text-slate-500,
+html[data-theme="light"]
+.brand-journey-dark .text-slate-700 {
+  color:
+    #94a3b8 !important;
+}
+
+html[data-theme="light"]
+.brand-journey-dark
+[class*="bg-slate-950/"] {
+  background-color:
+    rgba(2, 6, 23, 0.56) !important;
+}
+
+html[data-theme="light"]
+.brand-journey-dark .bg-slate-900 {
+  background-color:
+    rgba(15, 23, 42, 0.74) !important;
+}
+
+html[data-theme="light"]
+.brand-journey-dark
+[class*="border-white/"] {
+  border-color:
+    rgba(255, 255, 255, 0.10) !important;
+}
+
+/*
+ * Cyan retains the journey/action role.
+ */
+html[data-theme="light"]
+.brand-journey-dark .text-sky-400 {
+  color:
+    var(--brand-primary-light) !important;
+}
+
+/*
+ * Gold remains collector/value accent.
+ */
+html[data-theme="light"]
+.brand-journey-dark .text-amber-300 {
+  color:
+    var(--brand-accent-light) !important;
+}
+
+/* ------------------------------------------------------------
+   FOOTER — MIDNIGHT + INDIGO
+   ------------------------------------------------------------ */
+
+html[data-theme="light"]
+.brand-footer-dark {
+  background:
+    radial-gradient(
+      circle at 10% 0%,
+      rgba(79, 70, 229, 0.20),
+      transparent 32%
+    ),
+    radial-gradient(
+      circle at 90% 120%,
+      rgba(14, 165, 233, 0.14),
+      transparent 36%
+    ),
+    linear-gradient(
+      100deg,
+      #020617 0%,
+      #0f172a 65%,
+      #111936 100%
+    ) !important;
+
+  color:
+    var(--brand-light) !important;
+
+  box-shadow:
+    inset 0 1px 0
+    rgba(251, 191, 36, 0.18);
+}
+
+html[data-theme="light"]
+.brand-footer-dark .text-white {
+  color:
+    #ffffff !important;
+}
+
+html[data-theme="light"]
+.brand-footer-dark .text-slate-300 {
+  color:
+    #cbd5e1 !important;
+}
+
+html[data-theme="light"]
+.brand-footer-dark .text-slate-400 {
+  color:
+    #94a3b8 !important;
+}
+
+html[data-theme="light"]
+.brand-footer-dark .text-slate-500 {
+  color:
+    #94a3b8 !important;
+}
+
+html[data-theme="light"]
+.brand-footer-dark .text-slate-600 {
+  color:
+    #64748b !important;
+}
+
+html[data-theme="light"]
+.brand-footer-dark
+[class*="color-identity-light"] {
+  color:
+    var(--brand-secondary-light) !important;
+}
+
+html[data-theme="light"]
+.brand-footer-dark
+[class*="border-white/"] {
+  border-color:
+    rgba(255, 255, 255, 0.10) !important;
+}
+
+/* ------------------------------------------------------------
+   DARK MODE
+
+   Dark already owns these surfaces naturally.
+   Classes simply preserve brand composition.
+   ------------------------------------------------------------ */
+
+html[data-theme="dark"]
+.brand-shell-dark,
+html[data-theme="dark"]
+.brand-footer-dark {
+  background:
+    linear-gradient(
+      100deg,
+      #020617 0%,
+      #0f172a 70%,
+      #111936 100%
+    );
+}
+
+html[data-theme="dark"]
+.brand-journey-dark {
+  background:
+    radial-gradient(
+      circle at 90% 0%,
+      rgba(14, 165, 233, 0.12),
+      transparent 36%
+    ),
+    radial-gradient(
+      circle at 18% 100%,
+      rgba(251, 191, 36, 0.08),
+      transparent 36%
+    ),
+    linear-gradient(
+      135deg,
+      #020617 0%,
+      #0f172a 55%,
+      #17143d 100%
+    );
+}
+
+/* ============================================================
+   HOW TO BUY POLISH V1
+   Light-first premium composition
+   ============================================================ */
+
+/* ------------------------------------------------------------
+   SECTION CANVAS
+   ------------------------------------------------------------ */
+
+html[data-theme="light"]
+.how-to-buy-brand {
+  position: relative;
+
+  overflow: hidden;
+
+  background:
+    radial-gradient(
+      circle at 8% 14%,
+      rgba(14, 165, 233, 0.055),
+      transparent 28%
+    ),
+    radial-gradient(
+      circle at 88% 20%,
+      rgba(79, 70, 229, 0.045),
+      transparent 30%
+    ),
+    linear-gradient(
+      180deg,
+      #ffffff 0%,
+      #fbfdff 56%,
+      #f8fafc 100%
+    );
+}
+
+/*
+ * Fine brand line. It gives identity without converting
+ * the whole section into a colored block.
+ */
+html[data-theme="light"]
+.how-to-buy-brand::before {
+  content: "";
+
+  position: absolute;
+
+  top: 0;
+  left: 50%;
+
+  width: min(620px, 70%);
+  height: 2px;
+
+  transform: translateX(-50%);
+
+  background:
+    linear-gradient(
+      90deg,
+      transparent,
+      var(--brand-primary),
+      var(--brand-secondary),
+      var(--brand-accent),
+      transparent
+    );
+
+  opacity: 0.52;
+}
+
+/* ------------------------------------------------------------
+   MAIN TITLE
+   ------------------------------------------------------------ */
+
+html[data-theme="light"]
+.how-to-buy-brand h2 {
+  color:
+    var(--color-text);
+
+  letter-spacing:
+    -0.045em;
+}
+
+/* ============================================================
+   PURCHASE STEP CARDS
+   ============================================================ */
+
+/*
+ * We identify the light step cards by the existing
+ * white translucent utility inherited from the dark MVP.
+ */
+html[data-theme="light"]
+.how-to-buy-brand
+[class*="lg:grid-cols-4"]
+>
+[class*="bg-white/"] {
+  --step-accent:
+    var(--brand-primary);
+
+  position: relative;
+
+  overflow: hidden;
+
+  background:
+    linear-gradient(
+      160deg,
+      #ffffff 0%,
+      #ffffff 68%,
+      color-mix(
+        in srgb,
+        var(--step-accent) 5%,
+        #ffffff
+      ) 100%
+    ) !important;
+
+  border-color:
+    rgba(15, 23, 42, 0.10) !important;
+
+  box-shadow:
+    0 18px 46px
+    rgba(15, 23, 42, 0.065);
+
+  transition:
+    transform 180ms ease,
+    box-shadow 180ms ease,
+    border-color 180ms ease;
+}
+
+html[data-theme="light"]
+.how-to-buy-brand
+[class*="lg:grid-cols-4"]
+>
+[class*="bg-white/"]::before {
+  content: "";
+
+  position: absolute;
+
+  top: 0;
+  left: 20px;
+  right: 20px;
+
+  height: 3px;
+
+  border-radius:
+    0 0 999px 999px;
+
+  background:
+    linear-gradient(
+      90deg,
+      transparent,
+      var(--step-accent),
+      transparent
+    );
+
+  opacity: 0.82;
+}
+
+html[data-theme="light"]
+.how-to-buy-brand
+[class*="lg:grid-cols-4"]
+>
+[class*="bg-white/"]:hover {
+  transform:
+    translateY(-4px);
+
+  border-color:
+    color-mix(
+      in srgb,
+      var(--step-accent) 26%,
+      rgba(15, 23, 42, 0.10)
+    ) !important;
+
+  box-shadow:
+    0 24px 58px
+    rgba(15, 23, 42, 0.10);
+}
+
+/* 01 — Electric Cyan */
+html[data-theme="light"]
+.how-to-buy-brand
+[class*="lg:grid-cols-4"]
+>
+[class*="bg-white/"]:nth-child(1) {
+  --step-accent:
+    var(--brand-primary);
+}
+
+/* 02 — Collector Indigo */
+html[data-theme="light"]
+.how-to-buy-brand
+[class*="lg:grid-cols-4"]
+>
+[class*="bg-white/"]:nth-child(2) {
+  --step-accent:
+    var(--brand-secondary);
+}
+
+/* 03 — Collector Gold */
+html[data-theme="light"]
+.how-to-buy-brand
+[class*="lg:grid-cols-4"]
+>
+[class*="bg-white/"]:nth-child(3) {
+  --step-accent:
+    var(--brand-accent-deep);
+}
+
+/* 04 — Electric Cyan */
+html[data-theme="light"]
+.how-to-buy-brand
+[class*="lg:grid-cols-4"]
+>
+[class*="bg-white/"]:nth-child(4) {
+  --step-accent:
+    var(--brand-primary);
+}
+
+/* ------------------------------------------------------------
+   ICON TILE
+   ------------------------------------------------------------ */
+
+html[data-theme="light"]
+.how-to-buy-brand
+[class*="lg:grid-cols-4"]
+>
+[class*="bg-white/"]
+[class*="h-12"][class*="w-12"][class*="rounded-2xl"] {
+  background:
+    color-mix(
+      in srgb,
+      var(--step-accent) 9%,
+      #ffffff
+    ) !important;
+
+  color:
+    var(--step-accent) !important;
+
+  border:
+    1px solid
+    color-mix(
+      in srgb,
+      var(--step-accent) 14%,
+      transparent
+    );
+
+  box-shadow:
+    inset 0 1px 0
+    rgba(255, 255, 255, 0.75);
+}
+
+/* ------------------------------------------------------------
+   BIG DECORATIVE NUMBERS 01–04
+   ------------------------------------------------------------ */
+
+html[data-theme="light"]
+.how-to-buy-brand
+[class*="lg:grid-cols-4"]
+>
+[class*="bg-white/"]
+[class*="text-white/"] {
+  color:
+    color-mix(
+      in srgb,
+      var(--step-accent) 24%,
+      #ffffff
+    ) !important;
+
+  text-shadow:
+    none !important;
+}
+
+/*
+ * Titles remain strong and readable.
+ */
+html[data-theme="light"]
+.how-to-buy-brand
+[class*="lg:grid-cols-4"]
+>
+[class*="bg-white/"]
+h3 {
+  color:
+    var(--color-text) !important;
+
+  letter-spacing:
+    -0.025em;
+}
+
+/* ============================================================
+   SHIPPING JOURNEY
+   ============================================================ */
+
+/*
+ * Dark journey cards keep the Midnight language,
+ * but now each stage gets a controlled brand accent.
+ */
+html[data-theme="light"]
+.how-to-buy-brand
+[class*="lg:grid-cols-4"]
+>
+[class*="bg-slate-"] {
+  --journey-accent:
+    var(--brand-primary);
+
+  position: relative;
+
+  overflow: hidden;
+
+  border-color:
+    rgba(129, 140, 248, 0.16) !important;
+
+  background:
+    radial-gradient(
+      circle at 100% 100%,
+      color-mix(
+        in srgb,
+        var(--journey-accent) 10%,
+        transparent
+      ),
+      transparent 46%
+    ),
+    linear-gradient(
+      145deg,
+      #071226 0%,
+      #0f172a 62%,
+      #17143d 100%
+    ) !important;
+
+  box-shadow:
+    0 20px 42px
+    rgba(15, 23, 42, 0.11),
+    inset 0 1px 0
+    rgba(255, 255, 255, 0.035);
+}
+
+html[data-theme="light"]
+.how-to-buy-brand
+[class*="lg:grid-cols-4"]
+>
+[class*="bg-slate-"]::before {
+  content: "";
+
+  position: absolute;
+
+  top: 0;
+  left: 18px;
+  right: 18px;
+
+  height: 2px;
+
+  background:
+    linear-gradient(
+      90deg,
+      transparent,
+      var(--journey-accent),
+      transparent
+    );
+
+  opacity: 0.78;
+}
+
+/* Confirmado */
+html[data-theme="light"]
+.how-to-buy-brand
+[class*="lg:grid-cols-4"]
+>
+[class*="bg-slate-"]:nth-child(1) {
+  --journey-accent:
+    var(--brand-primary);
+}
+
+/* Protegido */
+html[data-theme="light"]
+.how-to-buy-brand
+[class*="lg:grid-cols-4"]
+>
+[class*="bg-slate-"]:nth-child(2) {
+  --journey-accent:
+    var(--brand-accent);
+}
+
+/* En camino */
+html[data-theme="light"]
+.how-to-buy-brand
+[class*="lg:grid-cols-4"]
+>
+[class*="bg-slate-"]:nth-child(3) {
+  --journey-accent:
+    var(--brand-secondary-light);
+}
+
+/* Recibido */
+html[data-theme="light"]
+.how-to-buy-brand
+[class*="lg:grid-cols-4"]
+>
+[class*="bg-slate-"]:nth-child(4) {
+  --journey-accent:
+    var(--brand-primary-light);
+}
+
+/*
+ * Icon tile inherits the stage accent.
+ */
+html[data-theme="light"]
+.how-to-buy-brand
+[class*="lg:grid-cols-4"]
+>
+[class*="bg-slate-"]
+[class*="rounded-2xl"] {
+  border-color:
+    color-mix(
+      in srgb,
+      var(--journey-accent) 20%,
+      transparent
+    ) !important;
+}
+
+/* ============================================================
+   JOURNEY INFORMATION CHIPS
+   ============================================================ */
+
+html[data-theme="light"]
+.how-to-buy-brand
+.brand-journey-dark
+[class*="rounded-full"],
+html[data-theme="light"]
+.how-to-buy-brand
+.brand-journey-dark
+[class*="rounded-xl"] {
+  border-color:
+    rgba(15, 23, 42, 0.10);
+}
+
+/* ============================================================
+   DARK MODE
+   Keep the same hierarchy without making Light decisions leak.
+   ============================================================ */
+
+html[data-theme="dark"]
+.how-to-buy-brand {
+  background:
+    var(--color-bg);
+}
+
+html[data-theme="dark"]
+.how-to-buy-brand::before {
+  background:
+    linear-gradient(
+      90deg,
+      transparent,
+      var(--brand-primary),
+      var(--brand-secondary),
+      var(--brand-accent),
+      transparent
+    );
+
+  opacity: 0.38;
+}
+
+/* ============================================================
+   LIGHT BRAND LANGUAGE V1
+   Canonical visual language derived from How To Buy.
+   ============================================================ */
+
+/* ============================================================
+   HEADER — LIGHT PREMIUM
+   ============================================================ */
+
+html[data-theme="light"]
+.home-brand-header {
+  position: relative;
+
+  background:
+    radial-gradient(
+      circle at 10% -120%,
+      rgba(14, 165, 233, 0.10),
+      transparent 42%
+    ),
+    radial-gradient(
+      circle at 82% -150%,
+      rgba(79, 70, 229, 0.08),
+      transparent 44%
+    ),
+    rgba(255, 255, 255, 0.96) !important;
+
+  color:
+    var(--color-text) !important;
+
+  border-color:
+    rgba(15, 23, 42, 0.08) !important;
+
+  box-shadow:
+    0 10px 32px
+    rgba(15, 23, 42, 0.055);
+
+  backdrop-filter:
+    blur(18px);
+
+  -webkit-backdrop-filter:
+    blur(18px);
+}
+
+html[data-theme="light"]
+.home-brand-header::after {
+  content: "";
+
+  position: absolute;
+
+  left: 0;
+  right: 0;
+  bottom: -1px;
+
+  height: 2px;
+
+  background:
+    linear-gradient(
+      90deg,
+      transparent 0%,
+      var(--brand-primary) 28%,
+      var(--brand-secondary) 54%,
+      var(--brand-accent) 76%,
+      transparent 100%
+    );
+
+  opacity: 0.42;
+
+  pointer-events: none;
+}
+
+/*
+ * Header typography
+ */
+html[data-theme="light"]
+.home-brand-header .text-white {
+  color:
+    var(--color-text) !important;
+}
+
+html[data-theme="light"]
+.home-brand-header .text-slate-300 {
+  color:
+    var(--color-text-secondary) !important;
+}
+
+html[data-theme="light"]
+.home-brand-header
+[class*="color-identity-light"] {
+  color:
+    var(--brand-secondary) !important;
+}
+
+/*
+ * Header controls become premium light tiles.
+ */
+html[data-theme="light"]
+.home-brand-header
+[class*="bg-white/"] {
+  background:
+    #ffffff !important;
+
+  border-color:
+    rgba(15, 23, 42, 0.09) !important;
+
+  box-shadow:
+    0 7px 20px
+    rgba(15, 23, 42, 0.045);
+}
+
+html[data-theme="light"]
+.home-brand-header
+[class*="bg-white/"]:hover {
+  border-color:
+    rgba(14, 165, 233, 0.30) !important;
+
+  background:
+    rgba(14, 165, 233, 0.045) !important;
+}
+
+html[data-theme="light"]
+.home-brand-header
+.bg-sky-500.text-white {
+  color:
+    #ffffff !important;
+}
+
+/*
+ * Main brand name must always dominate.
+ */
+html[data-theme="light"]
+.home-brand-header strong,
+html[data-theme="light"]
+.home-brand-header b {
+  color:
+    var(--color-text);
+}
+
+/* ============================================================
+   CATEGORIES — SAME DNA AS HOW TO BUY
+   ============================================================ */
+
+html[data-theme="light"]
+.home-brand-categories {
+  position: relative;
+
+  overflow: hidden;
+
+  background:
+    radial-gradient(
+      circle at 7% 15%,
+      rgba(14, 165, 233, 0.06),
+      transparent 31%
+    ),
+    radial-gradient(
+      circle at 91% 10%,
+      rgba(79, 70, 229, 0.045),
+      transparent 30%
+    ),
+    linear-gradient(
+      180deg,
+      #fbfdff 0%,
+      #f8fafc 100%
+    ) !important;
+}
+
+html[data-theme="light"]
+.home-brand-categories::before {
+  content: "";
+
+  position: absolute;
+
+  top: 0;
+  left: 50%;
+
+  width: min(620px, 70%);
+  height: 2px;
+
+  transform:
+    translateX(-50%);
+
+  background:
+    linear-gradient(
+      90deg,
+      transparent,
+      var(--brand-primary),
+      var(--brand-secondary),
+      var(--brand-accent),
+      transparent
+    );
+
+  opacity:
+    0.48;
+}
+
+/*
+ * Category links are the section's cards.
+ */
+html[data-theme="light"]
+.home-brand-categories a[href] {
+  --category-accent:
+    var(--brand-primary);
+
+  position:
+    relative;
+
+  overflow:
+    hidden;
+
+  background:
+    linear-gradient(
+      155deg,
+      #ffffff 0%,
+      #ffffff 72%,
+      color-mix(
+        in srgb,
+        var(--category-accent) 5%,
+        #ffffff
+      ) 100%
+    ) !important;
+
+  border-color:
+    rgba(15, 23, 42, 0.09) !important;
+
+  box-shadow:
+    0 18px 42px
+    rgba(15, 23, 42, 0.055);
+
+  transition:
+    transform 180ms ease,
+    box-shadow 180ms ease,
+    border-color 180ms ease;
+}
+
+html[data-theme="light"]
+.home-brand-categories a[href]::before {
+  content: "";
+
+  position:
+    absolute;
+
+  top: 0;
+  left: 20px;
+  right: 20px;
+
+  height:
+    3px;
+
+  border-radius:
+    0 0 999px 999px;
+
+  background:
+    linear-gradient(
+      90deg,
+      transparent,
+      var(--category-accent),
+      transparent
+    );
+
+  opacity:
+    0.80;
+}
+
+html[data-theme="light"]
+.home-brand-categories a[href]:hover {
+  transform:
+    translateY(-4px);
+
+  border-color:
+    color-mix(
+      in srgb,
+      var(--category-accent) 24%,
+      rgba(15, 23, 42, 0.10)
+    ) !important;
+
+  box-shadow:
+    0 24px 54px
+    rgba(15, 23, 42, 0.09);
+}
+
+/*
+ * 4-category brand rhythm.
+ */
+
+html[data-theme="light"]
+.home-brand-categories
+a[href]:nth-of-type(1) {
+  --category-accent:
+    var(--brand-primary);
+}
+
+html[data-theme="light"]
+.home-brand-categories
+a[href]:nth-of-type(2) {
+  --category-accent:
+    var(--brand-secondary);
+}
+
+html[data-theme="light"]
+.home-brand-categories
+a[href]:nth-of-type(3) {
+  --category-accent:
+    var(--brand-accent-deep);
+}
+
+html[data-theme="light"]
+.home-brand-categories
+a[href]:nth-of-type(4) {
+  --category-accent:
+    var(--brand-primary);
+}
+
+/*
+ * Typography remains neutral.
+ */
+html[data-theme="light"]
+.home-brand-categories h2,
+html[data-theme="light"]
+.home-brand-categories h3 {
+  color:
+    var(--color-text);
+}
+
+/* ============================================================
+   FOOTER — LIGHT PREMIUM
+   ============================================================ */
+
+html[data-theme="light"]
+.home-brand-footer {
+  position: relative;
+
+  overflow: hidden;
+
+  background:
+    radial-gradient(
+      circle at 8% 0%,
+      rgba(79, 70, 229, 0.055),
+      transparent 34%
+    ),
+    radial-gradient(
+      circle at 92% 100%,
+      rgba(14, 165, 233, 0.07),
+      transparent 38%
+    ),
+    linear-gradient(
+      180deg,
+      #ffffff 0%,
+      #f8fafc 100%
+    ) !important;
+
+  color:
+    var(--color-text) !important;
+
+  border-color:
+    rgba(15, 23, 42, 0.08) !important;
+
+  box-shadow:
+    inset 0 1px 0
+    rgba(15, 23, 42, 0.05);
+}
+
+html[data-theme="light"]
+.home-brand-footer::before {
+  content: "";
+
+  position:
+    absolute;
+
+  top: 0;
+  left: 0;
+  right: 0;
+
+  height:
+    2px;
+
+  background:
+    linear-gradient(
+      90deg,
+      var(--brand-primary),
+      var(--brand-secondary),
+      var(--brand-accent)
+    );
+
+  opacity:
+    0.52;
+}
+
+/*
+ * Previous dark-shell text becomes canonical Light typography.
+ */
+html[data-theme="light"]
+.home-brand-footer .text-white {
+  color:
+    var(--color-text) !important;
+}
+
+html[data-theme="light"]
+.home-brand-footer .text-slate-300 {
+  color:
+    var(--color-text-secondary) !important;
+}
+
+html[data-theme="light"]
+.home-brand-footer .text-slate-400,
+html[data-theme="light"]
+.home-brand-footer .text-slate-500,
+html[data-theme="light"]
+.home-brand-footer .text-slate-600 {
+  color:
+    var(--color-text-muted) !important;
+}
+
+html[data-theme="light"]
+.home-brand-footer
+[class*="color-identity-light"] {
+  color:
+    var(--brand-secondary) !important;
+}
+
+html[data-theme="light"]
+.home-brand-footer
+[class*="border-white/"] {
+  border-color:
+    rgba(15, 23, 42, 0.09) !important;
+}
+
+/*
+ * Footer contact control.
+ */
+html[data-theme="light"]
+.home-brand-footer
+[class*="bg-white/"] {
+  background:
+    #ffffff !important;
+
+  border-color:
+    rgba(15, 23, 42, 0.09) !important;
+
+  box-shadow:
+    0 7px 20px
+    rgba(15, 23, 42, 0.045);
+}
+
+/* ============================================================
+   DARK MODE
+   Same design grammar, dark surfaces.
+   ============================================================ */
+
+html[data-theme="dark"]
+.home-brand-header,
+html[data-theme="dark"]
+.home-brand-footer {
+  background:
+    radial-gradient(
+      circle at 10% -80%,
+      rgba(14, 165, 233, 0.14),
+      transparent 38%
+    ),
+    radial-gradient(
+      circle at 85% -100%,
+      rgba(79, 70, 229, 0.16),
+      transparent 42%
+    ),
+    linear-gradient(
+      100deg,
+      #020617 0%,
+      #0f172a 72%,
+      #111936 100%
+    ) !important;
+}
+
+html[data-theme="dark"]
+.home-brand-categories {
+  background:
+    linear-gradient(
+      180deg,
+      #020617 0%,
+      #07101f 100%
+    ) !important;
+}
+
+/* ============================================================
+   HERO EXCLUSION
+
+   No selector under LIGHT BRAND LANGUAGE V1 targets HeroSlider.
+   ============================================================ */
+
+/* ============================================================
+   LIGHT FINAL COMPOSITION V2
+
+   Canonical Light composition:
+
+   Header       -> Light
+   Hero         -> Own visual language
+   Categories   -> Light premium
+   How to Buy   -> Light premium
+   Shipping     -> Light premium
+   Footer       -> Dark brand closure
+   ============================================================ */
+
+/* ============================================================
+   SHIPPING / JOURNEY
+   LIGHT PREMIUM — SAME DNA AS HOW TO BUY
+   ============================================================ */
+
+html[data-theme="light"]
+.how-to-buy-brand
+.brand-journey-dark {
+  position: relative;
+
+  overflow: hidden;
+
+  background:
+    radial-gradient(
+      circle at 92% 8%,
+      rgba(14, 165, 233, 0.065),
+      transparent 31%
+    ),
+    radial-gradient(
+      circle at 12% 94%,
+      rgba(251, 191, 36, 0.045),
+      transparent 32%
+    ),
+    radial-gradient(
+      circle at 62% 108%,
+      rgba(79, 70, 229, 0.04),
+      transparent 36%
+    ),
+    linear-gradient(
+      180deg,
+      #ffffff 0%,
+      #fbfdff 54%,
+      #f8fafc 100%
+    ) !important;
+
+  border-color:
+    rgba(15, 23, 42, 0.10) !important;
+
+  box-shadow:
+    0 24px 64px
+    rgba(15, 23, 42, 0.065) !important;
+
+  color:
+    var(--color-text) !important;
+}
+
+/*
+ * Brand micro-line.
+ */
+html[data-theme="light"]
+.how-to-buy-brand
+.brand-journey-dark::before {
+  content: "";
+
+  position: absolute;
+
+  top: 0;
+  left: 50%;
+
+  width:
+    min(620px, 72%);
+
+  height:
+    2px;
+
+  transform:
+    translateX(-50%);
+
+  background:
+    linear-gradient(
+      90deg,
+      transparent,
+      var(--brand-primary),
+      var(--brand-secondary),
+      var(--brand-accent),
+      transparent
+    );
+
+  opacity:
+    0.50;
+}
+
+/* ------------------------------------------------------------
+   JOURNEY TYPOGRAPHY
+   ------------------------------------------------------------ */
+
+html[data-theme="light"]
+.how-to-buy-brand
+.brand-journey-dark .text-white {
+  color:
+    var(--color-text) !important;
+}
+
+html[data-theme="light"]
+.how-to-buy-brand
+.brand-journey-dark .text-slate-300 {
+  color:
+    var(--color-text-secondary) !important;
+}
+
+html[data-theme="light"]
+.how-to-buy-brand
+.brand-journey-dark .text-slate-400,
+html[data-theme="light"]
+.how-to-buy-brand
+.brand-journey-dark .text-slate-500,
+html[data-theme="light"]
+.how-to-buy-brand
+.brand-journey-dark .text-slate-700 {
+  color:
+    var(--color-text-muted) !important;
+}
+
+/*
+ * Keep Gold eyebrow.
+ */
+html[data-theme="light"]
+.how-to-buy-brand
+.brand-journey-dark .text-amber-300 {
+  color:
+    var(--brand-accent-deep) !important;
+}
+
+/*
+ * Keep Cyan functional icons.
+ */
+html[data-theme="light"]
+.how-to-buy-brand
+.brand-journey-dark .text-sky-400 {
+  color:
+    var(--brand-primary) !important;
+}
+
+/* ============================================================
+   SHIPPING STEP CARDS
+   ============================================================ */
+
+html[data-theme="light"]
+.how-to-buy-brand
+.brand-journey-dark
+[class*="lg:grid-cols-4"]
+>
+[class*="bg-slate-"] {
+  --journey-accent:
+    var(--brand-primary);
+
+  position:
+    relative;
+
+  overflow:
+    hidden;
+
+  background:
+    linear-gradient(
+      155deg,
+      #ffffff 0%,
+      #ffffff 70%,
+      color-mix(
+        in srgb,
+        var(--journey-accent) 5%,
+        #ffffff
+      ) 100%
+    ) !important;
+
+  border:
+    1px solid
+    rgba(15, 23, 42, 0.10) !important;
+
+  color:
+    var(--color-text) !important;
+
+  box-shadow:
+    0 18px 44px
+    rgba(15, 23, 42, 0.055) !important;
+
+  transition:
+    transform 180ms ease,
+    border-color 180ms ease,
+    box-shadow 180ms ease;
+}
+
+/*
+ * Accent line.
+ */
+html[data-theme="light"]
+.how-to-buy-brand
+.brand-journey-dark
+[class*="lg:grid-cols-4"]
+>
+[class*="bg-slate-"]::before {
+  content: "";
+
+  position:
+    absolute;
+
+  top: 0;
+  left: 18px;
+  right: 18px;
+
+  height:
+    3px;
+
+  border-radius:
+    0 0 999px 999px;
+
+  background:
+    linear-gradient(
+      90deg,
+      transparent,
+      var(--journey-accent),
+      transparent
+    );
+
+  opacity:
+    0.82;
+}
+
+html[data-theme="light"]
+.how-to-buy-brand
+.brand-journey-dark
+[class*="lg:grid-cols-4"]
+>
+[class*="bg-slate-"]:hover {
+  transform:
+    translateY(-4px);
+
+  border-color:
+    color-mix(
+      in srgb,
+      var(--journey-accent) 24%,
+      rgba(15, 23, 42, 0.10)
+    ) !important;
+
+  box-shadow:
+    0 24px 56px
+    rgba(15, 23, 42, 0.09) !important;
+}
+
+/*
+ * Confirmado — Electric Cyan
+ */
+html[data-theme="light"]
+.how-to-buy-brand
+.brand-journey-dark
+[class*="lg:grid-cols-4"]
+>
+[class*="bg-slate-"]:nth-child(1) {
+  --journey-accent:
+    var(--brand-primary);
+}
+
+/*
+ * Protegido — Collector Gold
+ */
+html[data-theme="light"]
+.how-to-buy-brand
+.brand-journey-dark
+[class*="lg:grid-cols-4"]
+>
+[class*="bg-slate-"]:nth-child(2) {
+  --journey-accent:
+    var(--brand-accent-deep);
+}
+
+/*
+ * En camino — Collector Indigo
+ */
+html[data-theme="light"]
+.how-to-buy-brand
+.brand-journey-dark
+[class*="lg:grid-cols-4"]
+>
+[class*="bg-slate-"]:nth-child(3) {
+  --journey-accent:
+    var(--brand-secondary);
+}
+
+/*
+ * Recibido — Electric Cyan
+ */
+html[data-theme="light"]
+.how-to-buy-brand
+.brand-journey-dark
+[class*="lg:grid-cols-4"]
+>
+[class*="bg-slate-"]:nth-child(4) {
+  --journey-accent:
+    var(--brand-primary);
+}
+
+/* ------------------------------------------------------------
+   SHIPPING CARD ICON
+   ------------------------------------------------------------ */
+
+html[data-theme="light"]
+.how-to-buy-brand
+.brand-journey-dark
+[class*="lg:grid-cols-4"]
+>
+[class*="bg-slate-"]
+[class*="rounded-2xl"] {
+  background:
+    color-mix(
+      in srgb,
+      var(--journey-accent) 8%,
+      #ffffff
+    ) !important;
+
+  border-color:
+    color-mix(
+      in srgb,
+      var(--journey-accent) 15%,
+      transparent
+    ) !important;
+
+  color:
+    var(--journey-accent) !important;
+}
+
+/* ------------------------------------------------------------
+   SHIPPING TITLES
+   ------------------------------------------------------------ */
+
+html[data-theme="light"]
+.how-to-buy-brand
+.brand-journey-dark
+[class*="lg:grid-cols-4"]
+>
+[class*="bg-slate-"]
+h3 {
+  color:
+    var(--color-text) !important;
+}
+
+/*
+ * Stage number.
+ */
+html[data-theme="light"]
+.how-to-buy-brand
+.brand-journey-dark
+[class*="lg:grid-cols-4"]
+>
+[class*="bg-slate-"]
+[class*="tracking-"] {
+  color:
+    color-mix(
+      in srgb,
+      var(--journey-accent) 72%,
+      var(--color-text)
+    ) !important;
+}
+
+/* ============================================================
+   SHIPPING INFO CHIPS
+   ============================================================ */
+
+html[data-theme="light"]
+.how-to-buy-brand
+.brand-journey-dark
+[class*="rounded-full"] {
+  background:
+    #ffffff !important;
+
+  border-color:
+    rgba(15, 23, 42, 0.10) !important;
+
+  color:
+    var(--color-text-secondary) !important;
+
+  box-shadow:
+    0 7px 18px
+    rgba(15, 23, 42, 0.035);
+}
+
+/* ============================================================
+   FOOTER — ONLY DARK SECTION IN LIGHT UI
+   ============================================================ */
+
+html[data-theme="light"]
+.home-brand-footer,
+html[data-theme="light"]
+.brand-footer-dark {
+  position:
+    relative;
+
+  overflow:
+    hidden;
+
+  background:
+    radial-gradient(
+      circle at 10% -20%,
+      rgba(79, 70, 229, 0.20),
+      transparent 34%
+    ),
+    radial-gradient(
+      circle at 88% 130%,
+      rgba(14, 165, 233, 0.15),
+      transparent 36%
+    ),
+    linear-gradient(
+      105deg,
+      #020617 0%,
+      #0f172a 64%,
+      #111936 100%
+    ) !important;
+
+  color:
+    #f8fafc !important;
+
+  border-color:
+    rgba(129, 140, 248, 0.12) !important;
+
+  box-shadow:
+    inset 0 1px 0
+    rgba(251, 191, 36, 0.14),
+    0 -12px 36px
+    rgba(15, 23, 42, 0.055);
+}
+
+/*
+ * Footer brand line.
+ */
+html[data-theme="light"]
+.home-brand-footer::before {
+  content: "";
+
+  position:
+    absolute;
+
+  top: 0;
+  left: 0;
+  right: 0;
+
+  height:
+    2px;
+
+  background:
+    linear-gradient(
+      90deg,
+      var(--brand-primary),
+      var(--brand-secondary),
+      var(--brand-accent)
+    );
+
+  opacity:
+    0.72;
+}
+
+/* ------------------------------------------------------------
+   FOOTER TYPOGRAPHY
+   ------------------------------------------------------------ */
+
+html[data-theme="light"]
+.home-brand-footer .text-white,
+html[data-theme="light"]
+.brand-footer-dark .text-white {
+  color:
+    #ffffff !important;
+}
+
+html[data-theme="light"]
+.home-brand-footer .text-slate-300,
+html[data-theme="light"]
+.brand-footer-dark .text-slate-300 {
+  color:
+    #cbd5e1 !important;
+}
+
+html[data-theme="light"]
+.home-brand-footer .text-slate-400,
+html[data-theme="light"]
+.home-brand-footer .text-slate-500,
+html[data-theme="light"]
+.brand-footer-dark .text-slate-400,
+html[data-theme="light"]
+.brand-footer-dark .text-slate-500 {
+  color:
+    #94a3b8 !important;
+}
+
+html[data-theme="light"]
+.home-brand-footer .text-slate-600,
+html[data-theme="light"]
+.brand-footer-dark .text-slate-600 {
+  color:
+    #64748b !important;
+}
+
+/*
+ * Institutional Indigo.
+ */
+html[data-theme="light"]
+.home-brand-footer
+[class*="color-identity-light"],
+html[data-theme="light"]
+.brand-footer-dark
+[class*="color-identity-light"] {
+  color:
+    var(--brand-secondary-light) !important;
+}
+
+/*
+ * Functional Cyan links.
+ */
+html[data-theme="light"]
+.home-brand-footer .text-sky-400,
+html[data-theme="light"]
+.home-brand-footer .text-sky-500 {
+  color:
+    var(--brand-primary-light) !important;
+}
+
+/*
+ * Contact control remains dark/glass.
+ */
+html[data-theme="light"]
+.home-brand-footer
+[class*="bg-white/"],
+html[data-theme="light"]
+.brand-footer-dark
+[class*="bg-white/"] {
+  background:
+    rgba(255, 255, 255, 0.055) !important;
+
+  border-color:
+    rgba(255, 255, 255, 0.12) !important;
+
+  color:
+    #f8fafc !important;
+
+  box-shadow:
+    none;
+}
+
+/*
+ * Footer separators.
+ */
+html[data-theme="light"]
+.home-brand-footer
+[class*="border-white/"],
+html[data-theme="light"]
+.brand-footer-dark
+[class*="border-white/"] {
+  border-color:
+    rgba(255, 255, 255, 0.10) !important;
+}
+
+/* ============================================================
+   HEADER PROTECTION
+
+   Header remains Light.
+   No dark override is applied here.
+   ============================================================ */
+
+/* ============================================================
+   DARK MODE
+
+   Secondary theme remains naturally dark.
+   ============================================================ */
+
+html[data-theme="dark"]
+.home-brand-footer,
+html[data-theme="dark"]
+.brand-footer-dark {
+  background:
+    radial-gradient(
+      circle at 10% -20%,
+      rgba(79, 70, 229, 0.18),
+      transparent 34%
+    ),
+    radial-gradient(
+      circle at 88% 130%,
+      rgba(14, 165, 233, 0.12),
+      transparent 36%
+    ),
+    linear-gradient(
+      105deg,
+      #020617 0%,
+      #0f172a 68%,
+      #111936 100%
+    ) !important;
+}
+
+/* ============================================================
+   SHIPPING LIGHT CANONICAL V1
+
+   Explicit semantic classes.
+   Same visual DNA as How To Buy.
+   ============================================================ */
+
+/* ============================================================
+   LIGHT PANEL
+   ============================================================ */
+
+html[data-theme="light"]
+.shipping-brand-panel {
+  position: relative;
+
+  overflow: hidden;
+
+  background:
+    radial-gradient(
+      circle at 91% 7%,
+      rgba(14, 165, 233, 0.065),
+      transparent 31%
+    ),
+    radial-gradient(
+      circle at 10% 92%,
+      rgba(251, 191, 36, 0.040),
+      transparent 31%
+    ),
+    radial-gradient(
+      circle at 68% 110%,
+      rgba(79, 70, 229, 0.038),
+      transparent 34%
+    ),
+    linear-gradient(
+      180deg,
+      #ffffff 0%,
+      #fbfdff 58%,
+      #f8fafc 100%
+    ) !important;
+
+  border:
+    1px solid
+    rgba(15, 23, 42, 0.10) !important;
+
+  color:
+    var(--color-text) !important;
+
+  box-shadow:
+    0 24px 60px
+    rgba(15, 23, 42, 0.06) !important;
+}
+
+html[data-theme="light"]
+.shipping-brand-panel::before {
+  content: "";
+
+  position: absolute;
+
+  top: 0;
+  left: 50%;
+
+  width:
+    min(620px, 72%);
+
+  height:
+    2px;
+
+  transform:
+    translateX(-50%);
+
+  background:
+    linear-gradient(
+      90deg,
+      transparent,
+      var(--brand-primary),
+      var(--brand-secondary),
+      var(--brand-accent),
+      transparent
+    );
+
+  opacity:
+    0.50;
+}
+
+/* ============================================================
+   EYEBROW — GOLD MUST BE VISIBLE
+   ============================================================ */
+
+html[data-theme="light"]
+.shipping-brand-eyebrow {
+  color:
+    #b45309 !important;
+
+  font-weight:
+    900;
+
+  letter-spacing:
+    0.22em;
+
+  text-shadow:
+    none;
+}
+
+html[data-theme="light"]
+.shipping-brand-eyebrow-icon {
+  color:
+    var(--brand-accent-deep) !important;
+
+  background:
+    rgba(251, 191, 36, 0.12) !important;
+
+  border:
+    1px solid
+    rgba(217, 119, 6, 0.12);
+
+  box-shadow:
+    inset 0 1px 0
+    rgba(255, 255, 255, 0.75);
+}
+
+/*
+ * Main heading / paragraph.
+ */
+html[data-theme="light"]
+.shipping-brand-panel h3 {
+  color:
+    var(--color-text) !important;
+}
+
+html[data-theme="light"]
+.shipping-brand-panel > div p,
+html[data-theme="light"]
+.shipping-brand-panel .text-slate-400 {
+  color:
+    var(--color-text-muted) !important;
+}
+
+/* ============================================================
+   JOURNEY GRID
+   ============================================================ */
+
+html[data-theme="light"]
+.shipping-journey-grid {
+  position:
+    relative;
+}
+
+/* ============================================================
+   JOURNEY CARD — WHITE PREMIUM
+   ============================================================ */
+
+html[data-theme="light"]
+.shipping-journey-card {
+  --journey-accent:
+    var(--brand-primary);
+
+  position:
+    relative;
+
+  overflow:
+    hidden;
+
+  background:
+    linear-gradient(
+      155deg,
+      #ffffff 0%,
+      #ffffff 72%,
+      color-mix(
+        in srgb,
+        var(--journey-accent) 5%,
+        #ffffff
+      ) 100%
+    ) !important;
+
+  border:
+    1px solid
+    rgba(15, 23, 42, 0.10) !important;
+
+  color:
+    var(--color-text) !important;
+
+  box-shadow:
+    0 18px 44px
+    rgba(15, 23, 42, 0.06) !important;
+
+  transition:
+    transform 180ms ease,
+    box-shadow 180ms ease,
+    border-color 180ms ease;
+}
+
+html[data-theme="light"]
+.shipping-journey-card::before {
+  content: "";
+
+  position: absolute;
+
+  top: 0;
+  left: 18px;
+  right: 18px;
+
+  height:
+    3px;
+
+  border-radius:
+    0 0 999px 999px;
+
+  background:
+    linear-gradient(
+      90deg,
+      transparent,
+      var(--journey-accent),
+      transparent
+    );
+
+  opacity:
+    0.84;
+}
+
+html[data-theme="light"]
+.shipping-journey-card:hover {
+  transform:
+    translateY(-4px);
+
+  border-color:
+    color-mix(
+      in srgb,
+      var(--journey-accent) 25%,
+      rgba(15, 23, 42, 0.10)
+    ) !important;
+
+  box-shadow:
+    0 24px 56px
+    rgba(15, 23, 42, 0.095) !important;
+}
+
+/* ============================================================
+   BRAND RHYTHM
+   ============================================================ */
+
+/* 01 Confirmado — Cyan */
+html[data-theme="light"]
+.shipping-journey-card:nth-child(1) {
+  --journey-accent:
+    var(--brand-primary);
+}
+
+/* 02 Protegido — Gold */
+html[data-theme="light"]
+.shipping-journey-card:nth-child(2) {
+  --journey-accent:
+    var(--brand-accent-deep);
+}
+
+/* 03 En camino — Indigo */
+html[data-theme="light"]
+.shipping-journey-card:nth-child(3) {
+  --journey-accent:
+    var(--brand-secondary);
+}
+
+/* 04 Recibido — Cyan */
+html[data-theme="light"]
+.shipping-journey-card:nth-child(4) {
+  --journey-accent:
+    var(--brand-primary);
+}
+
+/* ============================================================
+   CARD ICON
+   ============================================================ */
+
+html[data-theme="light"]
+.shipping-journey-icon {
+  background:
+    color-mix(
+      in srgb,
+      var(--journey-accent) 8%,
+      #ffffff
+    ) !important;
+
+  border:
+    1px solid
+    color-mix(
+      in srgb,
+      var(--journey-accent) 16%,
+      transparent
+    ) !important;
+
+  color:
+    var(--journey-accent) !important;
+
+  box-shadow:
+    inset 0 1px 0
+    rgba(255, 255, 255, 0.8) !important;
+}
+
+/* ============================================================
+   CARD NUMBER
+   ============================================================ */
+
+html[data-theme="light"]
+.shipping-journey-number {
+  color:
+    color-mix(
+      in srgb,
+      var(--journey-accent) 72%,
+      var(--color-text)
+    ) !important;
+
+  opacity:
+    0.90;
+}
+
+/* ============================================================
+   CARD TYPOGRAPHY
+   ============================================================ */
+
+html[data-theme="light"]
+.shipping-journey-title {
+  color:
+    var(--color-text) !important;
+}
+
+html[data-theme="light"]
+.shipping-journey-copy {
+  color:
+    var(--color-text-muted) !important;
+}
+
+/* ============================================================
+   INFORMATION CHIPS
+   ============================================================ */
+
+html[data-theme="light"]
+.shipping-highlight-chip {
+  background:
+    #ffffff !important;
+
+  border:
+    1px solid
+    rgba(15, 23, 42, 0.10) !important;
+
+  color:
+    var(--color-text-secondary) !important;
+
+  box-shadow:
+    0 7px 18px
+    rgba(15, 23, 42, 0.04);
+}
+
+html[data-theme="light"]
+.shipping-highlight-chip svg {
+  color:
+    var(--brand-primary) !important;
+}
+
+/* ============================================================
+   BUTTON PROTECTION
+   ============================================================ */
+
+/*
+ * WhatsApp remains semantic green.
+ */
+html[data-theme="light"]
+.shipping-brand-panel
+.text-emerald-400 {
+  color:
+    #16a34a !important;
+}
+
+/*
+ * Catalog CTA keeps white text on Cyan.
+ */
+html[data-theme="light"]
+.shipping-brand-panel
+.bg-sky-500 {
+  background:
+    var(--brand-primary) !important;
+
+  color:
+    #ffffff !important;
+}
+
+html[data-theme="light"]
+.shipping-brand-panel
+.bg-sky-500:hover {
+  background:
+    var(--brand-primary-light) !important;
+}
+
+/* ============================================================
+   DARK SECONDARY THEME
+   ============================================================ */
+
+html[data-theme="dark"]
+.shipping-brand-panel {
+  background:
+    radial-gradient(
+      circle at 90% 0%,
+      rgba(14, 165, 233, 0.12),
+      transparent 34%
+    ),
+    radial-gradient(
+      circle at 14% 100%,
+      rgba(251, 191, 36, 0.07),
+      transparent 32%
+    ),
+    linear-gradient(
+      135deg,
+      #020617 0%,
+      #0f172a 58%,
+      #17143d 100%
+    ) !important;
+
+  border-color:
+    rgba(129, 140, 248, 0.18) !important;
+}
+
+html[data-theme="dark"]
+.shipping-journey-card {
+  --journey-accent:
+    var(--brand-primary);
+
+  background:
+    linear-gradient(
+      145deg,
+      #071226 0%,
+      #0f172a 62%,
+      #17143d 100%
+    ) !important;
+
+  border-color:
+    rgba(129, 140, 248, 0.16) !important;
+
+  color:
+    var(--brand-light) !important;
+}
+
+html[data-theme="dark"]
+.shipping-journey-card:nth-child(2) {
+  --journey-accent:
+    var(--brand-accent);
+}
+
+html[data-theme="dark"]
+.shipping-journey-card:nth-child(3) {
+  --journey-accent:
+    var(--brand-secondary-light);
+}
+
+html[data-theme="dark"]
+.shipping-journey-title {
+  color:
+    #ffffff !important;
+}
+
+html[data-theme="dark"]
+.shipping-journey-copy {
+  color:
+    #94a3b8 !important;
+}
+
+html[data-theme="dark"]
+.shipping-highlight-chip {
+  background:
+    rgba(255, 255, 255, 0.035) !important;
+
+  border-color:
+    rgba(255, 255, 255, 0.09) !important;
+
+  color:
+    #cbd5e1 !important;
+}
+
+/* ============================================================
+   COMMERCE LIGHT SYSTEM V1
+
+   Home brand language applied to the commercial experience.
+
+   Light:
+   - White / Slate = structure
+   - Cyan = action / navigation
+   - Indigo = identity
+   - Gold = collector value
+
+   Dark keeps the component base styles untouched.
+   ============================================================ */
+
+/* ------------------------------------------------------------
+   CATALOG + CATEGORY PAGE CANVAS
+   ------------------------------------------------------------ */
+
+html[data-theme="light"] .catalog-page,
+html[data-theme="light"] .category-page {
+  background:
+    radial-gradient(
+      circle at 10% 0%,
+      color-mix(
+        in srgb,
+        var(--brand-primary) 6%,
+        transparent
+      ),
+      transparent 24rem
+    ),
+    radial-gradient(
+      circle at 90% 8%,
+      color-mix(
+        in srgb,
+        var(--brand-secondary) 4%,
+        transparent
+      ),
+      transparent 30rem
+    ),
+    #f8fafc;
+
+  color:
+    #0f172a;
+}
+
+html[data-theme="light"] .catalog-shelf-heading h1,
+html[data-theme="light"] .category-page-shelf-heading h1 {
+  color:
+    #0f172a;
+}
+
+html[data-theme="light"] .catalog-shelf-heading span,
+html[data-theme="light"] .category-page-shelf-heading > span {
+  color:
+    var(--brand-secondary-deep);
+}
+
+/* ------------------------------------------------------------
+   CATALOG TOP NAV
+   ------------------------------------------------------------ */
+
+html[data-theme="light"] .catalog-top-nav {
+  border-color:
+    rgba(148, 163, 184, 0.22);
+
+  background:
+    rgba(255, 255, 255, 0.94);
+
+  box-shadow:
+    0 1px 0 rgba(15, 23, 42, 0.03),
+    0 12px 34px rgba(15, 23, 42, 0.055);
+
+  backdrop-filter:
+    blur(18px);
+
+  -webkit-backdrop-filter:
+    blur(18px);
+}
+
+html[data-theme="light"] .catalog-category-chip {
+  border-color:
+    rgba(148, 163, 184, 0.24);
+
+  background:
+    rgba(255, 255, 255, 0.88);
+
+  color:
+    #475569;
+
+  box-shadow:
+    0 4px 14px rgba(15, 23, 42, 0.035);
+}
+
+html[data-theme="light"] .catalog-category-chip:hover {
+  border-color:
+    color-mix(
+      in srgb,
+      var(--brand-primary) 38%,
+      #cbd5e1
+    );
+
+  background:
+    color-mix(
+      in srgb,
+      var(--brand-primary) 5%,
+      #ffffff
+    );
+
+  color:
+    var(--brand-primary-deep);
+}
+
+html[data-theme="light"] .catalog-category-chip.active {
+  border-color:
+    var(--brand-primary);
+
+  background:
+    var(--brand-primary);
+
+  color:
+    #ffffff;
+
+  box-shadow:
+    0 10px 24px
+    color-mix(
+      in srgb,
+      var(--brand-primary) 24%,
+      transparent
+    );
+}
+
+html[data-theme="light"] .catalog-category-chip.active small {
+  background:
+    rgba(255, 255, 255, 0.2);
+
+  color:
+    #ffffff;
+}
+
+/* ------------------------------------------------------------
+   SEARCH
+   ------------------------------------------------------------ */
+
+html[data-theme="light"] .search-input-box {
+  border-color:
+    rgba(148, 163, 184, 0.28);
+
+  background:
+    rgba(255, 255, 255, 0.96);
+
+  box-shadow:
+    0 10px 26px rgba(15, 23, 42, 0.055);
+}
+
+html[data-theme="light"] .search-input-box:focus-within {
+  border-color:
+    color-mix(
+      in srgb,
+      var(--brand-primary) 58%,
+      #cbd5e1
+    );
+
+  background:
+    #ffffff;
+
+  box-shadow:
+    0 12px 30px rgba(15, 23, 42, 0.07),
+    0 0 0 4px
+    color-mix(
+      in srgb,
+      var(--brand-primary) 9%,
+      transparent
+    );
+}
+
+html[data-theme="light"] .search-input-icon {
+  color:
+    var(--brand-primary);
+}
+
+html[data-theme="light"] .search-input-field {
+  color:
+    #0f172a;
+}
+
+html[data-theme="light"] .search-input-field::placeholder {
+  color:
+    #94a3b8;
+}
+
+html[data-theme="light"] .search-input-shortcut {
+  border-color:
+    #e2e8f0;
+
+  background:
+    #f8fafc;
+
+  color:
+    #64748b;
+}
+
+html[data-theme="light"] .search-input-clear {
+  background:
+    #f1f5f9;
+
+  color:
+    #64748b;
+}
+
+html[data-theme="light"] .search-suggestions,
+html[data-theme="light"] .search-quick-panel,
+html[data-theme="light"] .search-empty-panel {
+  border-color:
+    rgba(148, 163, 184, 0.24);
+
+  background:
+    rgba(255, 255, 255, 0.985);
+
+  color:
+    #0f172a;
+
+  box-shadow:
+    0 24px 60px rgba(15, 23, 42, 0.14);
+}
+
+html[data-theme="light"] .search-quick-title {
+  color:
+    var(--brand-secondary-deep);
+}
+
+html[data-theme="light"] .search-quick-chip,
+html[data-theme="light"] .search-empty-chip {
+  border-color:
+    color-mix(
+      in srgb,
+      var(--brand-primary) 20%,
+      #e2e8f0
+    );
+
+  background:
+    color-mix(
+      in srgb,
+      var(--brand-primary) 6%,
+      #ffffff
+    );
+
+  color:
+    var(--brand-primary-deep);
+}
+
+html[data-theme="light"] .search-suggestion-item:hover,
+html[data-theme="light"] .search-suggestion-item-active {
+  background:
+    color-mix(
+      in srgb,
+      var(--brand-primary) 7%,
+      #ffffff
+    );
+}
+
+html[data-theme="light"] .search-suggestion-footer {
+  border-top-color:
+    #e2e8f0;
+
+  background:
+    #f8fafc;
+
+  color:
+    var(--brand-primary-deep);
+}
+
+html[data-theme="light"] .search-match {
+  background:
+    color-mix(
+      in srgb,
+      var(--brand-primary) 18%,
+      #ffffff
+    );
+
+  color:
+    var(--brand-primary-deep);
+}
+
+/* ------------------------------------------------------------
+   CATEGORY FILTER
+   ------------------------------------------------------------ */
+
+html[data-theme="light"] .category-chip {
+  border-color:
+    rgba(148, 163, 184, 0.25);
+
+  background:
+    rgba(255, 255, 255, 0.94);
+
+  color:
+    #475569;
+
+  box-shadow:
+    0 4px 14px rgba(15, 23, 42, 0.035);
+}
+
+html[data-theme="light"] .category-chip:hover {
+  border-color:
+    color-mix(
+      in srgb,
+      var(--brand-primary) 38%,
+      #cbd5e1
+    );
+
+  background:
+    color-mix(
+      in srgb,
+      var(--brand-primary) 5%,
+      #ffffff
+    );
+
+  color:
+    var(--brand-primary-deep);
+}
+
+html[data-theme="light"] .category-chip-active {
+  border-color:
+    var(--brand-primary);
+
+  background:
+    var(--brand-primary);
+
+  color:
+    #ffffff;
+
+  box-shadow:
+    0 10px 24px
+    color-mix(
+      in srgb,
+      var(--brand-primary) 22%,
+      transparent
+    );
+}
+
+html[data-theme="light"] .category-more-button {
+  border-color:
+    #dbe3ed;
+
+  background:
+    #ffffff;
+
+  color:
+    var(--brand-primary-deep);
+
+  box-shadow:
+    0 6px 18px rgba(15, 23, 42, 0.055);
+}
+
+/* ------------------------------------------------------------
+   PRODUCT CARD
+   PRODUCT PHOTO + NAME REMAIN DOMINANT
+   ------------------------------------------------------------ */
+
+html[data-theme="light"] .product-card {
+  border-color:
+    rgba(148, 163, 184, 0.24);
+
+  background:
+    linear-gradient(
+      180deg,
+      #ffffff 0%,
+      #ffffff 72%,
+      #fbfdff 100%
+    );
+
+  box-shadow:
+    0 8px 24px rgba(15, 23, 42, 0.055),
+    0 1px 2px rgba(15, 23, 42, 0.035);
+}
+
+html[data-theme="light"] .product-card::before {
+  background:
+    linear-gradient(
+      90deg,
+      transparent,
+      color-mix(
+        in srgb,
+        var(--brand-secondary) 52%,
+        transparent
+      ),
+      color-mix(
+        in srgb,
+        var(--brand-primary) 50%,
+        transparent
+      ),
+      color-mix(
+        in srgb,
+        var(--brand-accent) 48%,
+        transparent
+      ),
+      transparent
+    );
+
+  opacity:
+    0.5;
+}
+
+html[data-theme="light"] .product-card:hover {
+  border-color:
+    color-mix(
+      in srgb,
+      var(--brand-primary) 34%,
+      #cbd5e1
+    );
+
+  box-shadow:
+    0 16px 34px rgba(15, 23, 42, 0.09),
+    0 4px 12px
+    color-mix(
+      in srgb,
+      var(--brand-primary) 7%,
+      transparent
+    );
+}
+
+html[data-theme="light"] .product-card-image-wrap {
+  border-color:
+    rgba(148, 163, 184, 0.18);
+
+  background:
+    radial-gradient(
+      circle at 50% 28%,
+      color-mix(
+        in srgb,
+        var(--brand-primary) 6%,
+        #ffffff
+      ),
+      #f8fafc 62%,
+      #f1f5f9 100%
+    );
+
+  box-shadow:
+    inset 0 0 0 1px rgba(255, 255, 255, 0.72);
+}
+
+html[data-theme="light"] .product-card-image-wrap::after {
+  background:
+    linear-gradient(
+      180deg,
+      transparent 62%,
+      rgba(15, 23, 42, 0.025)
+    );
+}
+
+html[data-theme="light"] .product-card-title {
+  color:
+    #0f172a;
+}
+
+html[data-theme="light"] .product-card-title-button:hover .product-card-title,
+html[data-theme="light"] .product-card-title:hover {
+  color:
+    var(--brand-primary-deep);
+}
+
+html[data-theme="light"] .product-card-commerce-block::before {
+  background:
+    linear-gradient(
+      90deg,
+      rgba(148, 163, 184, 0.2),
+      transparent 90%
+    );
+}
+
+html[data-theme="light"] .product-card-price span {
+  color:
+    var(--brand-primary-deep);
+}
+
+html[data-theme="light"] .product-card-price strong {
+  color:
+    #0f172a;
+}
+
+html[data-theme="light"] .product-card-price-old {
+  color:
+    #94a3b8;
+}
+
+/* Collector / warning remains Gold */
+
+html[data-theme="light"] .product-card-stock-warning {
+  color:
+    var(--brand-accent-deep);
+
+  background:
+    color-mix(
+      in srgb,
+      var(--brand-accent) 10%,
+      #ffffff
+    );
+
+  border-color:
+    color-mix(
+      in srgb,
+      var(--brand-accent) 28%,
+      #e2e8f0
+    );
+}
+
+/* Commerce / preorder remains Cyan */
+
+html[data-theme="light"] .product-card-stock-preorder {
+  color:
+    var(--brand-primary-deep);
+
+  background:
+    color-mix(
+      in srgb,
+      var(--brand-primary) 7%,
+      #ffffff
+    );
+
+  border-color:
+    color-mix(
+      in srgb,
+      var(--brand-primary) 22%,
+      #e2e8f0
+    );
+}
+
+/* Semantic availability remains independent */
+
+html[data-theme="light"] .product-card-stock-available {
+  color:
+    #15803d;
+
+  background:
+    #f0fdf4;
+
+  border-color:
+    #bbf7d0;
+}
+
+html[data-theme="light"] .product-card-stock-soldout {
+  color:
+    #be123c;
+
+  background:
+    #fff1f2;
+
+  border-color:
+    #fecdd3;
+}
+
+html[data-theme="light"] .product-card-stock-muted {
+  color:
+    #64748b;
+
+  background:
+    #f8fafc;
+
+  border-color:
+    #e2e8f0;
+}
+
+/* Generic badge gains a lighter neutral treatment.
+   Specific semantic badges retain their own category colors. */
+
+html[data-theme="light"] .product-badge--default {
+  border-color:
+    #dbe3ed;
+
+  background:
+    rgba(255, 255, 255, 0.94);
+
+  color:
+    #475569;
+
+  box-shadow:
+    0 4px 12px rgba(15, 23, 42, 0.06);
+}
+
+/* ------------------------------------------------------------
+   EMPTY STATES
+   ------------------------------------------------------------ */
+
+html[data-theme="light"] .catalog-empty,
+html[data-theme="light"] .category-page-empty {
+  border-color:
+    rgba(148, 163, 184, 0.22);
+
+  background:
+    rgba(255, 255, 255, 0.8);
+
+  color:
+    #475569;
+
+  box-shadow:
+    0 12px 30px rgba(15, 23, 42, 0.045);
+}
+
+html[data-theme="light"] .catalog-empty-symbol {
+  background:
+    color-mix(
+      in srgb,
+      var(--brand-primary) 7%,
+      #ffffff
+    );
+
+  color:
+    var(--brand-primary-deep);
+}
+
+/* ============================================================
+   COMMERCE LIGHT MICROCOMPONENTS V1
+
+   Home visual DNA applied to commerce microcomponents.
+   Dark mode remains untouched.
+   ============================================================ */
+
+/* ------------------------------------------------------------
+   THEME TOGGLE
+   Premium floating control.
+   ------------------------------------------------------------ */
+
+html[data-theme="light"] .theme-toggle {
+  border:
+    1px solid
+    rgba(148, 163, 184, 0.28);
+
+  background:
+    rgba(255, 255, 255, 0.96);
+
+  color:
+    #475569;
+
+  box-shadow:
+    0 10px 28px rgba(15, 23, 42, 0.10),
+    0 1px 2px rgba(15, 23, 42, 0.05);
+
+  backdrop-filter:
+    blur(18px);
+
+  -webkit-backdrop-filter:
+    blur(18px);
+}
+
+html[data-theme="light"] .theme-toggle:hover {
+  border-color:
+    color-mix(
+      in srgb,
+      var(--brand-secondary) 35%,
+      #cbd5e1
+    );
+
+  background:
+    #ffffff;
+
+  color:
+    var(--brand-secondary-deep);
+
+  box-shadow:
+    0 14px 32px rgba(15, 23, 42, 0.12),
+    0 0 0 3px
+    color-mix(
+      in srgb,
+      var(--brand-secondary) 5%,
+      transparent
+    );
+}
+
+html[data-theme="light"] .theme-toggle__icon {
+  border:
+    1px solid
+    color-mix(
+      in srgb,
+      var(--brand-secondary) 18%,
+      #e2e8f0
+    );
+
+  background:
+    color-mix(
+      in srgb,
+      var(--brand-secondary) 8%,
+      #ffffff
+    );
+
+  color:
+    var(--brand-secondary);
+}
+
+html[data-theme="light"] .theme-toggle__label {
+  color:
+    #475569;
+}
+
+/* ------------------------------------------------------------
+   PRODUCT CARD CTA
+   Cyan = commerce action.
+   ------------------------------------------------------------ */
+
+html[data-theme="light"]
+.product-card-button-cart {
+  border-color:
+    color-mix(
+      in srgb,
+      var(--brand-primary) 74%,
+      #0284c7
+    );
+
+  background:
+    linear-gradient(
+      135deg,
+      var(--brand-primary-deep) 0%,
+      var(--brand-primary) 56%,
+      var(--brand-primary-light) 125%
+    );
+
+  color:
+    #ffffff;
+
+  box-shadow:
+    0 10px 24px
+    color-mix(
+      in srgb,
+      var(--brand-primary) 20%,
+      transparent
+    ),
+    inset 0 1px 0 rgba(255, 255, 255, 0.22);
+}
+
+html[data-theme="light"]
+.product-card-button-cart
+.product-card-button-content,
+html[data-theme="light"]
+.product-card-button-cart
+.product-card-button-label,
+html[data-theme="light"]
+.product-card-button-cart
+.product-card-button-icon {
+  color:
+    #ffffff;
+}
+
+html[data-theme="light"]
+.product-card-button-cart
+.product-card-button-icon-shell {
+  border-color:
+    rgba(255, 255, 255, 0.28);
+
+  background:
+    rgba(255, 255, 255, 0.13);
+
+  color:
+    #ffffff;
+
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.16);
+}
+
+html[data-theme="light"]
+.product-card-button-cart:hover:not(:disabled) {
+  border-color:
+    var(--brand-primary-light);
+
+  background:
+    linear-gradient(
+      135deg,
+      var(--brand-primary-deep) 0%,
+      var(--brand-primary) 42%,
+      var(--brand-primary-light) 110%
+    );
+
+  color:
+    #ffffff;
+
+  box-shadow:
+    0 14px 30px
+    color-mix(
+      in srgb,
+      var(--brand-primary) 27%,
+      transparent
+    ),
+    inset 0 1px 0 rgba(255, 255, 255, 0.25);
+}
+
+/* ------------------------------------------------------------
+   COLLECTOR META
+   CAJA / TARJETA
+   ------------------------------------------------------------ */
+
+html[data-theme="light"]
+.product-card-collector-meta {
+  border:
+    1px solid
+    rgba(148, 163, 184, 0.22);
+
+  background:
+    linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 0.98),
+      #f8fafc
+    );
+
+  box-shadow:
+    0 3px 10px rgba(15, 23, 42, 0.035),
+    inset 0 1px 0 rgba(255, 255, 255, 0.9);
+}
+
+html[data-theme="light"]
+.product-card-collector-meta small {
+  color:
+    #94a3b8;
+}
+
+html[data-theme="light"]
+.product-card-collector-meta strong {
+  color:
+    var(--brand-accent-deep);
+}
+
+html[data-theme="light"]
+.product-card-collector-meta i {
+  background:
+    var(--brand-accent);
+
+  box-shadow:
+    0 0 7px
+    color-mix(
+      in srgb,
+      var(--brand-accent) 34%,
+      transparent
+    );
+}
+
+/* ------------------------------------------------------------
+   NEUTRAL BADGES
+   Includes year / generic labels.
+   Semantic badges remain untouched.
+   ------------------------------------------------------------ */
+
+html[data-theme="light"]
+.product-card-badge.product-badge--default {
+  border:
+    1px solid
+    #dbe3ed;
+
+  background:
+    rgba(255, 255, 255, 0.96);
+
+  color:
+    #475569;
+
+  box-shadow:
+    0 4px 12px rgba(15, 23, 42, 0.055);
+
+  backdrop-filter:
+    blur(10px);
+
+  -webkit-backdrop-filter:
+    blur(10px);
+}
+
+/* Generic card badge base becomes cleaner in Light.
+   Semantic modifier classes can still override color/background. */
+
+html[data-theme="light"]
+.product-card-badge {
+  box-shadow:
+    0 5px 14px rgba(15, 23, 42, 0.07);
+}
+
+/* ------------------------------------------------------------
+   PRODUCT SERIES / SECONDARY META
+   ------------------------------------------------------------ */
+
+html[data-theme="light"]
+.product-card-series {
+  color:
+    #94a3b8;
+}
+
+html[data-theme="light"]
+.product-card-code {
+  color:
+    #64748b;
+}
+
+html[data-theme="light"]
+.product-card-category {
+  color:
+    #64748b;
+}
+
+/* ------------------------------------------------------------
+   PRICE / STOCK POLISH
+   ------------------------------------------------------------ */
+
+html[data-theme="light"]
+.product-card-price strong {
+  color:
+    #0f172a;
+}
+
+html[data-theme="light"]
+.product-card-price span {
+  color:
+    var(--brand-primary-deep);
+}
+
+/* ------------------------------------------------------------
+   DISABLED CTA
+   ------------------------------------------------------------ */
+
+html[data-theme="light"]
+.product-card-button-disabled,
+html[data-theme="light"]
+.product-card-button:disabled {
+  border-color:
+    #e2e8f0;
+
+  background:
+    #f1f5f9;
+
+  color:
+    #94a3b8;
+
+  box-shadow:
+    none;
+}
+
+html[data-theme="light"]
+.product-card-button:disabled
+.product-card-button-icon-shell {
+  border-color:
+    #e2e8f0;
+
+  background:
+    #ffffff;
+
+  color:
+    #94a3b8;
+}
+
+/* ============================================================
+   COMMERCE PRODUCT CARD CLEAN + SKELETON V2
+
+   Product = protagonist.
+   Brand colors become microaccents, not large surfaces.
+   ============================================================ */
+
+/* ------------------------------------------------------------
+   PRODUCT CARD — CLEAN LIGHT SURFACE
+   ------------------------------------------------------------ */
+
+html[data-theme="light"]
+.product-card:not(.product-card-skeleton) {
+  background:
+    #ffffff;
+
+  border-color:
+    rgba(148, 163, 184, 0.24);
+
+  box-shadow:
+    0 8px 24px rgba(15, 23, 42, 0.055),
+    0 1px 2px rgba(15, 23, 42, 0.035);
+}
+
+/*
+ * Replace the previous full-card color wash with one
+ * controlled collector micro-line.
+ */
+html[data-theme="light"]
+.product-card:not(.product-card-skeleton)::before {
+  z-index:
+    4;
+
+  top:
+    0;
+
+  right:
+    1.15rem;
+
+  bottom:
+    auto;
+
+  left:
+    1.15rem;
+
+  height:
+    2px;
+
+  border-radius:
+    999px;
+
+  background:
+    linear-gradient(
+      90deg,
+      transparent 0%,
+      color-mix(
+        in srgb,
+        var(--brand-secondary) 76%,
+        transparent
+      ) 20%,
+      color-mix(
+        in srgb,
+        var(--brand-primary) 86%,
+        transparent
+      ) 52%,
+      color-mix(
+        in srgb,
+        var(--brand-accent) 78%,
+        transparent
+      ) 82%,
+      transparent 100%
+    );
+
+  opacity:
+    0.36;
+
+  pointer-events:
+    none;
+}
+
+html[data-theme="light"]
+.product-card:not(.product-card-skeleton)
+.product-card-body {
+  background:
+    transparent;
+}
+
+html[data-theme="light"]
+.product-card:not(.product-card-skeleton)
+.product-card-image-wrap {
+  background:
+    #f8fafc;
+
+  border-color:
+    #e2e8f0;
+
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.95),
+    0 6px 16px rgba(15, 23, 42, 0.035);
+}
+
+/*
+ * The image itself already carries the product photography.
+ * Keep the wrapper overlay practically neutral.
+ */
+html[data-theme="light"]
+.product-card:not(.product-card-skeleton)
+.product-card-image-wrap::after {
+  background:
+    linear-gradient(
+      180deg,
+      transparent 78%,
+      rgba(15, 23, 42, 0.018)
+    );
+}
+
+/* ------------------------------------------------------------
+   SKELETON 2.0 — STRUCTURE
+   ------------------------------------------------------------ */
+
+.product-card-skeleton {
+  --skeleton-accent:
+    var(--brand-primary);
+
+  cursor:
+    default;
+
+  pointer-events:
+    none;
+}
+
+.product-card-skeleton-media {
+  position:
+    relative;
+
+  aspect-ratio:
+    10 / 11;
+
+  overflow:
+    hidden;
+
+  border-radius:
+    1.05rem;
+}
+
+.product-card-skeleton-image {
+  width:
+    100%;
+
+  height:
+    100%;
+
+  border-radius:
+    inherit;
+}
+
+.product-card-skeleton-badges {
+  position:
+    absolute;
+
+  z-index:
+    2;
+
+  top:
+    0.68rem;
+
+  left:
+    0.68rem;
+
+  display:
+    flex;
+
+  gap:
+    0.36rem;
+}
+
+.product-card-skeleton-badge {
+  width:
+    4rem;
+
+  height:
+    1.5rem;
+
+  border-radius:
+    999px;
+}
+
+.product-card-skeleton-badge:last-child {
+  width:
+    3.1rem;
+}
+
+.product-card-skeleton-body {
+  display:
+    flex;
+
+  flex:
+    1;
+
+  flex-direction:
+    column;
+
+  padding:
+    0.74rem 0.2rem 0.12rem;
+}
+
+.product-card-skeleton-title {
+  width:
+    78%;
+
+  height:
+    1.35rem;
+
+  border-radius:
+    0.45rem;
+}
+
+.product-card-skeleton-series {
+  width:
+    58%;
+
+  height:
+    0.68rem;
+
+  margin-top:
+    0.62rem;
+
+  border-radius:
+    999px;
+}
+
+.product-card-skeleton-meta {
+  width:
+    100%;
+
+  height:
+    1.68rem;
+
+  margin-top:
+    0.66rem;
+
+  border-radius:
+    0.7rem;
+}
+
+.product-card-skeleton-commerce {
+  display:
+    grid;
+
+  grid-template-columns:
+    minmax(0, 1fr)
+    auto;
+
+  gap:
+    0.45rem;
+
+  align-items:
+    end;
+
+  margin-top:
+    0.72rem;
+
+  padding-top:
+    0.62rem;
+
+  border-top:
+    1px solid
+    color-mix(
+      in srgb,
+      var(--color-border) 74%,
+      transparent
+    );
+}
+
+.product-card-skeleton-price {
+  width:
+    5.8rem;
+
+  height:
+    1.75rem;
+
+  border-radius:
+    0.5rem;
+}
+
+.product-card-skeleton-stock {
+  width:
+    4.4rem;
+
+  height:
+    1.45rem;
+
+  border-radius:
+    999px;
+}
+
+.product-card-skeleton-cta {
+  width:
+    100%;
+
+  height:
+    2.84rem;
+
+  margin-top:
+    0.62rem;
+
+  border-radius:
+    0.88rem;
+}
+
+/* ------------------------------------------------------------
+   SKELETON 2.0 — BRAND RHYTHM
+   Cyan -> Indigo -> Gold
+   ------------------------------------------------------------ */
+
+.catalog-grid
+> .product-card-skeleton:nth-child(3n + 1),
+.category-page-grid
+> .product-card-skeleton:nth-child(3n + 1) {
+  --skeleton-accent:
+    var(--brand-primary);
+}
+
+.catalog-grid
+> .product-card-skeleton:nth-child(3n + 2),
+.category-page-grid
+> .product-card-skeleton:nth-child(3n + 2) {
+  --skeleton-accent:
+    var(--brand-secondary);
+}
+
+.catalog-grid
+> .product-card-skeleton:nth-child(3n),
+.category-page-grid
+> .product-card-skeleton:nth-child(3n) {
+  --skeleton-accent:
+    var(--brand-accent-deep);
+}
+
+/* ------------------------------------------------------------
+   SKELETON 2.0 — SURFACE
+   ------------------------------------------------------------ */
+
+.product-card-skeleton::before {
+  z-index:
+    4;
+
+  top:
+    0;
+
+  right:
+    1.1rem;
+
+  bottom:
+    auto;
+
+  left:
+    1.1rem;
+
+  height:
+    2px;
+
+  border-radius:
+    999px;
+
+  background:
+    linear-gradient(
+      90deg,
+      transparent,
+      var(--skeleton-accent),
+      transparent
+    );
+
+  opacity:
+    0.44;
+
+  pointer-events:
+    none;
+}
+
+.catalog-skeleton {
+  position:
+    relative;
+
+  overflow:
+    hidden;
+
+  background:
+    color-mix(
+      in srgb,
+      var(--color-text) 8%,
+      var(--color-surface)
+    );
+}
+
+.catalog-skeleton::after {
+  content:
+    "";
+
+  position:
+    absolute;
+
+  inset:
+    0;
+
+  transform:
+    translateX(-105%);
+
+  background:
+    linear-gradient(
+      90deg,
+      transparent 0%,
+      color-mix(
+        in srgb,
+        var(--color-text) 5%,
+        transparent
+      ) 34%,
+      color-mix(
+        in srgb,
+        var(--color-text) 9%,
+        transparent
+      ) 50%,
+      color-mix(
+        in srgb,
+        var(--color-text) 5%,
+        transparent
+      ) 66%,
+      transparent 100%
+    );
+
+  animation:
+    catalogSkeletonShimmer
+    1.65s
+    ease-in-out
+    infinite;
+}
+
+@keyframes catalogSkeletonShimmer {
+  100% {
+    transform:
+      translateX(105%);
+  }
+}
+
+/* ------------------------------------------------------------
+   SKELETON 2.0 — LIGHT PREMIUM
+   ------------------------------------------------------------ */
+
+html[data-theme="light"]
+.product-card-skeleton {
+  border-color:
+    rgba(148, 163, 184, 0.22);
+
+  background:
+    #ffffff;
+
+  box-shadow:
+    0 8px 24px rgba(15, 23, 42, 0.045),
+    0 1px 2px rgba(15, 23, 42, 0.03);
+}
+
+html[data-theme="light"]
+.product-card-skeleton-media {
+  border:
+    1px solid
+    #e2e8f0;
+
+  background:
+    #f8fafc;
+}
+
+html[data-theme="light"]
+.catalog-skeleton {
+  background:
+    linear-gradient(
+      110deg,
+      #edf2f7 0%,
+      #f3f6f9 48%,
+      #e9eef4 100%
+    );
+}
+
+html[data-theme="light"]
+.catalog-skeleton::after {
+  background:
+    linear-gradient(
+      90deg,
+      transparent 0%,
+      rgba(255, 255, 255, 0.16) 25%,
+      rgba(255, 255, 255, 0.92) 48%,
+      color-mix(
+        in srgb,
+        var(--skeleton-accent) 5%,
+        rgba(255, 255, 255, 0.92)
+      ) 54%,
+      rgba(255, 255, 255, 0.20) 72%,
+      transparent 100%
+    );
+}
+
+/*
+ * CTA skeleton gets a subtle Cyan anticipation,
+ * without pretending to be an active button.
+ */
+html[data-theme="light"]
+.product-card-skeleton-cta {
+  background:
+    color-mix(
+      in srgb,
+      var(--brand-primary) 10%,
+      #eef2f7
+    );
+
+  border:
+    1px solid
+    color-mix(
+      in srgb,
+      var(--brand-primary) 10%,
+      #e2e8f0
+    );
+}
+
+/*
+ * Collector meta skeleton gets a very light Gold cue.
+ */
+html[data-theme="light"]
+.product-card-skeleton-meta {
+  background:
+    color-mix(
+      in srgb,
+      var(--brand-accent) 5%,
+      #eef2f7
+    );
+}
+
+/* ------------------------------------------------------------
+   REDUCED MOTION
+   ------------------------------------------------------------ */
+
+@media (prefers-reduced-motion: reduce) {
+  .catalog-skeleton::after {
+    animation:
+      none;
+
+    transform:
+      none;
+  }
+}
+
+/* ============================================================
+   COMMERCE FLOATING BOX + EXPLORE LIGHT V1
+
+   Final catalog utility language:
+   - Cyan = commerce
+   - Indigo = identity
+   - Gold = collector value
+   - White/Slate = structure
+
+   Dark mode keeps component base styles.
+   ============================================================ */
+
+/* ------------------------------------------------------------
+   MI BOX — FLOATING ACTION
+   ------------------------------------------------------------ */
+
+html[data-theme="light"]
+.floating-box-button {
+  border-color:
+    color-mix(
+      in srgb,
+      var(--brand-primary) 58%,
+      #bae6fd
+    ) !important;
+
+  background:
+    linear-gradient(
+      145deg,
+      var(--brand-primary) 0%,
+      var(--brand-primary-light) 115%
+    ) !important;
+
+  color:
+    #ffffff !important;
+
+  box-shadow:
+    0 12px 28px
+    color-mix(
+      in srgb,
+      var(--brand-primary) 24%,
+      transparent
+    ),
+    inset 0 1px 0 rgba(255, 255, 255, 0.28) !important;
+}
+
+html[data-theme="light"]
+.floating-box-button:hover {
+  border-color:
+    var(--brand-primary-light) !important;
+
+  background:
+    linear-gradient(
+      145deg,
+      var(--brand-primary-deep) 0%,
+      var(--brand-primary) 66%,
+      var(--brand-primary-light) 125%
+    ) !important;
+
+  color:
+    #ffffff !important;
+}
+
+.floating-box-icon-shell {
+  width:
+    1.78rem;
+
+  height:
+    1.78rem;
+
+  display:
+    inline-flex;
+
+  align-items:
+    center;
+
+  justify-content:
+    center;
+
+  border-radius:
+    0.68rem;
+}
+
+html[data-theme="light"]
+.floating-box-icon-shell {
+  border:
+    1px solid
+    rgba(255, 255, 255, 0.38);
+
+  background:
+    rgba(255, 255, 255, 0.16);
+
+  color:
+    #ffffff;
+
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.22);
+}
+
+html[data-theme="light"]
+.floating-box-icon {
+  color:
+    #ffffff;
+
+  stroke-width:
+    2;
+}
+
+html[data-theme="light"]
+.floating-box-count {
+  border-color:
+    color-mix(
+      in srgb,
+      var(--brand-secondary) 20%,
+      #e2e8f0
+    ) !important;
+
+  background:
+    #ffffff !important;
+
+  color:
+    var(--brand-secondary-deep) !important;
+
+  box-shadow:
+    0 5px 14px rgba(15, 23, 42, 0.12) !important;
+}
+
+/* ------------------------------------------------------------
+   EXPLORE — TRIGGER
+   ------------------------------------------------------------ */
+
+html[data-theme="light"]
+.catalog-explore-trigger {
+  border-color:
+    color-mix(
+      in srgb,
+      var(--brand-secondary) 22%,
+      #dbe3ed
+    );
+
+  background:
+    #ffffff;
+
+  color:
+    var(--brand-secondary);
+
+  box-shadow:
+    0 8px 22px rgba(15, 23, 42, 0.07),
+    inset 0 1px 0 rgba(255, 255, 255, 0.96);
+}
+
+html[data-theme="light"]
+.catalog-explore-trigger:hover {
+  border-color:
+    color-mix(
+      in srgb,
+      var(--brand-primary) 38%,
+      #cbd5e1
+    );
+
+  background:
+    color-mix(
+      in srgb,
+      var(--brand-primary) 4%,
+      #ffffff
+    );
+
+  color:
+    var(--brand-primary-deep);
+
+  box-shadow:
+    0 10px 24px rgba(15, 23, 42, 0.09),
+    0 0 0 3px
+    color-mix(
+      in srgb,
+      var(--brand-primary) 6%,
+      transparent
+    );
+}
+
+html[data-theme="light"]
+.catalog-explore-trigger svg {
+  stroke-width:
+    2.15;
+}
+
+/* ------------------------------------------------------------
+   EXPLORE — OVERLAY
+   ------------------------------------------------------------ */
+
+html[data-theme="light"]
+.catalog-explore-backdrop {
+  background:
+    rgba(15, 23, 42, 0.28);
+
+  backdrop-filter:
+    blur(5px);
+
+  -webkit-backdrop-filter:
+    blur(5px);
+}
+
+/* ------------------------------------------------------------
+   EXPLORE — SHEET
+   ------------------------------------------------------------ */
+
+html[data-theme="light"]
+.catalog-explore-sheet {
+  position:
+    absolute;
+
+  border-color:
+    rgba(148, 163, 184, 0.24);
+
+  background:
+    linear-gradient(
+      180deg,
+      #ffffff 0%,
+      #fbfdff 100%
+    );
+
+  color:
+    #0f172a;
+
+  box-shadow:
+    0 -24px 60px rgba(15, 23, 42, 0.16);
+}
+
+html[data-theme="light"]
+.catalog-explore-sheet::before {
+  content:
+    "";
+
+  position:
+    absolute;
+
+  top:
+    0;
+
+  left:
+    1.5rem;
+
+  right:
+    1.5rem;
+
+  height:
+    2px;
+
+  border-radius:
+    999px;
+
+  background:
+    linear-gradient(
+      90deg,
+      transparent,
+      var(--brand-secondary),
+      var(--brand-primary),
+      var(--brand-accent),
+      transparent
+    );
+
+  opacity:
+    0.52;
+
+  pointer-events:
+    none;
+}
+
+/* ------------------------------------------------------------
+   EXPLORE — HEADER
+   ------------------------------------------------------------ */
+
+html[data-theme="light"]
+.catalog-explore-header span {
+  color:
+    var(--brand-secondary);
+}
+
+html[data-theme="light"]
+.catalog-explore-header h3 {
+  color:
+    #0f172a;
+}
+
+html[data-theme="light"]
+.catalog-explore-close {
+  border-color:
+    #e2e8f0;
+
+  background:
+    #f8fafc;
+
+  color:
+    #64748b;
+
+  box-shadow:
+    0 4px 12px rgba(15, 23, 42, 0.045);
+}
+
+html[data-theme="light"]
+.catalog-explore-close:hover {
+  border-color:
+    color-mix(
+      in srgb,
+      var(--brand-secondary) 24%,
+      #dbe3ed
+    );
+
+  background:
+    color-mix(
+      in srgb,
+      var(--brand-secondary) 4%,
+      #ffffff
+    );
+
+  color:
+    var(--brand-secondary-deep);
+}
+
+html[data-theme="light"]
+.catalog-explore-group > p {
+  color:
+    #94a3b8;
+}
+
+/* ------------------------------------------------------------
+   EXPLORE — CATEGORY CHIPS
+   ------------------------------------------------------------ */
+
+html[data-theme="light"]
+.catalog-explore-chip {
+  border-color:
+    #e2e8f0;
+
+  background:
+    #ffffff;
+
+  color:
+    #475569;
+
+  box-shadow:
+    0 4px 12px rgba(15, 23, 42, 0.035);
+
+  transition:
+    border-color
+      var(--motion-duration-standard)
+      var(--motion-ease-standard),
+    background
+      var(--motion-duration-standard)
+      var(--motion-ease-standard),
+    color
+      var(--motion-duration-standard)
+      var(--motion-ease-standard),
+    transform
+      var(--motion-duration-standard)
+      var(--motion-ease-standard),
+    box-shadow
+      var(--motion-duration-standard)
+      var(--motion-ease-standard);
+}
+
+html[data-theme="light"]
+.catalog-explore-chip:hover {
+  transform:
+    translateY(-1px);
+
+  border-color:
+    color-mix(
+      in srgb,
+      var(--brand-primary) 28%,
+      #dbe3ed
+    );
+
+  background:
+    color-mix(
+      in srgb,
+      var(--brand-primary) 4%,
+      #ffffff
+    );
+
+  color:
+    #0f172a;
+
+  box-shadow:
+    0 7px 18px rgba(15, 23, 42, 0.065);
+}
+
+html[data-theme="light"]
+.catalog-explore-chip strong {
+  color:
+    inherit;
+}
+
+html[data-theme="light"]
+.catalog-explore-chip small {
+  color:
+    #94a3b8;
+}
+
+html[data-theme="light"]
+.catalog-explore-chip.active {
+  border-color:
+    var(--brand-primary);
+
+  background:
+    color-mix(
+      in srgb,
+      var(--brand-primary) 8%,
+      #ffffff
+    );
+
+  color:
+    var(--brand-primary-deep);
+
+  box-shadow:
+    0 8px 20px
+    color-mix(
+      in srgb,
+      var(--brand-primary) 10%,
+      transparent
+    ),
+    inset 3px 0 0
+    var(--brand-primary);
+}
+
+html[data-theme="light"]
+.catalog-explore-chip.active small {
+  color:
+    var(--brand-primary-deep);
+}
+
+/* ============================================================
+   PRODUCT DETAIL LIGHT EXPERIENCE V1
+
+   Commercial hierarchy:
+   1. Product image
+   2. Product name / collector identity
+   3. Price / stock
+   4. Commerce actions
+
+   Dark mode keeps component base styles.
+   ============================================================ */
+
+/* ------------------------------------------------------------
+   PAGE CANVAS
+   ------------------------------------------------------------ */
+
+html[data-theme="light"]
+.product-detail-page {
+  background:
+    radial-gradient(
+      circle at 8% 4%,
+      color-mix(
+        in srgb,
+        var(--brand-primary) 5%,
+        transparent
+      ),
+      transparent 28rem
+    ),
+    radial-gradient(
+      circle at 92% 10%,
+      color-mix(
+        in srgb,
+        var(--brand-secondary) 4%,
+        transparent
+      ),
+      transparent 30rem
+    ),
+    #f8fafc;
+
+  color:
+    #0f172a;
+}
+
+/* ------------------------------------------------------------
+   STICKY PRODUCT HEADER
+   ------------------------------------------------------------ */
+
+html[data-theme="light"]
+.product-detail-header {
+  border-bottom-color:
+    rgba(148, 163, 184, 0.22);
+
+  background:
+    rgba(255, 255, 255, 0.94);
+
+  box-shadow:
+    0 1px 0 rgba(15, 23, 42, 0.03),
+    0 10px 30px rgba(15, 23, 42, 0.055);
+
+  backdrop-filter:
+    blur(18px);
+
+  -webkit-backdrop-filter:
+    blur(18px);
+}
+
+html[data-theme="light"]
+.product-detail-header-title p {
+  color:
+    var(--brand-secondary);
+}
+
+html[data-theme="light"]
+.product-detail-header-title h1 {
+  color:
+    #0f172a;
+}
+
+html[data-theme="light"]
+.product-detail-icon-button {
+  border-color:
+    #e2e8f0;
+
+  background:
+    #ffffff;
+
+  color:
+    #64748b;
+
+  box-shadow:
+    0 5px 14px rgba(15, 23, 42, 0.045);
+}
+
+html[data-theme="light"]
+.product-detail-icon-button:hover {
+  border-color:
+    color-mix(
+      in srgb,
+      var(--brand-primary) 30%,
+      #dbe3ed
+    );
+
+  background:
+    color-mix(
+      in srgb,
+      var(--brand-primary) 4%,
+      #ffffff
+    );
+
+  color:
+    var(--brand-primary-deep);
+}
+
+/* ------------------------------------------------------------
+   GALLERY — PRODUCT IMAGE IS THE KING
+   ------------------------------------------------------------ */
+
+html[data-theme="light"]
+.product-gallery-main {
+  border-color:
+    #e2e8f0;
+
+  background:
+    #ffffff;
+
+  box-shadow:
+    0 18px 46px rgba(15, 23, 42, 0.075),
+    0 1px 2px rgba(15, 23, 42, 0.035);
+}
+
+html[data-theme="light"]
+.product-gallery-main::before {
+  content:
+    "";
+
+  position:
+    absolute;
+
+  z-index:
+    1;
+
+  top:
+    0;
+
+  right:
+    1.25rem;
+
+  left:
+    1.25rem;
+
+  height:
+    2px;
+
+  border-radius:
+    999px;
+
+  background:
+    linear-gradient(
+      90deg,
+      transparent,
+      var(--brand-secondary),
+      var(--brand-primary),
+      var(--brand-accent),
+      transparent
+    );
+
+  opacity:
+    0.3;
+
+  pointer-events:
+    none;
+}
+
+html[data-theme="light"]
+.product-gallery-image {
+  position:
+    relative;
+
+  z-index:
+    0;
+}
+
+html[data-theme="light"]
+.product-gallery-badge {
+  border-color:
+    rgba(148, 163, 184, 0.24);
+
+  background:
+    rgba(255, 255, 255, 0.94);
+
+  color:
+    #475569;
+
+  box-shadow:
+    0 5px 14px rgba(15, 23, 42, 0.07);
+
+  backdrop-filter:
+    blur(10px);
+
+  -webkit-backdrop-filter:
+    blur(10px);
+}
+
+html[data-theme="light"]
+.product-gallery-zoom {
+  border-color:
+    color-mix(
+      in srgb,
+      var(--brand-secondary) 20%,
+      #dbe3ed
+    );
+
+  background:
+    rgba(255, 255, 255, 0.94);
+
+  color:
+    var(--brand-secondary);
+
+  box-shadow:
+    0 7px 18px rgba(15, 23, 42, 0.09);
+}
+
+html[data-theme="light"]
+.product-gallery-zoom:hover {
+  background:
+    #ffffff;
+
+  color:
+    var(--brand-primary-deep);
+
+  box-shadow:
+    0 10px 24px rgba(15, 23, 42, 0.11);
+}
+
+html[data-theme="light"]
+.product-gallery-thumbnail {
+  border-color:
+    #e2e8f0;
+
+  background:
+    #ffffff;
+
+  box-shadow:
+    0 4px 12px rgba(15, 23, 42, 0.035);
+}
+
+html[data-theme="light"]
+.product-gallery-thumbnail-active {
+  border-color:
+    var(--brand-primary);
+
+  box-shadow:
+    0 0 0 3px
+    color-mix(
+      in srgb,
+      var(--brand-primary) 9%,
+      transparent
+    );
+}
+
+/* ------------------------------------------------------------
+   OVERVIEW / BUY PANEL
+   ------------------------------------------------------------ */
+
+html[data-theme="light"]
+.product-detail-overview {
+  border-color:
+    rgba(148, 163, 184, 0.23);
+
+  background:
+    linear-gradient(
+      180deg,
+      #ffffff 0%,
+      #ffffff 74%,
+      #fbfdff 100%
+    );
+
+  box-shadow:
+    0 18px 46px rgba(15, 23, 42, 0.075),
+    0 1px 2px rgba(15, 23, 42, 0.035);
+
+  backdrop-filter:
+    none;
+}
+
+html[data-theme="light"]
+.product-detail-overview::before {
+  content:
+    "";
+
+  position:
+    absolute;
+
+  top:
+    0;
+
+  right:
+    1.3rem;
+
+  left:
+    1.3rem;
+
+  height:
+    2px;
+
+  border-radius:
+    999px;
+
+  background:
+    linear-gradient(
+      90deg,
+      transparent,
+      var(--brand-secondary),
+      var(--brand-primary),
+      var(--brand-accent),
+      transparent
+    );
+
+  opacity:
+    0.32;
+
+  pointer-events:
+    none;
+}
+
+/* ------------------------------------------------------------
+   PRODUCT HEADING / META
+   ------------------------------------------------------------ */
+
+html[data-theme="light"]
+.product-detail-title {
+  color:
+    #0f172a;
+}
+
+html[data-theme="light"]
+.product-detail-code {
+  color:
+    #94a3b8;
+}
+
+html[data-theme="light"]
+.product-detail-kicker {
+  border-color:
+    color-mix(
+      in srgb,
+      var(--brand-secondary) 20%,
+      #e2e8f0
+    );
+
+  background:
+    color-mix(
+      in srgb,
+      var(--brand-secondary) 5%,
+      #ffffff
+    );
+
+  color:
+    var(--brand-secondary-deep);
+}
+
+html[data-theme="light"]
+.product-detail-description {
+  color:
+    #64748b;
+}
+
+/* ------------------------------------------------------------
+   PROFILE BADGES
+   Neutral base + semantic modifiers
+   ------------------------------------------------------------ */
+
+html[data-theme="light"]
+.product-profile-badge {
+  border-color:
+    #e2e8f0;
+
+  background:
+    #ffffff;
+
+  color:
+    #475569;
+
+  box-shadow:
+    0 4px 12px rgba(15, 23, 42, 0.045);
+}
+
+html[data-theme="light"]
+.product-profile-badge.product-badge--new {
+  border-color:
+    #bae6fd;
+
+  background:
+    #f0f9ff;
+
+  color:
+    #0369a1;
+}
+
+html[data-theme="light"]
+.product-profile-badge.product-badge--premium,
+html[data-theme="light"]
+.product-profile-badge.product-badge--limited {
+  border-color:
+    #fde68a;
+
+  background:
+    #fffbeb;
+
+  color:
+    #b45309;
+}
+
+html[data-theme="light"]
+.product-profile-badge.product-badge--offer {
+  border-color:
+    #fecdd3;
+
+  background:
+    #fff1f2;
+
+  color:
+    #be123c;
+}
+
+html[data-theme="light"]
+.product-profile-badge.product-badge--special {
+  border-color:
+    #ddd6fe;
+
+  background:
+    #f5f3ff;
+
+  color:
+    #6d28d9;
+}
+
+html[data-theme="light"]
+.product-profile-badge.product-badge--top,
+html[data-theme="light"]
+.product-profile-badge.product-badge--last {
+  border-color:
+    #fed7aa;
+
+  background:
+    #fff7ed;
+
+  color:
+    #c2410c;
+}
+
+html[data-theme="light"]
+.product-profile-badge.product-badge--express {
+  border-color:
+    #bbf7d0;
+
+  background:
+    #f0fdf4;
+
+  color:
+    #15803d;
+}
+
+html[data-theme="light"]
+.product-profile-badge.product-badge--season {
+  border-color:
+    #bfdbfe;
+
+  background:
+    #eff6ff;
+
+  color:
+    #1d4ed8;
+}
+
+/* ------------------------------------------------------------
+   COLLECTOR PROFILE
+   Gold = collection value
+   ------------------------------------------------------------ */
+
+html[data-theme="light"]
+.product-profile-collector {
+  border-color:
+    color-mix(
+      in srgb,
+      var(--brand-accent) 30%,
+      #e2e8f0
+    );
+
+  background:
+    linear-gradient(
+      135deg,
+      color-mix(
+        in srgb,
+        var(--brand-accent) 4%,
+        #ffffff
+      ),
+      #ffffff 58%,
+      #f8fafc
+    );
+
+  box-shadow:
+    0 7px 20px rgba(15, 23, 42, 0.04);
+}
+
+html[data-theme="light"]
+.product-profile-collector-eyebrow {
+  color:
+    var(--brand-accent-deep);
+}
+
+html[data-theme="light"]
+.product-profile-collector-line {
+  background:
+    linear-gradient(
+      90deg,
+      color-mix(
+        in srgb,
+        var(--brand-accent) 54%,
+        transparent
+      ),
+      transparent
+    );
+}
+
+html[data-theme="light"]
+.product-profile-fact {
+  border-color:
+    #e2e8f0;
+
+  background:
+    rgba(255, 255, 255, 0.86);
+}
+
+html[data-theme="light"]
+.product-profile-fact dt {
+  color:
+    #94a3b8;
+}
+
+html[data-theme="light"]
+.product-profile-fact dd {
+  color:
+    #334155;
+}
+
+html[data-theme="light"]
+.product-profile-fact:nth-child(1) dd {
+  color:
+    var(--brand-accent-deep);
+}
+
+/* ------------------------------------------------------------
+   STOCK / STATUS
+   ------------------------------------------------------------ */
+
+html[data-theme="light"]
+.product-detail-stock-count {
+  border:
+    1px solid
+    #e2e8f0;
+
+  background:
+    #f8fafc;
+
+  color:
+    #64748b;
+}
+
+html[data-theme="light"]
+.product-detail-stock-count strong {
+  color:
+    #334155;
+}
+
+html[data-theme="light"]
+.product-detail-status-success {
+  color:
+    #15803d;
+}
+
+html[data-theme="light"]
+.product-detail-status-warning {
+  color:
+    #b45309;
+}
+
+html[data-theme="light"]
+.product-detail-status-danger {
+  color:
+    #be123c;
+}
+
+html[data-theme="light"]
+.product-detail-status-preorder {
+  color:
+    var(--brand-primary-deep);
+}
+
+/* ------------------------------------------------------------
+   BUY BOX
+   ------------------------------------------------------------ */
+
+html[data-theme="light"]
+.product-detail-buy-box {
+  border-top-color:
+    #e2e8f0;
+}
+
+html[data-theme="light"]
+.product-detail-price-box > p {
+  color:
+    var(--brand-secondary-deep);
+}
+
+html[data-theme="light"]
+.product-detail-old-price {
+  color:
+    #94a3b8;
+}
+
+html[data-theme="light"]
+.product-detail-price span {
+  color:
+    var(--brand-primary-deep);
+}
+
+html[data-theme="light"]
+.product-detail-price strong {
+  color:
+    #0f172a;
+}
+
+html[data-theme="light"]
+.product-detail-offer-label {
+  border-color:
+    #bae6fd;
+
+  background:
+    #f0f9ff;
+
+  color:
+    var(--brand-primary-deep);
+}
+
+/* ------------------------------------------------------------
+   QUANTITY
+   ------------------------------------------------------------ */
+
+html[data-theme="light"]
+.product-detail-qty-box {
+  border-color:
+    #e2e8f0;
+
+  background:
+    #f8fafc;
+}
+
+html[data-theme="light"]
+.product-detail-qty-box p {
+  color:
+    #334155;
+}
+
+html[data-theme="light"]
+.product-detail-qty-box small {
+  color:
+    #94a3b8;
+}
+
+html[data-theme="light"]
+.product-detail-qty-control {
+  border-color:
+    #dbe3ed;
+
+  background:
+    #ffffff;
+
+  box-shadow:
+    0 4px 12px rgba(15, 23, 42, 0.04);
+}
+
+html[data-theme="light"]
+.product-detail-qty-control button {
+  color:
+    var(--brand-primary-deep);
+}
+
+html[data-theme="light"]
+.product-detail-qty-control button:hover:not(:disabled) {
+  background:
+    color-mix(
+      in srgb,
+      var(--brand-primary) 7%,
+      #ffffff
+    );
+}
+
+html[data-theme="light"]
+.product-detail-qty-control button:disabled {
+  color:
+    #cbd5e1;
+}
+
+html[data-theme="light"]
+.product-detail-qty-control input {
+  border-color:
+    #e2e8f0;
+
+  color:
+    #0f172a;
+}
+
+html[data-theme="light"]
+.product-detail-qty-control input:disabled {
+  color:
+    #94a3b8;
+}
+
+/* ------------------------------------------------------------
+   TOTAL + PRIMARY CTA
+   ------------------------------------------------------------ */
+
+html[data-theme="light"]
+.product-detail-total span {
+  color:
+    #64748b;
+}
+
+html[data-theme="light"]
+.product-detail-total strong {
+  color:
+    #0f172a;
+}
+
+html[data-theme="light"]
+.product-detail-primary-button {
+  border-color:
+    var(--brand-primary);
+
+  background:
+    linear-gradient(
+      135deg,
+      var(--brand-primary-deep),
+      var(--brand-primary)
+    );
+
+  color:
+    #ffffff;
+
+  box-shadow:
+    0 12px 26px
+    color-mix(
+      in srgb,
+      var(--brand-primary) 21%,
+      transparent
+    ),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2);
+}
+
+html[data-theme="light"]
+.product-detail-primary-button:hover:not(:disabled) {
+  box-shadow:
+    0 16px 32px
+    color-mix(
+      in srgb,
+      var(--brand-primary) 27%,
+      transparent
+    );
+}
+
+html[data-theme="light"]
+.product-detail-primary-button:disabled {
+  border-color:
+    #e2e8f0;
+
+  background:
+    #f1f5f9;
+
+  color:
+    #94a3b8;
+
+  box-shadow:
+    none;
+}
+
+/* ------------------------------------------------------------
+   WHATSAPP
+   Semantic green remains independent
+   ------------------------------------------------------------ */
+
+html[data-theme="light"]
+.product-detail-whatsapp-button {
+  border-color:
+    #bbf7d0;
+
+  background:
+    #f0fdf4;
+
+  color:
+    #15803d;
+}
+
+html[data-theme="light"]
+.product-detail-whatsapp-button:hover {
+  border-color:
+    #86efac;
+
+  background:
+    #dcfce7;
+
+  color:
+    #166534;
+}
+
+html[data-theme="light"]
+.product-detail-trust {
+  color:
+    #64748b;
+}
+
+html[data-theme="light"]
+.product-detail-trust svg {
+  color:
+    var(--brand-secondary);
+}
+
+/* ------------------------------------------------------------
+   EMPTY STATE
+   ------------------------------------------------------------ */
+
+html[data-theme="light"]
+.product-detail-empty {
+  background:
+    #f8fafc;
+}
+
+html[data-theme="light"]
+.product-detail-empty p {
+  color:
+    #0f172a;
+}
+
+/* ------------------------------------------------------------
+   PRODUCT DETAIL SKELETON 2.0
+   ------------------------------------------------------------ */
+
+.product-detail-skeleton-page {
+  width:
+    min(100%, 1320px);
+
+  margin:
+    0 auto;
+
+  padding:
+    1.5rem;
+}
+
+.product-detail-skeleton-grid {
+  display:
+    grid;
+
+  grid-template-columns:
+    minmax(0, 1.12fr)
+    minmax(21rem, 0.88fr);
+
+  gap:
+    clamp(1.5rem, 3vw, 3rem);
+
+  align-items:
+    start;
+}
+
+.product-detail-skeleton-gallery {
+  padding:
+    0;
+
+  overflow:
+    hidden;
+
+  aspect-ratio:
+    3 / 4;
+
+  border-radius:
+    1.45rem;
+}
+
+.product-detail-skeleton-panel {
+  display:
+    flex;
+
+  flex-direction:
+    column;
+
+  gap:
+    1rem;
+
+  padding:
+    clamp(1.2rem, 2.2vw, 1.75rem);
+
+  border-radius:
+    1.35rem;
+}
+
+.product-detail-skeleton-badges {
+  display:
+    flex;
+
+  gap:
+    0.42rem;
+}
+
+.product-detail-skeleton-facts {
+  display:
+    grid;
+
+  grid-template-columns:
+    repeat(4, minmax(0, 1fr));
+
+  gap:
+    0.45rem;
+}
+
+.product-detail-skeleton-actions {
+  display:
+    grid;
+
+  gap:
+    0.55rem;
+}
+
+html[data-theme="light"]
+.product-detail-skeleton-gallery,
+html[data-theme="light"]
+.product-detail-skeleton-panel {
+  border:
+    1px solid
+    rgba(148, 163, 184, 0.22);
+
+  background:
+    #ffffff;
+
+  box-shadow:
+    0 14px 36px rgba(15, 23, 42, 0.055);
+}
+
+html[data-theme="light"]
+.product-detail-skeleton-panel {
+  position:
+    relative;
+}
+
+html[data-theme="light"]
+.product-detail-skeleton-panel::before {
+  content:
+    "";
+
+  position:
+    absolute;
+
+  top:
+    0;
+
+  right:
+    1.25rem;
+
+  left:
+    1.25rem;
+
+  height:
+    2px;
+
+  border-radius:
+    999px;
+
+  background:
+    linear-gradient(
+      90deg,
+      transparent,
+      var(--brand-secondary),
+      var(--brand-primary),
+      var(--brand-accent),
+      transparent
+    );
+
+  opacity:
+    0.24;
+}
+
+@media (max-width: 900px) {
+  .product-detail-skeleton-page {
+    width:
+      min(100%, 820px);
+  }
+
+  .product-detail-skeleton-grid {
+    grid-template-columns:
+      minmax(0, 1fr);
+  }
+}
+
+@media (max-width: 640px) {
+  .product-detail-skeleton-page {
+    padding:
+      0.8rem
+      0.9rem
+      5rem;
+  }
+
+  .product-detail-skeleton-gallery {
+    border-radius:
+      1.15rem;
+  }
+
+  .product-detail-skeleton-panel {
+    padding:
+      1rem;
+
+    border-radius:
+      1.15rem;
+  }
+
+  .product-detail-skeleton-facts {
+    grid-template-columns:
+      repeat(2, minmax(0, 1fr));
+  }
+}

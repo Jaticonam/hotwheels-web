@@ -37,7 +37,7 @@
 .product-detail-header-title p {
   margin: 0 0 0.18rem;
   overflow: hidden;
-  color: #38bdf8;
+  color: var(--color-commerce-bright);
   font-size: 0.56rem;
   font-weight: 950;
   letter-spacing: 0.16em;
@@ -50,7 +50,7 @@
 .product-detail-header-title h1 {
   margin: 0;
   overflow: hidden;
-  color: #f8fafc;
+  color: var(--color-text);
   font-size: 0.84rem;
   font-weight: 900;
   line-height: 1.2;
@@ -70,7 +70,7 @@
   border-radius: 0.85rem;
   background:
     rgba(15, 23, 42, 0.82);
-  color: #cbd5e1;
+  color: var(--color-text-secondary);
   cursor: pointer;
   transition:
     transform 180ms ease,

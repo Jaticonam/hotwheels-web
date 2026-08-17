@@ -3,6 +3,10 @@ import AOS from "aos";
 
 import "aos/dist/aos.css";
 import "./index.css";
+import "./styles/base/themes.css";
+
+import ThemeToggle from "./shared/components/theme/ThemeToggle";
+import { initializeTheme } from "./shared/theme/theme";
 
 import App from "./App.tsx";
 
@@ -13,4 +17,9 @@ AOS.init({
   offset: 60,
 });
 
-createRoot(document.getElementById("root")!).render(<App />);
+initializeTheme();
+
+createRoot(document.getElementById("root")!).render(<>
+        <App />
+        <ThemeToggle />
+      </>);

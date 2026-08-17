@@ -10,8 +10,9 @@ import {
   ArrowLeft,
   MessageCircle,
   Minus,
+  PackageOpen,
+  PackagePlus,
   Plus,
-  ShoppingCart,
   Trash2,
   X,
 } from "lucide-react";
@@ -288,13 +289,13 @@ function CartRow({
         <div className="cart-sidebar-item-info">
           <div className="cart-sidebar-item-top">
             <div>
-              <p className="cart-sidebar-item-code">
-                ID {item.id}
-              </p>
-
               <h4>
                 {item.title}
               </h4>
+
+              <p className="cart-sidebar-item-code">
+                ID {item.id}
+              </p>
             </div>
 
             <button
@@ -421,7 +422,7 @@ export function CartSidebar({
         <header className="cart-sidebar-header">
           <div className="cart-sidebar-title-wrap">
             <div className="cart-sidebar-icon">
-              <ShoppingCart className="w-5 h-5" />
+              <PackagePlus className="w-5 h-5" />
             </div>
 
             <div>
@@ -446,7 +447,7 @@ export function CartSidebar({
             type="button"
             onClick={onClose}
             className="cart-sidebar-close"
-            aria-label="Cerrar carrito"
+            aria-label="Cerrar Mi Box"
           >
             <X className="w-5 h-5" />
           </button>
@@ -456,11 +457,11 @@ export function CartSidebar({
           {cart.length === 0 ? (
             <div className="cart-sidebar-empty">
               <div className="cart-sidebar-empty-icon">
-                <ShoppingCart className="w-8 h-8" />
+                <PackageOpen className="w-8 h-8" />
               </div>
 
               <p>
-                Aún no agregaste modelos.
+                Aún no agregaste modelos a Mi Box.
               </p>
 
               <small>

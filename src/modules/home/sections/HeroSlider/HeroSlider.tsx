@@ -1,92 +1,90 @@
 import "./HeroSlider.css";
 
-import { Link } from "react-router-dom";
 import {
-  ArrowRight,
-  Gauge,
-  ShieldCheck,
-  Sparkles,
+  MessageCircle,
 } from "lucide-react";
 
-export default function HeroSlider() {
-  return (
-    <section className="collectibles-hero">
-      <div className="collectibles-hero-grid" />
-      <div className="collectibles-hero-glow collectibles-hero-glow-a" />
-      <div className="collectibles-hero-glow collectibles-hero-glow-b" />
+import MiniRace from "@/modules/home/components/MiniRace/MiniRace";
 
-      <div className="relative z-10 mx-auto grid min-h-[680px] max-w-7xl items-center gap-14 px-5 py-20 md:px-8 lg:grid-cols-[1.08fr_.92fr]">
-        <div>
-          <div className="mb-7 inline-flex items-center gap-2 rounded-full border border-sky-400/20 bg-sky-400/10 px-4 py-2 text-[11px] font-black uppercase tracking-[0.2em] text-sky-300">
-            <Sparkles size={14} />
-            Autos para descubrir y coleccionar
+import {
+  BRAND_CONFIG,
+} from "@/tenant/config/brand";
+
+export default function HeroSlider() {
+  const whatsappHref =
+    `https://wa.me/${BRAND_CONFIG.contact.whatsapp}?text=${encodeURIComponent(
+      "Hola, quiero información sobre Hot Wheels.",
+    )}`;
+
+  return (
+    <section className="home-mvp-hero">
+      <div className="home-mvp-hero-background">
+        <img
+          src="https://images.unsplash.com/photo-1603584173870-7f23fdae1b7a?auto=format&fit=crop&w=1920&q=80"
+          alt="Hot Wheels Background"
+        />
+
+        <div className="home-mvp-hero-overlay" />
+      </div>
+
+      <div className="home-mvp-hero-inner">
+        <div className="home-mvp-hero-copy">
+          <div className="home-mvp-stock-chip">
+            <span className="home-mvp-stock-fire">
+              🔥
+            </span>
+
+            <span>
+              Coleccionables originales · Envíos a todo el Perú
+            </span>
           </div>
 
-          <h1 className="max-w-4xl text-5xl font-black leading-[.94] tracking-[-0.05em] text-white sm:text-6xl lg:text-8xl">
-            Tu próxima pieza
-            <span className="block text-sky-400">
-              empieza aquí.
+          <div className="home-mvp-heading">
+            <span className="home-mvp-eyebrow">
+              HOTWHEELS · COLECCIONABLES 1:64
             </span>
-          </h1>
 
-          <p className="mt-7 max-w-2xl text-base font-medium leading-8 text-slate-400 md:text-lg">
-            Explora modelos, encuentra tus favoritos y compra
-            unidades seleccionadas directamente desde nuestro catálogo.
+            <h1>
+              Hot Wheels originales para{" "}
+              <span className="home-mvp-gradient-text">
+                coleccionar, disfrutar y regalar
+              </span>{" "}
+              🚗🔥
+            </h1>
+          </div>
+
+          <p className="home-mvp-hero-description">
+            Descubre modelos para coleccionar, disfrutar o regalar.
+            Explora el catálogo, encuentra tus favoritos y recibe tu pedido en cualquier ciudad del Perú.
           </p>
 
-          <div className="mt-9 flex flex-col gap-3 sm:flex-row">
-            <Link
-              to="/catalogo"
-              className="group inline-flex items-center justify-center gap-3 rounded-2xl bg-sky-500 px-7 py-4 text-sm font-black text-white shadow-[0_20px_60px_rgba(14,165,233,.25)] transition hover:-translate-y-1 hover:bg-sky-400"
+          <div className="home-mvp-hero-actions">
+            <a
+              href={whatsappHref}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="home-mvp-whatsapp"
             >
-              Explorar catálogo
-              <ArrowRight
-                size={18}
-                className="transition group-hover:translate-x-1"
+              <MessageCircle
+                size={20}
+                aria-hidden="true"
               />
-            </Link>
+
+              <span>
+                Consultar por WhatsApp
+              </span>
+            </a>
 
             <a
-              href="#categorias"
-              className="inline-flex items-center justify-center rounded-2xl border border-white/10 bg-white/5 px-7 py-4 text-sm font-black text-white transition hover:bg-white/10"
+              href="/catalogo"
+              className="home-mvp-secondary"
             >
-              Ver categorías
+              Ver catálogo
             </a>
           </div>
-
-          <div className="mt-10 flex flex-wrap gap-6 border-t border-white/10 pt-7 text-xs font-bold text-slate-400">
-            <span className="flex items-center gap-2">
-              <Gauge size={16} className="text-sky-400" />
-              Compra por unidad
-            </span>
-
-            <span className="flex items-center gap-2">
-              <ShieldCheck size={16} className="text-sky-400" />
-              Stock identificado
-            </span>
-          </div>
         </div>
 
-        <div className="collectibles-hero-display">
-          <div className="collectibles-hero-card">
-            <span className="collectibles-hero-number">
-              1:64
-            </span>
-
-            <div className="collectibles-car">
-              <div className="collectibles-car-body" />
-              <div className="collectibles-car-window" />
-              <div className="collectibles-wheel collectibles-wheel-left" />
-              <div className="collectibles-wheel collectibles-wheel-right" />
-            </div>
-
-            <div className="collectibles-hero-card-copy">
-              <span>CATÁLOGO</span>
-              <strong>COLECCIONABLES</strong>
-              <small>Encuentra tu próxima pieza</small>
-            </div>
-          </div>
-        </div>
+        <MiniRace />
       </div>
     </section>
   );

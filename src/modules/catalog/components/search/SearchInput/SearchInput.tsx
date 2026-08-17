@@ -3,6 +3,13 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import { ArrowRight, Search, Sparkles, X } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { BRAND_CONFIG } from "@/tenant/config/brand";
+import {
+  getCatalogSearchUrl,
+  getProductUrl,
+} from "@/app/routes/routes";
+import {
+  searchProducts,
+} from "@/shared/lib/search";
 import type { Product } from "@/shared/types/product";
 
 interface SearchInputProps {
@@ -16,34 +23,6 @@ const MAX_SUGGESTIONS = 6;
 
 const QUICK_SEARCHES = ["Deportivos", "Premium", "Clásicos"];
 
-const SEARCH_SYNONYMS: Record<string, string[]> = {
-  deportivo: ["deportivo", "deportivos", "sport", "sports"],
-  deportivos: ["deportivo", "deportivos", "sport", "sports"],
-
-  coleccionable: ["coleccionable", "coleccionables"],
-  coleccionables: ["coleccionable", "coleccionables"],
-
-  tematico: ["tematico", "tematicos"],
-  tematicos: ["tematico", "tematicos"],
-
-  clasico: ["clasico", "clasicos"],
-  clasicos: ["clasico", "clasicos"],
-
-  premium: ["premium"],
-};
-
-function normalizeSearchText(value: unknown): string {
-  return String(value ?? "")
-    .trim()
-    .toLowerCase()
-    .normalize("NFD")
-    .replace(/[\u0300-\u036f]/g, "");
-}
-
-function getSearchVariants(value: string): string[] {
-  const normalized = normalizeSearchText(value);
-  return SEARCH_SYNONYMS[normalized] ?? [normalized];
-}
 
 function highlightMatch(text: string, query: string) {
   const cleanQuery = query.trim();
@@ -94,35 +73,17 @@ export function SearchInput({
   const hasValue = term.length > 0;
 
   const suggestions = useMemo(() => {
-    const searchTerm = normalizeSearchText(term);
+    if (!term) {
+      return [];
+    }
 
-    if (!searchTerm) return [];
-
-    const searchVariants = getSearchVariants(searchTerm);
-
-    return products
-      .filter((p) => {
-        const attributes = Array.isArray(p.attributes)
-          ? p.attributes.join(" ")
-          : "";
-
-        const fields = [
-          p.title,
-          p.id,
-          p.category,
-          p.description,
-          attributes,
-        ];
-
-        return fields.some((field) => {
-          const normalizedField = normalizeSearchText(field);
-
-          return searchVariants.some((variant) =>
-            normalizedField.includes(variant)
-          );
-        });
-      })
-      .slice(0, MAX_SUGGESTIONS);
+    return searchProducts(
+      products,
+      term,
+    ).slice(
+      0,
+      MAX_SUGGESTIONS,
+    );
   }, [term, products]);
 
   const hasSuggestions = suggestions.length > 0;
@@ -150,12 +111,15 @@ export function SearchInput({
     onChange("");
     closeSuggestions();
 
-    navigate(`/catalogo/producto.html?id=${product.id}&cat=${product.category}`, {
-      state: {
-        fromSearch: true,
-        searchQuery: currentSearch,
+    navigate(
+      getProductUrl(product),
+      {
+        state: {
+          fromSearch: true,
+          searchQuery: currentSearch,
+        },
       },
-    });
+    );
   };
 
   const goToCatalogSearch = () => {
@@ -163,12 +127,15 @@ export function SearchInput({
 
     closeSuggestions();
 
-    navigate("/catalogo", {
-      state: {
-        fromSearch: true,
-        searchQuery: term,
+    navigate(
+      getCatalogSearchUrl(term),
+      {
+        state: {
+          fromSearch: true,
+          searchQuery: term,
+        },
       },
-    });
+    );
   };
 
   const applyQuickSearch = (item: string) => {

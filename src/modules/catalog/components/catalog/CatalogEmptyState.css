@@ -10,7 +10,7 @@
   justify-content: center;
   min-height: 18rem;
   text-align: center;
-  color: #64748b;
+  color: var(--color-text-subtle);
 }
 
 .catalog-empty-icon {
@@ -23,7 +23,7 @@
   border: 1px solid rgba(56, 189, 248, 0.16);
   border-radius: 50%;
   background: rgba(14, 165, 233, 0.08);
-  color: #38bdf8;
+  color: var(--color-commerce-bright);
 }
 
 .catalog-empty p {
@@ -34,6 +34,6 @@
 
 .catalog-empty small {
   margin-top: 0.35rem;
-  color: #64748b;
+  color: var(--color-text-subtle);
   font-weight: 650;
 }

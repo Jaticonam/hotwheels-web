@@ -15,6 +15,12 @@ export interface CatalogTopNavProps {
     id: string,
   ) => void;
 
+  exploreOpen?: boolean;
+
+  onExploreOpenChange?: (
+    open: boolean,
+  ) => void;
+
   searchSlot?: React.ReactNode;
   logoSlot?: React.ReactNode;
 }

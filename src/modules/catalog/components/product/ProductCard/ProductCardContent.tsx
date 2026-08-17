@@ -41,21 +41,6 @@ export function ProductCardContent({
 
   return (
     <div className="product-card-content">
-      <div className="product-card-identity-row">
-        <p
-          className="product-card-code product-card-copyable"
-          data-product-card-no-detail="true"
-        >
-          ID {product.id}
-        </p>
-
-        <span className="product-card-category">
-          {getCategoryName(
-            product.category,
-          )}
-        </span>
-      </div>
-
       <div
         className="product-card-title-button product-card-copyable"
         data-product-card-no-detail="true"
@@ -104,6 +89,21 @@ export function ProductCardContent({
           )}
         </div>
       )}
+
+      <div
+        className="product-card-identity-row product-card-copyable"
+        data-product-card-no-detail="true"
+      >
+        <p className="product-card-code">
+          ID {product.id}
+        </p>
+
+        <span className="product-card-category">
+          {getCategoryName(
+            product.category,
+          )}
+        </span>
+      </div>
     </div>
   );
 }

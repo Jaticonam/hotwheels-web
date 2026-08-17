@@ -19,10 +19,36 @@ export function useCatalogProducts(
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    productSource.loadAllProducts().then((data) => {
-      setProducts(data);
-      setLoading(false);
-    });
+    let mounted = true;
+
+    productSource
+      .loadAllProducts()
+      .then((data) => {
+        if (!mounted) {
+          return;
+        }
+
+        setProducts(data);
+      })
+      .catch((error) => {
+        console.error(
+          "No se pudo cargar el catálogo:",
+          error,
+        );
+
+        if (mounted) {
+          setProducts([]);
+        }
+      })
+      .finally(() => {
+        if (mounted) {
+          setLoading(false);
+        }
+      });
+
+    return () => {
+      mounted = false;
+    };
   }, []);
 
   const filteredProducts = useMemo(() => {

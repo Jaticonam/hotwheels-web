@@ -15,13 +15,62 @@
 
 :root {
   /* ========================================================
+     BRAND SYSTEM V1
+     Identidad nativa provisional de la futura marca.
+     ======================================================== */
+
+  /* Foundation */
+  --brand-dark: #020617;
+  --brand-surface: #0f172a;
+  --brand-light: #f8fafc;
+
+  /* Primary — Electric Cyan */
+  --brand-primary-deep: #0369a1;
+  --brand-primary: #0ea5e9;
+  --brand-primary-light: #38bdf8;
+  --brand-primary-soft: #7dd3fc;
+
+  /* Secondary — Collector Indigo */
+  --brand-secondary-deep: #3730a3;
+  --brand-secondary: #4f46e5;
+  --brand-secondary-light: #818cf8;
+  --brand-secondary-soft: #c7d2fe;
+
+  /* Accent — Collector Gold */
+  --brand-accent-deep: #d97706;
+  --brand-accent: #fbbf24;
+  --brand-accent-light: #fde68a;
+
+  /* Semantic brand aliases */
+  --color-brand-primary: var(--brand-primary);
+  --color-brand-primary-deep: var(--brand-primary-deep);
+  --color-brand-primary-light: var(--brand-primary-light);
+
+  --color-brand-secondary: var(--brand-secondary);
+  --color-brand-secondary-deep: var(--brand-secondary-deep);
+  --color-brand-secondary-light: var(--brand-secondary-light);
+
+  --color-brand-accent: var(--brand-accent);
+  --color-brand-accent-deep: var(--brand-accent-deep);
+  --color-brand-accent-light: var(--brand-accent-light);
+
+  /*
+   * Identity / editorial layer.
+   * No representa una acción ni un estado funcional.
+   */
+  --color-identity-deep: var(--brand-secondary-deep);
+  --color-identity: var(--brand-secondary);
+  --color-identity-light: var(--brand-secondary-light);
+  --color-identity-soft: rgba(79, 70, 229, 0.12);
+  --color-identity-glow: rgba(79, 70, 229, 0.20);
+  /* ========================================================
      FOUNDATION
   ======================================================== */
 
-  --color-bg: #020617;
-  --color-bg-deep: #020617;
+  --color-bg: var(--brand-dark);
+  --color-bg-deep: var(--brand-dark);
 
-  --color-surface: #0f172a;
+  --color-surface: var(--brand-surface);
   --color-surface-raised: #1e293b;
   --color-surface-strong: #334155;
 
@@ -32,7 +81,7 @@
      TEXT
   ======================================================== */
 
-  --color-text: #f8fafc;
+  --color-text: var(--brand-light);
   --color-text-secondary: #cbd5e1;
   --color-text-muted: #94a3b8;
   --color-text-subtle: #64748b;
@@ -55,10 +104,10 @@
      Acción / navegación / compra / Mi Box
   ======================================================== */
 
-  --color-commerce-strong: #0369a1;
-  --color-commerce: #0ea5e9;
-  --color-commerce-bright: #38bdf8;
-  --color-commerce-light: #7dd3fc;
+  --color-commerce-strong: var(--brand-primary-deep);
+  --color-commerce: var(--brand-primary);
+  --color-commerce-bright: var(--brand-primary-light);
+  --color-commerce-light: var(--brand-primary-soft);
 
   --color-commerce-soft:
     rgba(14, 165, 233, 0.1);
@@ -71,9 +120,9 @@
      Colección / ficha / premium / rareza / recompensa
   ======================================================== */
 
-  --color-collector-strong: #d97706;
-  --color-collector: #fbbf24;
-  --color-collector-light: #fde68a;
+  --color-collector-strong: var(--brand-accent-deep);
+  --color-collector: var(--brand-accent);
+  --color-collector-light: var(--brand-accent-light);
 
   --color-collector-soft:
     rgba(245, 158, 11, 0.1);

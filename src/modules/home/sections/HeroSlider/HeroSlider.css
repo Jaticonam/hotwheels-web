@@ -1,159 +1,364 @@
-.collectibles-hero {
+.home-mvp-hero {
   position: relative;
+
+  min-height:
+    calc(
+      100vh - 5rem
+    );
+
   overflow: hidden;
-  background:
-    radial-gradient(circle at 50% -20%, rgba(14, 165, 233, 0.18), transparent 34%),
-    #020617;
-}
 
-.collectibles-hero-grid {
-  position: absolute;
-  inset: 0;
-  opacity: 0.14;
-  background-image:
-    linear-gradient(rgba(148, 163, 184, 0.16) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(148, 163, 184, 0.16) 1px, transparent 1px);
-  background-size: 48px 48px;
-  mask-image: linear-gradient(to bottom, black, transparent 82%);
-}
-
-.collectibles-hero-glow {
-  position: absolute;
-  width: 32rem;
-  height: 32rem;
-  border-radius: 999px;
-  filter: blur(110px);
-  pointer-events: none;
-}
-
-.collectibles-hero-glow-a {
-  right: -10rem;
-  top: 1rem;
-  background: rgba(14, 165, 233, 0.14);
-}
-
-.collectibles-hero-glow-b {
-  left: -14rem;
-  bottom: -16rem;
-  background: rgba(59, 130, 246, 0.1);
-}
-
-.collectibles-hero-display {
-  position: relative;
   display: flex;
-  justify-content: center;
-  perspective: 1200px;
+  align-items: center;
+
+  background: var(--color-bg);
 }
 
-.collectibles-hero-card {
-  position: relative;
-  width: min(100%, 430px);
-  aspect-ratio: 0.74;
-  overflow: hidden;
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  border-radius: 34px;
+.home-mvp-hero-background {
+  position: absolute;
+
+  inset: 0;
+
+  z-index: 0;
+}
+
+.home-mvp-hero-background img {
+  width: 100%;
+  height: 100%;
+
+  object-fit: cover;
+
+  filter:
+    saturate(0.86)
+    contrast(1.06)
+    brightness(0.62);
+}
+
+.home-mvp-hero-overlay {
+  position: absolute;
+
+  inset: 0;
+
   background:
-    linear-gradient(145deg, rgba(14, 165, 233, 0.17), transparent 45%),
-    linear-gradient(180deg, #111827, #020617);
-  box-shadow:
-    0 40px 100px rgba(0, 0, 0, 0.45),
-    inset 0 1px 0 rgba(255, 255, 255, 0.08);
-  transform: rotateY(-7deg) rotateX(3deg);
+    linear-gradient(
+      90deg,
+      rgba(2, 6, 23, 0.98) 0%,
+      rgba(2, 6, 23, 0.9) 43%,
+      rgba(3, 105, 161, 0.34) 72%,
+      rgba(2, 6, 23, 0.12) 100%
+    );
 }
 
-.collectibles-hero-number {
-  position: absolute;
-  right: 22px;
-  top: 18px;
-  font-size: clamp(3.5rem, 9vw, 6.8rem);
-  font-weight: 950;
-  line-height: 1;
-  letter-spacing: -0.08em;
-  color: rgba(255, 255, 255, 0.055);
+.home-mvp-hero-inner {
+  position: relative;
+
+  z-index: 1;
+
+  width:
+    min(
+      100% - 2rem,
+      80rem
+    );
+
+  margin: 0 auto;
+
+  display: grid;
+
+  grid-template-columns:
+    minmax(0, 1fr)
+    minmax(0, 1fr);
+
+  gap: 3rem;
+
+  align-items: center;
+
+  padding:
+    6rem
+    0;
 }
 
-.collectibles-car {
-  position: absolute;
-  left: 50%;
-  top: 47%;
-  width: 72%;
-  height: 26%;
-  transform: translate(-50%, -50%);
-}
+.home-mvp-hero-copy {
+  order: 1;
 
-.collectibles-car-body {
-  position: absolute;
-  left: 5%;
-  top: 35%;
-  width: 90%;
-  height: 42%;
-  border-radius: 52% 24% 18% 24% / 45% 48% 35% 40%;
-  background: linear-gradient(135deg, #38bdf8, #0284c7 65%, #075985);
-  box-shadow: 0 18px 55px rgba(14, 165, 233, 0.28);
-}
-
-.collectibles-car-window {
-  position: absolute;
-  left: 34%;
-  top: 18%;
-  width: 38%;
-  height: 30%;
-  transform: skewX(-22deg);
-  border-radius: 60% 30% 10% 20%;
-  background: linear-gradient(160deg, #cbd5e1, #334155 60%);
-}
-
-.collectibles-wheel {
-  position: absolute;
-  bottom: 4%;
-  width: 19%;
-  aspect-ratio: 1;
-  border: 8px solid #020617;
-  border-radius: 50%;
-  background: #334155;
-  box-shadow: inset 0 0 0 5px #94a3b8;
-}
-
-.collectibles-wheel-left {
-  left: 18%;
-}
-
-.collectibles-wheel-right {
-  right: 12%;
-}
-
-.collectibles-hero-card-copy {
-  position: absolute;
-  left: 30px;
-  right: 30px;
-  bottom: 32px;
   display: flex;
   flex-direction: column;
+
+  gap: 1.5rem;
 }
 
-.collectibles-hero-card-copy span {
-  margin-bottom: 5px;
-  font-size: 10px;
+.home-mvp-stock-chip {
+  align-self: flex-start;
+
+  display: inline-flex;
+  align-items: center;
+
+  gap: 0.5rem;
+
+  padding:
+    0.5rem
+    1rem;
+
+  border:
+    1px solid
+    rgba(251, 191, 36, 0.32);
+
+  border-radius: 999px;
+
+  background:
+    rgba(251, 191, 36, 0.1);
+
+  color: var(--color-collector-light);
+
+  font-size: 0.875rem;
+  font-weight: 800;
+}
+
+.home-mvp-stock-fire {
+  animation:
+    homeMvpPulse
+    1.5s
+    ease-in-out
+    infinite;
+}
+
+.home-mvp-heading {
+  display: flex;
+  flex-direction: column;
+
+  gap: 0.5rem;
+}
+
+.home-mvp-eyebrow {
+  color: var(--color-identity-light);
+
+  font-size: 0.72rem;
   font-weight: 900;
-  letter-spacing: 0.28em;
-  color: #38bdf8;
+
+  text-transform: uppercase;
+
+  letter-spacing: 0.18em;
 }
 
-.collectibles-hero-card-copy strong {
-  font-size: clamp(1.8rem, 5vw, 3rem);
-  line-height: 0.95;
-  letter-spacing: -0.04em;
-  color: white;
+.home-mvp-heading h1 {
+  max-width: 13ch;
+
+  margin: 0;
+
+  color: #ffffff;
+
+  font-size:
+    clamp(
+      2.5rem,
+      5vw,
+      3.75rem
+    );
+
+  font-weight: 950;
+
+  line-height: 1.05;
+
+  letter-spacing:
+    -0.045em;
 }
 
-.collectibles-hero-card-copy small {
-  margin-top: 10px;
-  color: #94a3b8;
+.home-mvp-gradient-text {
+  background:
+    linear-gradient(
+      90deg,
+      var(--color-commerce-light),
+      var(--color-identity-light),
+      var(--color-collector)
+    );
+
+  -webkit-background-clip:
+    text;
+
+  background-clip:
+    text;
+
+  color: transparent;
 }
+
+.home-mvp-hero-description {
+  max-width: 36rem;
+
+  margin: 0;
+
+  color: var(--color-text-secondary);
+
+  font-size: 1.08rem;
+
+  line-height: 1.7;
+}
+
+.home-mvp-hero-actions {
+  display: flex;
+  flex-wrap: wrap;
+
+  gap: 1rem;
+
+  padding-top: 1rem;
+}
+
+.home-mvp-whatsapp,
+.home-mvp-secondary {
+  min-height: 3.5rem;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  gap: 0.5rem;
+
+  padding:
+    0
+    2rem;
+
+  border-radius: 0.75rem;
+
+  font-size: 1rem;
+  font-weight: 850;
+
+  transition:
+    transform 180ms ease,
+    background 180ms ease,
+    border-color 180ms ease;
+}
+
+.home-mvp-whatsapp {
+  background: var(--color-whatsapp);
+
+  color: #ffffff;
+
+  box-shadow:
+    0 14px 34px
+    rgba(37, 211, 102, 0.2);
+}
+
+.home-mvp-whatsapp:hover {
+  transform:
+    translateY(-2px);
+
+  background: #20bd5a;
+}
+
+.home-mvp-secondary {
+  border:
+    1px solid
+    rgba(125, 211, 252, 0.22);
+
+  background:
+    rgba(15, 23, 42, 0.66);
+
+  color: #ffffff;
+
+  backdrop-filter:
+    blur(12px);
+}
+
+.home-mvp-secondary:hover {
+  transform:
+    translateY(-2px);
+
+  border-color:
+    rgba(56, 189, 248, 0.5);
+
+  background:
+    rgba(30, 41, 59, 0.82);
+}
+
+@keyframes homeMvpPulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0.55;
+  }
+}
+
+/* ========================================================
+   TABLET / MOBILE
+======================================================== */
 
 @media (max-width: 1023px) {
-  .collectibles-hero-card {
-    max-width: 360px;
-    transform: none;
+  .home-mvp-hero {
+    min-height: auto;
+  }
+
+  .home-mvp-hero-inner {
+    grid-template-columns:
+      1fr;
+
+    gap: 3rem;
+
+    padding:
+      4.5rem
+      0;
+  }
+
+  .home-mvp-hero-copy {
+    order: 2;
+  }
+
+  .home-mvp-heading h1 {
+    max-width: 14ch;
+  }
+}
+
+@media (max-width: 640px) {
+  .home-mvp-hero-inner {
+    width:
+      min(
+        100% - 2rem,
+        80rem
+      );
+
+    gap: 2.5rem;
+
+    padding:
+      3rem
+      0
+      3.5rem;
+  }
+
+  .home-mvp-stock-chip {
+    border-radius: 0.9rem;
+
+    font-size: 0.72rem;
+
+    line-height: 1.35;
+  }
+
+  .home-mvp-heading h1 {
+    font-size:
+      clamp(
+        2.35rem,
+        11vw,
+        3.75rem
+      );
+  }
+
+  .home-mvp-hero-description {
+    font-size: 1rem;
+  }
+
+  .home-mvp-hero-actions {
+    width: 100%;
+
+    flex-direction:
+      column;
+  }
+
+  .home-mvp-whatsapp,
+  .home-mvp-secondary {
+    width: 100%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .home-mvp-stock-fire {
+    animation: none;
   }
 }

@@ -1,7 +1,7 @@
 import {
   LayoutGrid,
   MessageCircle,
-  PackagePlus,
+  Box,
 } from "lucide-react";
 
 import { BRAND_CONFIG } from "@/tenant/config/brand";
@@ -53,18 +53,22 @@ export function FloatingButtons({
         <button
           type="button"
           onClick={onCartClick}
-          className={`${utilityButtonClass} border-sky-300/55 bg-sky-500 text-slate-950 shadow-[0_14px_36px_rgba(14,165,233,0.38)] ring-1 ring-sky-300/20 hover:border-sky-200/70 hover:bg-sky-400 hover:shadow-[0_16px_42px_rgba(14,165,233,0.46)]`}
+          className={`${utilityButtonClass} floating-box-button border-sky-300/55 bg-sky-500 text-slate-950 shadow-[0_14px_36px_rgba(14,165,233,0.38)] ring-1 ring-sky-300/20 hover:border-sky-200/70 hover:bg-sky-400 hover:shadow-[0_16px_42px_rgba(14,165,233,0.46)]`}
           aria-label={`Mi Box, ${cartCount} unidades`}
           title="Mi Box"
         >
-          <PackagePlus
-            className="h-[19px] w-[19px]"
+          <span
+            className="floating-box-icon-shell"
             aria-hidden="true"
-          />
+          >
+            <Box
+              className="floating-box-icon h-[18px] w-[18px]"
+            />
+          </span>
 
           {cartCount > 0 && (
             <span
-              className="absolute -left-1.5 -top-1.5 inline-flex min-h-[18px] min-w-[18px] items-center justify-center rounded-full border border-sky-300/55 bg-slate-950 px-1 text-[9px] font-black leading-none text-white shadow-lg"
+              className="floating-box-count absolute -left-1.5 -top-1.5 inline-flex min-h-[18px] min-w-[18px] items-center justify-center rounded-full border border-sky-300/55 bg-slate-950 px-1 text-[9px] font-black leading-none text-white shadow-lg"
               aria-hidden="true"
             >
               {visibleCartCount}

@@ -75,6 +75,10 @@ export function ProductMeta({
   return (
     <>
       <div className="product-detail-heading">
+        <h2 className="product-detail-title">
+          {product.title}
+        </h2>
+
         <div className="product-detail-topline">
           <span className="product-detail-code">
             ID {product.id}
@@ -86,10 +90,6 @@ export function ProductMeta({
             )}
           </span>
         </div>
-
-        <h2 className="product-detail-title">
-          {product.title}
-        </h2>
 
         {visibleBadges.length >
           0 && (

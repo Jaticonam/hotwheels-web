@@ -21,64 +21,45 @@
     ====================================================== */
 
     /* Commerce */
-    --w-primary:
-      var(--color-commerce);
+    --w-primary: var(--brand-primary);
 
-    --w-primary-dark:
-      var(--color-commerce-strong);
+    --w-primary-dark: var(--brand-primary-deep);
 
-    --w-primary-soft:
-      var(--color-commerce-soft);
+    --w-primary-soft: var(--brand-primary-soft);
 
-    --w-secondary:
-      var(--color-commerce-bright);
+    --w-secondary: var(--brand-secondary);
 
-    --w-secondary-strong:
-      var(--color-commerce);
+    --w-secondary-strong: var(--brand-secondary-deep);
 
-    --w-secondary-soft:
-      var(--color-commerce-soft);
+    --w-secondary-soft: var(--brand-secondary-light);
 
     /* Collector */
-    --w-highlight:
-      var(--color-collector);
+    --w-highlight: var(--brand-accent);
 
-    --w-highlight-soft:
-      var(--color-collector-soft);
+    --w-highlight-soft: var(--brand-accent-light);
 
-    --w-accent:
-      var(--color-commerce-light);
+    --w-accent: var(--brand-accent);
 
-    --w-accent-soft:
-      var(--color-commerce-soft);
+    --w-accent-soft: var(--brand-accent-light);
 
-    --w-lavender:
-      var(--color-text-secondary);
+    --w-lavender: var(--brand-secondary-light);
 
-    --w-lavender-soft:
-      var(--color-surface-raised);
+    --w-lavender-soft: var(--brand-secondary-soft);
 
     /* Foundation */
-    --w-bg:
-      var(--color-bg);
+    --w-bg: var(--brand-dark);
 
-    --w-surface:
-      var(--color-surface);
+    --w-surface: var(--brand-surface);
 
-    --w-surface-soft:
-      var(--color-surface-raised);
+    --w-surface-soft: var(--color-surface-raised);
 
-    --w-text:
-      var(--color-text-secondary);
+    --w-text: var(--brand-light);
 
-    --w-heading:
-      var(--color-text);
+    --w-heading: var(--brand-light);
 
-    --w-muted:
-      var(--color-text-muted);
+    --w-muted: var(--color-text-muted);
 
-    --w-border:
-      var(--color-border);
+    --w-border: var(--color-border);
 
     /* Channels / states */
     --w-whatsapp:

@@ -55,11 +55,11 @@
 
   border-radius: 1px;
 
-  background: var(--color-collector);
+  background: var(--color-identity);
 
   box-shadow:
     0 0 12px
-    var(--color-collector-glow);
+    var(--color-identity-glow);
 
   transform: rotate(45deg);
 }

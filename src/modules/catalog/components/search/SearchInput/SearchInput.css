@@ -39,7 +39,7 @@
 .search-input-icon {
   width: 1.1rem;
   height: 1.1rem;
-  color: #38bdf8;
+  color: var(--color-commerce-bright);
   flex-shrink: 0;
 }
 
@@ -49,13 +49,13 @@
   border: 0;
   outline: 0;
   background: transparent;
-  color: #f8fafc;
+  color: var(--color-text);
   font-size: 0.9rem;
   font-weight: 800;
 }
 
 .search-input-field::placeholder {
-  color: #64748b;
+  color: var(--color-text-subtle);
 }
 
 .search-input-shortcut {
@@ -64,7 +64,7 @@
   border: 1px solid rgba(148, 163, 184, 0.12);
   border-radius: 0.6rem;
   background: rgba(255, 255, 255, 0.04);
-  color: #64748b;
+  color: var(--color-text-subtle);
   font-size: 0.63rem;
   font-weight: 950;
 }
@@ -78,7 +78,7 @@
   border: 0;
   border-radius: 50%;
   background: rgba(255, 255, 255, 0.05);
-  color: #94a3b8;
+  color: var(--color-text-muted);
   cursor: pointer;
 }
 
@@ -124,7 +124,7 @@
   border: 1px solid rgba(56, 189, 248, 0.18);
   border-radius: 999px;
   background: rgba(14, 165, 233, 0.08);
-  color: #7dd3fc;
+  color: var(--color-commerce-light);
   font-size: 0.7rem;
   font-weight: 900;
   cursor: pointer;
@@ -157,7 +157,7 @@
 
 .search-suggestion-item p {
   margin: 0;
-  color: #f8fafc;
+  color: var(--color-text);
   font-size: 0.84rem;
   font-weight: 900;
 }
@@ -165,7 +165,7 @@
 .search-suggestion-item span {
   display: block;
   margin-top: 0.15rem;
-  color: #64748b;
+  color: var(--color-text-subtle);
   font-size: 0.68rem;
   font-weight: 700;
 }
@@ -179,7 +179,7 @@
 .search-suggestion-action {
   width: 1rem;
   height: 1rem;
-  color: #38bdf8;
+  color: var(--color-commerce-bright);
 }
 
 .search-suggestion-footer {
@@ -193,7 +193,7 @@
   border: 0;
   border-top: 1px solid rgba(148, 163, 184, 0.12);
   background: rgba(2, 6, 23, 0.48);
-  color: #7dd3fc;
+  color: var(--color-commerce-light);
   font-size: 0.8rem;
   font-weight: 950;
   cursor: pointer;
@@ -218,19 +218,19 @@
   justify-content: center;
   border-radius: 50%;
   background: rgba(14, 165, 233, 0.09);
-  color: #38bdf8;
+  color: var(--color-commerce-bright);
 }
 
 .search-empty-panel p {
   margin: 0;
-  color: #f8fafc;
+  color: var(--color-text);
   font-weight: 950;
 }
 
 .search-empty-panel span {
   display: block;
   margin-top: 0.2rem;
-  color: #64748b;
+  color: var(--color-text-subtle);
   font-size: 0.74rem;
   font-weight: 700;
 }
