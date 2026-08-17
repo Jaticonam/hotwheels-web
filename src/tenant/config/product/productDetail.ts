@@ -29,7 +29,7 @@ export const PRODUCT_DETAIL_CONFIG = {
 
   actions: {
     addToCart:
-      "Agregar al carrito",
+      "Agregar a Mi Box",
     invalidQty:
       "Ingresa una cantidad",
     whatsappDefault:
@@ -56,7 +56,7 @@ export const PRODUCT_DETAIL_CONFIG = {
     linkCopiedDescription:
       "Comparte este producto",
     addedToCartTitle:
-      "Agregado al carrito",
+      "Agregado a Mi Box",
     addedToCartDescription:
       "El producto fue agregado al carrito.",
     stockLimitTitle:

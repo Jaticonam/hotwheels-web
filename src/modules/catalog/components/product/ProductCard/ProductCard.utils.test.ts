@@ -44,7 +44,7 @@ describe(
               stock: 8,
             }),
           ).label,
-        ).toBe("Stock: 8");
+        ).toBe("Disponible");
       },
     );
 
@@ -59,7 +59,7 @@ describe(
           ),
         ).toEqual({
           label:
-            "2 unidades disponibles",
+            "Quedan 2",
           className:
             "product-card-stock-warning",
         });
@@ -104,7 +104,7 @@ describe(
             }),
           ).label,
         ).toBe(
-          "Stock por confirmar",
+          "Por confirmar",
         );
       },
     );

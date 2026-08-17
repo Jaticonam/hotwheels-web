@@ -19,6 +19,10 @@ export const BRAND_CONFIG = {
   slug: "hotwheels",
   name: "Coleccionables",
 
+  identity: {
+    scale: "Escala 1:64",
+  },
+
   contact: {
     whatsapp: WHATSAPP_NUMBER,
   },

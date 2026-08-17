@@ -35,23 +35,34 @@ export function getProductCardStockPresentation(
     product.stock === undefined
   ) {
     return {
-      label: "Stock por confirmar",
+      label: "Por confirmar",
       className: "product-card-stock-muted",
     };
   }
 
-  if (product.stock <= 3) {
+  if (product.stock === 1) {
     return {
-      label:
-        product.stock === 1
-          ? "1 unidad disponible"
-          : `${product.stock} unidades disponibles`,
+      label: "Última unidad",
+      className: "product-card-stock-warning",
+    };
+  }
+
+  if (product.stock === 2) {
+    return {
+      label: "Quedan 2",
+      className: "product-card-stock-warning",
+    };
+  }
+
+  if (product.stock === 3) {
+    return {
+      label: "Quedan 3",
       className: "product-card-stock-warning",
     };
   }
 
   return {
-    label: `Stock: ${product.stock}`,
+    label: "Disponible",
     className: "product-card-stock-available",
   };
 }

@@ -416,7 +416,7 @@ export function CartSidebar({
         ) =>
           event.stopPropagation()
         }
-        aria-label="Mi carrito"
+        aria-label="Mi Box"
       >
         <header className="cart-sidebar-header">
           <div className="cart-sidebar-title-wrap">
@@ -430,7 +430,7 @@ export function CartSidebar({
               </span>
 
               <h2>
-                Mi carrito
+                Mi Box
               </h2>
 
               <p>

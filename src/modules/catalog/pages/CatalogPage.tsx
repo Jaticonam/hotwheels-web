@@ -4,7 +4,7 @@ import {
   useState,
 } from "react";
 
-import { loadAllProducts } from "@/integrations/sheets/fetchSheets";
+import { productSource } from "@/infrastructure/catalog/productSource";
 import { productBelongsToCategory } from "@/domain/product/categories";
 import { searchProducts } from "@/shared/lib/search";
 import { sortByCommercialPriority } from "@/shared/lib/sort";
@@ -12,6 +12,7 @@ import { sortByCommercialPriority } from "@/shared/lib/sort";
 import type { Product } from "@/shared/types/product";
 
 import { BRAND_CONFIG } from "@/tenant/config/brand";
+import { BrandLockup } from "@/shared/components/brand/BrandLockup";
 
 import { ProductCard } from "@/modules/catalog/components/product/ProductCard";
 import { CatalogTopNav } from "@/modules/catalog/components/catalog/CatalogTopNav";
@@ -38,7 +39,7 @@ export default function CatalogPage() {
   useEffect(() => {
     let mounted = true;
 
-    loadAllProducts()
+    productSource.loadAllProducts()
       .then((loadedProducts) => {
         if (!mounted) {
           return;
@@ -152,13 +153,7 @@ export default function CatalogPage() {
             }}
             aria-label="Ir al inicio"
           >
-            <span className="catalog-brand-mark">
-              Coleccionables
-            </span>
-
-            <span className="catalog-brand-subtitle">
-              Escala 1:64
-            </span>
+            <BrandLockup align="center" size="compact" />
           </button>
         }
         searchSlot={
@@ -187,20 +182,30 @@ export default function CatalogPage() {
             {BRAND_CONFIG.catalog.description}
           </p>
 
-          <div className="catalog-hero-meta">
-            <span>
-              {products.length}{" "}
-              {products.length === 1
-                ? "modelo disponible"
-                : "modelos disponibles"}
+          <div
+            className="catalog-hero-meta"
+            aria-label="Datos del catálogo"
+          >
+            <span className="catalog-hero-stat">
+              <strong>
+                {products.length}
+              </strong>
+
+              <small>
+                {products.length === 1
+                  ? "modelo disponible"
+                  : "modelos disponibles"}
+              </small>
             </span>
 
-            <span>
-              Compra por unidad
-            </span>
+            <span className="catalog-hero-stat catalog-hero-stat-collector">
+              <strong>
+                x1
+              </strong>
 
-            <span>
-              Escala 1:64
+              <small>
+                Compra por unidad
+              </small>
             </span>
           </div>
         </section>

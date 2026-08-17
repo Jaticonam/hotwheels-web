@@ -4,7 +4,7 @@ import {
   useState,
 } from "react";
 
-import { loadAllProducts } from "@/integrations/sheets/fetchSheets";
+import { productSource } from "@/infrastructure/catalog/productSource";
 
 import {
   getEffectivePrice,
@@ -94,7 +94,7 @@ export function useProductDetail({
     setLoading(true);
     setLoadError(null);
 
-    loadAllProducts()
+    productSource.loadAllProducts()
       .then((data) => {
         if (!mounted) return;
 

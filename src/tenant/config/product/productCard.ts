@@ -11,7 +11,7 @@ export const PRODUCT_CARD_CONFIG = {
     whatsappPreorder: "Consultar",
     whatsappSoldOut: "Consultar disponibilidad",
     addMore: "Agregar más",
-    addToCart: "Agregar al carrito",
+    addToCart: "Agregar a Mi Box",
     whatsapp: "Consulta WhatsApp",
     soldOut: "Agotado",
   },

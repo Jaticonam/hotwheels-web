@@ -1,4 +1,6 @@
-import { PRODUCT_CARD_CONFIG } from "@/tenant/config/product";
+import {
+  PRODUCT_CARD_CONFIG,
+} from "@/tenant/config/product";
 
 interface ProductCardPriceProps {
   isPreventa: boolean;
@@ -15,41 +17,48 @@ export function ProductCardPrice({
 }: ProductCardPriceProps) {
   if (isPreventa) {
     return (
-      <div className="product-card-price-block">
+      <div className="product-card-price-block product-card-price-block-preorder">
         <span className="product-card-preorder">
-          {PRODUCT_CARD_CONFIG.price.preorder}
+          {
+            PRODUCT_CARD_CONFIG
+              .price
+              .preorder
+          }
         </span>
-
-        <small>
-          {PRODUCT_CARD_CONFIG.price.preorderHelp}
-        </small>
       </div>
     );
   }
 
   return (
-    <div className="product-card-price-block">
-      <div className="product-card-price-wrap">
+    <div
+      className={[
+        "product-card-price-block",
+        hasOffer
+          ? "product-card-price-block-offer"
+          : "",
+      ].join(" ")}
+    >
+      <div
+        className="product-card-price-topline"
+        aria-hidden={
+          hasOffer
+            ? undefined
+            : true
+        }
+      >
         {hasOffer && (
-          <div className="product-card-price-old">
+          <span className="product-card-price-old">
             S/ {originalPrice.toFixed(2)}
-          </div>
+          </span>
         )}
+      </div>
 
-        <div className="product-card-price">
-          <span>S/</span>
-          <strong>{price.toFixed(2)}</strong>
-        </div>
+      <div className="product-card-price">
+        <span>S/</span>
 
-        {hasOffer ? (
-          <small className="product-card-offer-text">
-            {PRODUCT_CARD_CONFIG.price.offerText}
-          </small>
-        ) : (
-          <small>
-            {PRODUCT_CARD_CONFIG.price.defaultText}
-          </small>
-        )}
+        <strong>
+          {price.toFixed(2)}
+        </strong>
       </div>
     </div>
   );

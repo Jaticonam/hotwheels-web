@@ -232,7 +232,7 @@ export function ProductBuyBox({
         >
           <ShoppingCart className="w-5 h-5" />
 
-          Agregar al carrito
+          Agregar a Mi Box
         </button>
 
         <button

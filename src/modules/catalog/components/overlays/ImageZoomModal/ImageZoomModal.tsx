@@ -15,6 +15,8 @@ interface ImageZoomModalProps {
   title: string;
   onClose: () => void;
 }
+const IMAGE_ZOOM_HISTORY_KEY =
+  "__hotwheelsImageZoom";
 
 export function ImageZoomModal({
   src,
@@ -47,6 +49,11 @@ export function ImageZoomModal({
     useRef<HTMLDivElement>(
       null,
     );
+  const historyEntryRef =
+    useRef(false);
+
+  const onCloseRef =
+    useRef(onClose);
 
   const reset =
     useCallback(() => {
@@ -64,6 +71,99 @@ export function ImageZoomModal({
     src,
     reset,
   ]);
+  useEffect(() => {
+    onCloseRef.current =
+      onClose;
+  }, [onClose]);
+
+  useEffect(() => {
+    if (!src) {
+      return;
+    }
+
+    const currentState =
+      window.history.state;
+
+    const baseState =
+      typeof currentState === "object" &&
+      currentState !== null
+        ? currentState
+        : {};
+
+    const currentIndex =
+      typeof baseState.idx === "number"
+        ? baseState.idx
+        : null;
+
+    window.history.pushState(
+      {
+        ...baseState,
+        ...(currentIndex !== null
+          ? {
+              idx:
+                currentIndex + 1,
+            }
+          : {}),
+        [IMAGE_ZOOM_HISTORY_KEY]:
+          true,
+      },
+      "",
+      window.location.href,
+    );
+
+    historyEntryRef.current =
+      true;
+
+    const handlePopState =
+      () => {
+        if (
+          !historyEntryRef.current
+        ) {
+          return;
+        }
+
+        historyEntryRef.current =
+          false;
+
+        onCloseRef.current();
+      };
+
+    window.addEventListener(
+      "popstate",
+      handlePopState,
+    );
+
+    return () => {
+      window.removeEventListener(
+        "popstate",
+        handlePopState,
+      );
+    };
+  }, [src]);
+
+  const requestClose =
+    useCallback(() => {
+      const currentState =
+        window.history.state;
+
+      const ownsZoomEntry =
+        historyEntryRef.current &&
+        typeof currentState === "object" &&
+        currentState !== null &&
+        currentState[
+          IMAGE_ZOOM_HISTORY_KEY
+        ] === true;
+
+      if (ownsZoomEntry) {
+        window.history.back();
+        return;
+      }
+
+      historyEntryRef.current =
+        false;
+
+      onCloseRef.current();
+    }, []);
 
   useEffect(() => {
     const element =
@@ -196,7 +296,7 @@ export function ImageZoomModal({
           event.target ===
           event.currentTarget
         ) {
-          onClose();
+          requestClose();
         }
       }}
       onMouseMove={
@@ -212,9 +312,7 @@ export function ImageZoomModal({
       <button
         type="button"
         className="absolute right-5 top-5 z-20 rounded-full border border-slate-700 bg-slate-900/90 p-3 text-slate-300 transition hover:border-sky-400/40 hover:text-white md:right-8 md:top-8"
-        onClick={
-          onClose
-        }
+        onClick={requestClose}
         aria-label="Cerrar imagen"
       >
         <X className="h-6 w-6" />

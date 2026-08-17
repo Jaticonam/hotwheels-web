@@ -1,4 +1,6 @@
 import { Link } from "react-router-dom";
+
+import { BrandLockup } from "@/shared/components/brand/BrandLockup";
 import {
   Menu,
   Search,
@@ -21,13 +23,7 @@ export default function HomeNav({
           to="/"
           className="flex flex-col leading-none"
         >
-          <span className="text-lg font-black uppercase tracking-[0.18em] text-white md:text-xl">
-            Coleccionables
-          </span>
-
-          <span className="mt-1 text-[9px] font-black uppercase tracking-[0.34em] text-sky-400">
-            Escala 1:64
-          </span>
+          <BrandLockup align="start" size="default" />
         </Link>
 
         <div className="hidden items-center gap-8 text-sm font-bold text-slate-300 md:flex">
@@ -66,7 +62,7 @@ export default function HomeNav({
             type="button"
             onClick={onCartClick}
             className="relative flex h-11 w-11 items-center justify-center rounded-full border border-white/10 bg-white/5 text-white transition hover:border-sky-400/50 hover:bg-white/10"
-            aria-label="Ver carrito"
+            aria-label="Ver Mi Box"
           >
             <ShoppingBag size={20} />
 

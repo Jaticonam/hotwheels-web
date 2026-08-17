@@ -1,6 +1,10 @@
 import "./ProductCard.css";
 
-import { useMemo } from "react";
+import {
+  useMemo,
+  useState,
+  type MouseEvent,
+} from "react";
 import { useNavigate } from "react-router-dom";
 
 import { getProductUrl } from "@/app/routes/routes";
@@ -16,8 +20,8 @@ import {
   isProductAvailable,
 } from "@/domain/product";
 
-import { buildProductWhatsAppUrl } from "@/integrations/whatsapp/whatsapp";
 import { showNotification } from "@/shared/components/feedback/NotificationStack";
+import { ImageZoomModal } from "@/modules/catalog/components/overlays/ImageZoomModal";
 
 import { ProductCardImage } from "./ProductCardImage";
 import { ProductCardContent } from "./ProductCardContent";
@@ -36,11 +40,30 @@ interface ProductCardProps {
   ) => boolean | void;
 }
 
+const CARD_DETAIL_BLOCK_SELECTOR =
+  [
+    "button",
+    "a",
+    "input",
+    "select",
+    "textarea",
+    '[role="button"]',
+    '[data-product-card-no-detail="true"]',
+  ].join(",");
+
 export function ProductCard({
   product,
   onAddToCart,
 }: ProductCardProps) {
   const navigate = useNavigate();
+
+  const [
+    zoomImage,
+    setZoomImage,
+  ] =
+    useState<string | null>(
+      null,
+    );
 
   const available =
     isProductAvailable(product);
@@ -83,7 +106,7 @@ export function ProductCard({
 
   const addToCartLabel =
     available
-      ? "Agregar al carrito"
+      ? "Agregar a Mi Box"
       : isPreventa
         ? "Preventa"
         : "Agotado";
@@ -94,12 +117,82 @@ export function ProductCard({
     );
   };
 
-  const handleAddToCart = () => {
+  const handleImageZoom = () => {
+    const image =
+      product.img
+        ?.trim();
+
+    if (!image) {
+      return;
+    }
+
+    setZoomImage(
+      image,
+    );
+  };
+
+  const handleCardClick = (
+    event: MouseEvent<HTMLElement>,
+  ) => {
+    const target =
+      event.target instanceof Element
+        ? event.target
+        : null;
+
+    if (!target) {
+      return;
+    }
+
+    if (
+      target.closest(
+        CARD_DETAIL_BLOCK_SELECTOR,
+      )
+    ) {
+      return;
+    }
+
+    const selection =
+      window.getSelection();
+
+    if (
+      selection &&
+      !selection.isCollapsed &&
+      selection
+        .toString()
+        .trim()
+        .length > 0
+    ) {
+      const anchorInside =
+        selection.anchorNode
+          ? event.currentTarget.contains(
+              selection.anchorNode,
+            )
+          : false;
+
+      const focusInside =
+        selection.focusNode
+          ? event.currentTarget.contains(
+              selection.focusNode,
+            )
+          : false;
+
+      if (
+        anchorInside ||
+        focusInside
+      ) {
+        return;
+      }
+    }
+
+    handleViewDetail();
+  };
+
+  const handleAddToCart = (): boolean => {
     if (
       !available ||
       !onAddToCart
     ) {
-      return;
+      return false;
     }
 
     const added =
@@ -108,91 +201,97 @@ export function ProductCard({
         1,
       );
 
-    if (
-      added === false
-    ) {
+    if (added === false) {
       showNotification(
         "Stock máximo alcanzado",
         `Ya tienes el máximo disponible de ${product.title}.`,
       );
 
-      return;
+      return false;
     }
 
     showNotification(
-      "Agregado al carrito",
+      "Agregado a Mi Box",
       `${product.title} se agregó correctamente.`,
     );
-  };
 
-  const handleWhatsApp = () => {
-    const url =
-      buildProductWhatsAppUrl({
-        product,
-        qty: 1,
-      });
-
-    window.open(
-      url,
-      "_blank",
-      "noopener,noreferrer",
-    );
+    return true;
   };
 
   return (
-    <article className="product-card">
-      <ProductCardImage
-        product={product}
-        available={available}
-        isPreventa={isPreventa}
-        badges={visibleBadges}
-        onImageClick={
-          handleViewDetail
+    <>
+      <article
+        className="product-card"
+        onClick={handleCardClick}
+      >
+        <ProductCardImage
+          product={product}
+          available={available}
+          isPreventa={isPreventa}
+          badges={visibleBadges}
+          onImageClick={
+            handleImageZoom
+          }
+        />
+
+        <div className="product-card-body">
+          <ProductCardContent
+            product={product}
+          />
+
+          <div className="product-card-commerce-block">
+            <ProductCardPrice
+              isPreventa={
+                isPreventa
+              }
+              hasOffer={
+                hasOffer
+              }
+              price={price}
+              originalPrice={
+                originalPrice
+              }
+            />
+
+            <div
+              className={[
+                "product-card-stock",
+                stockPresentation.className,
+              ].join(" ")}
+            >
+              <span
+                className="product-card-stock-dot"
+                aria-hidden="true"
+              />
+
+              {stockPresentation.label}
+            </div>
+          </div>
+
+          <ProductCardActions
+            productTitle={
+              product.title
+            }
+            canAddToCart={
+              canAddToCart
+            }
+            addToCartLabel={
+              addToCartLabel
+            }
+            onAddToCart={
+              handleAddToCart
+            }
+          />
+        </div>
+      </article>
+
+      <ImageZoomModal
+        src={zoomImage}
+        title={product.title}
+        onClose={() =>
+          setZoomImage(null)
         }
       />
-
-      <div className="product-card-body">
-        <ProductCardContent
-          product={product}
-          stockPresentation={
-            stockPresentation
-          }
-          onViewDetail={
-            handleViewDetail
-          }
-        />
-
-        <ProductCardPrice
-          isPreventa={
-            isPreventa
-          }
-          hasOffer={
-            hasOffer
-          }
-          price={price}
-          originalPrice={
-            originalPrice
-          }
-        />
-
-        <ProductCardActions
-          productTitle={
-            product.title
-          }
-          canAddToCart={
-            canAddToCart
-          }
-          addToCartLabel={
-            addToCartLabel
-          }
-          onAddToCart={
-            handleAddToCart
-          }
-          onWhatsApp={
-            handleWhatsApp
-          }
-        />
-      </div>
-    </article>
+    </>
   );
 }

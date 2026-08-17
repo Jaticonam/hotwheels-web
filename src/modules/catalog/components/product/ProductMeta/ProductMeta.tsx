@@ -3,7 +3,9 @@ import {
 } from "@/tenant/config/catalog";
 
 import {
+  getBadgePresentation,
   PRODUCT_DETAIL_CONFIG,
+  sortBadges,
 } from "@/tenant/config/product";
 
 import type {
@@ -29,6 +31,47 @@ export function ProductMeta({
   stockClass,
   StockIcon,
 }: ProductMetaProps) {
+  const visibleBadges =
+    sortBadges(
+      product.badges ?? [],
+    ).slice(0, 3);
+
+  const collectorFacts = [
+    {
+      label: "Caja",
+      value:
+        product.case_code
+          ?.trim()
+          .toUpperCase() ?? "",
+    },
+    {
+      label: "Tarjeta",
+      value:
+        product.card_number
+          ?.trim() ?? "",
+    },
+    {
+      label: "Serie",
+      value:
+        product.mini_series
+          ?.trim() ?? "",
+    },
+    {
+      label: "Año",
+      value:
+        product.year
+          ? String(
+              product.year,
+            )
+          : "",
+    },
+  ].filter(
+    (fact) =>
+      Boolean(
+        fact.value,
+      ),
+  );
+
   return (
     <>
       <div className="product-detail-heading">
@@ -48,6 +91,46 @@ export function ProductMeta({
           {product.title}
         </h2>
 
+        {visibleBadges.length >
+          0 && (
+          <div
+            className="product-profile-badges"
+            aria-label="Etiquetas del producto"
+          >
+            {visibleBadges.map(
+              (badge) => {
+                const presentation =
+                  getBadgePresentation(
+                    badge,
+                  );
+
+                return (
+                  <span
+                    key={badge}
+                    className={[
+                      "product-profile-badge",
+                      presentation.className,
+                    ].join(" ")}
+                  >
+                    <span
+                      aria-hidden="true"
+                      className="product-profile-badge-icon"
+                    >
+                      {
+                        presentation.icon
+                      }
+                    </span>
+
+                    {
+                      presentation.label
+                    }
+                  </span>
+                );
+              },
+            )}
+          </div>
+        )}
+
         <p className="product-detail-description">
           {product.description ||
             PRODUCT_DETAIL_CONFIG
@@ -55,6 +138,47 @@ export function ProductMeta({
               .fallback}
         </p>
       </div>
+
+      {collectorFacts.length >
+        0 && (
+        <section
+          className="product-profile-collector"
+          aria-label="Ficha de colección"
+        >
+          <div className="product-profile-collector-heading">
+            <span className="product-profile-collector-eyebrow">
+              Ficha de colección
+            </span>
+
+            <span className="product-profile-collector-line" />
+          </div>
+
+          <dl className="product-profile-facts">
+            {collectorFacts.map(
+              (fact) => (
+                <div
+                  key={
+                    fact.label
+                  }
+                  className="product-profile-fact"
+                >
+                  <dt>
+                    {
+                      fact.label
+                    }
+                  </dt>
+
+                  <dd>
+                    {
+                      fact.value
+                    }
+                  </dd>
+                </div>
+              ),
+            )}
+          </dl>
+        </section>
+      )}
 
       <div className="product-detail-meta-row">
         <div

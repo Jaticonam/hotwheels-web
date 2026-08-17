@@ -1,45 +1,130 @@
-/* ===== CARDS ===== */
+/* ==========================================================
+   PLATFORM CARD SYSTEM 1.0
+
+   Page -> Surface -> Raised
+
+   Las superficies estructurales abandonan el blanco
+   y pasan al sistema Midnight / Slate.
+========================================================== */
 
 @layer components {
+  .card-home,
+  .card-shop,
+  .card-w {
+    border:
+      1px solid
+      var(--color-border);
 
-  .card-home {
-    @apply rounded-[28px] bg-white;
-    border: 1px solid var(--w-border);
-    box-shadow: var(--w-shadow-soft);
+    border-radius:
+      var(--radius-xl);
+
+    background:
+      linear-gradient(
+        180deg,
+        rgba(255, 255, 255, 0.035),
+        rgba(255, 255, 255, 0.008)
+      ),
+      var(--color-surface);
+
+    color:
+      var(--color-text-secondary);
+
+    box-shadow:
+      var(--shadow-card);
   }
 
   .card-product {
-    @apply rounded-[24px] bg-white transition-all duration-200 hover:-translate-y-1 hover:shadow-xl;
-    border: 1px solid var(--w-border);
-    box-shadow: 0 8px 24px rgba(106, 90, 138, 0.10);
+    border:
+      1px solid
+      var(--color-border);
+
+    border-radius:
+      var(--radius-lg);
+
+    background:
+      linear-gradient(
+        180deg,
+        rgba(255, 255, 255, 0.035),
+        rgba(255, 255, 255, 0.006)
+      ),
+      var(--color-surface);
+
+    color:
+      var(--color-text-secondary);
+
+    box-shadow:
+      var(--shadow-card);
+
+    transition:
+      transform var(--motion-normal),
+      border-color var(--motion-normal),
+      box-shadow var(--motion-normal);
   }
 
   .card-product:hover {
-    border-color: rgba(236, 164, 194, 0.65);
-    box-shadow: var(--w-shadow-medium);
-  }
+    transform:
+      translateY(-4px);
 
-  .card-shop {
-    @apply rounded-[26px] bg-white;
-    border: 1px solid var(--w-border);
-    box-shadow: var(--w-shadow-soft);
-  }
+    border-color:
+      var(--color-border-active);
 
-  .card-w {
-    @apply card-home;
+    box-shadow:
+      var(--shadow-raised);
   }
 
   .glass-w {
-    @apply relative overflow-hidden rounded-[30px] bg-white/85 ring-1 ring-white/30 backdrop-blur-xl;
+    position: relative;
 
-    border: 1px solid rgba(255, 255, 255, 0.7);
+    overflow: hidden;
 
-    box-shadow: 0 30px 90px rgba(106, 90, 138, 0.18);
+    border:
+      1px solid
+      rgba(148, 163, 184, 0.18);
+
+    border-radius:
+      var(--radius-xl);
+
+    background:
+      rgba(15, 23, 42, 0.78);
+
+    color:
+      var(--color-text-secondary);
+
+    box-shadow:
+      var(--shadow-raised);
+
+    backdrop-filter:
+      blur(20px);
+
+    -webkit-backdrop-filter:
+      blur(20px);
   }
 
   .glass-w::before {
     content: "";
 
-    @apply pointer-events-none absolute inset-0 bg-gradient-to-b from-white/50 via-transparent to-transparent opacity-70;
+    position: absolute;
+    inset: 0;
+
+    pointer-events: none;
+
+    background:
+      linear-gradient(
+        180deg,
+        rgba(255, 255, 255, 0.055),
+        transparent 34%
+      );
+
+    opacity: 0.8;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .card-product {
+    transition: none;
+  }
+
+  .card-product:hover {
+    transform: none;
   }
 }

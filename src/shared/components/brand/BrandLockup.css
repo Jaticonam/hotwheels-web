@@ -1,0 +1,101 @@
+/* ==========================================================
+   BRAND LOCKUP 1.0
+
+   Wordmark         -> neutral / white
+   Scale descriptor -> commerce cyan
+   Collector mark   -> amber
+========================================================== */
+
+.brand-lockup {
+  display: inline-flex;
+  flex-direction: column;
+
+  color: var(--color-text);
+
+  font-family: var(--font-display);
+  line-height: 1;
+}
+
+.brand-lockup-start {
+  align-items: flex-start;
+  text-align: left;
+}
+
+.brand-lockup-center {
+  align-items: center;
+  text-align: center;
+}
+
+.brand-lockup-name {
+  color: var(--color-text);
+
+  font-size: 1.12rem;
+  font-weight: 900;
+
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+
+  white-space: nowrap;
+}
+
+.brand-lockup-signature {
+  display: inline-flex;
+  align-items: center;
+
+  gap: 0.42rem;
+
+  margin-top: 0.34rem;
+}
+
+.brand-lockup-accent {
+  width: 0.34rem;
+  height: 0.34rem;
+
+  flex-shrink: 0;
+
+  border-radius: 1px;
+
+  background: var(--color-collector);
+
+  box-shadow:
+    0 0 12px
+    var(--color-collector-glow);
+
+  transform: rotate(45deg);
+}
+
+.brand-lockup-scale {
+  color: var(--color-commerce-bright);
+
+  font-size: 0.56rem;
+  font-weight: 900;
+
+  text-transform: uppercase;
+  letter-spacing: 0.3em;
+
+  white-space: nowrap;
+}
+
+.brand-lockup-compact .brand-lockup-name {
+  font-size: 1.02rem;
+}
+
+.brand-lockup-compact .brand-lockup-scale {
+  font-size: 0.54rem;
+}
+
+@media (min-width: 768px) {
+  .brand-lockup-default .brand-lockup-name {
+    font-size: 1.25rem;
+  }
+
+  .brand-lockup-default .brand-lockup-scale {
+    font-size: 0.58rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .brand-lockup-accent {
+    box-shadow: none;
+  }
+}

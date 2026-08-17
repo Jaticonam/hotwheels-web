@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
 
 import { productBelongsToCategory } from "@/domain/product/categories";
-import { loadAllProducts } from "@/integrations/sheets/fetchSheets";
+import { productSource } from "@/infrastructure/catalog/productSource";
 import { searchProducts } from "@/shared/lib/search";
 import { sortByCommercialPriority } from "@/shared/lib/sort";
 import type { Product } from "@/shared/types/product";
@@ -19,7 +19,7 @@ export function useCatalogProducts(
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    loadAllProducts().then((data) => {
+    productSource.loadAllProducts().then((data) => {
       setProducts(data);
       setLoading(false);
     });

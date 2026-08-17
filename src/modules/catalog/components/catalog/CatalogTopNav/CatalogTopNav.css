@@ -16,7 +16,7 @@
 
 .catalog-top-nav-brand-row {
   width: min(100%, 1480px);
-  margin: 0 auto 0.75rem;
+  margin: 0 auto 0.58rem;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -35,33 +35,8 @@
   cursor: pointer;
 }
 
-.catalog-brand-mark {
-  color: #ffffff;
-  font-size: 1.02rem;
-  font-weight: 950;
-  line-height: 1;
-  text-transform: uppercase;
-  letter-spacing: 0.18em;
-}
 
-.catalog-brand-subtitle {
-  margin-top: 0.35rem;
-  color: #38bdf8;
-  font-size: 0.55rem;
-  font-weight: 950;
-  line-height: 1;
-  text-transform: uppercase;
-  letter-spacing: 0.3em;
-}
 
-.catalog-top-nav-brand-row p {
-  margin: 0.38rem 0 0;
-  color: #64748b;
-  font-size: 0.6rem;
-  font-weight: 850;
-  letter-spacing: 0.17em;
-  text-transform: uppercase;
-}
 
 .catalog-top-nav-categories {
   width: min(100%, 1480px);
@@ -139,13 +114,7 @@
     padding: 0.7rem 0.75rem 0.8rem;
   }
 
-  .catalog-brand-mark {
-    font-size: 0.92rem;
-  }
 
-  .catalog-top-nav-brand-row p {
-    font-size: 0.55rem;
-  }
 
   .catalog-top-nav-categories {
     display: none;

@@ -12,7 +12,15 @@ export type ProductStateType =
 
 /**
  * Estado comercial visual del producto.
- * Centraliza etiquetas para cards, detail, filtros y futuras campañas.
+ *
+ * Regla de stock:
+ * - 0: agotado.
+ * - 1: última unidad.
+ * - 2-3: pocas unidades.
+ * - 4+: disponible.
+ *
+ * Centraliza etiquetas para cards, detail,
+ * filtros y futuras campañas.
  */
 export function getProductState(product: Product): {
   type: ProductStateType;
@@ -43,15 +51,18 @@ export function getProductState(product: Product): {
     };
   }
 
-  if (product.stock !== null && product.stock <= 3) {
+  if (product.stock === 1) {
     return {
       type: "last-units",
-      label: `Últimos ${product.stock}`,
+      label: "Última unidad",
       available: true,
     };
   }
 
-  if (product.stock !== null && product.stock <= 10) {
+  if (
+    product.stock !== null &&
+    product.stock <= 3
+  ) {
     return {
       type: "limited",
       label: "Pocas unidades",
@@ -65,6 +76,3 @@ export function getProductState(product: Product): {
     available: true,
   };
 }
-
-
-

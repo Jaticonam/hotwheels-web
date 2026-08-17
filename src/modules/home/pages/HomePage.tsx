@@ -5,7 +5,7 @@ import HowToBuySection from "../sections/HowToBuySection/HowToBuySection";
 
 import HomeNav from "../components/HomeNav/HomeNav";
 import HomeFooter from "../components/HomeFooter/HomeFooter";
-import HomeFloatingButtons from "../components/HomeFloatingButtons/HomeFloatingButtons";
+import { FloatingButtons } from "@/shared/components/overlays/FloatingButtons";
 
 import { useCart } from "@/modules/cart/hooks/useCart";
 
@@ -31,7 +31,7 @@ export default function HomePage() {
       </main>
 
       <HomeFooter />
-      <HomeFloatingButtons />
+      <FloatingButtons variant="home" />
     </div>
   );
 }

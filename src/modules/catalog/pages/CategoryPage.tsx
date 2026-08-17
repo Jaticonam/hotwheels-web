@@ -18,7 +18,7 @@ import {
 
 import { BRAND_CONFIG } from "@/tenant/config/brand";
 
-import { loadAllProducts } from "@/integrations/sheets/fetchSheets";
+import { productSource } from "@/infrastructure/catalog/productSource";
 import { productBelongsToCategory } from "@/domain/product/categories";
 import { searchProducts } from "@/shared/lib/search";
 import { sortByCommercialPriority } from "@/shared/lib/sort";
@@ -77,7 +77,7 @@ export default function CategoryPage() {
   useEffect(() => {
     let mounted = true;
 
-    loadAllProducts()
+    productSource.loadAllProducts()
       .then((data) => {
         if (!mounted) return;
 

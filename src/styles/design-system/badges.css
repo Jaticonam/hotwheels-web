@@ -1,104 +1,179 @@
-/* ===== BADGES ===== */
+/* ==========================================================
+   PLATFORM BADGE SYSTEM 1.0
+
+   Commerce  -> Cyan
+   Collector -> Amber / Gold
+   Danger    -> Rose únicamente ante condición real
+========================================================== */
 
 @layer components {
-
   .price-tier-3,
   .price-tier-12,
   .price-tier-50,
   .price-tier-100 {
-    @apply inline-flex items-center justify-center px-2.5 py-[4px] text-[12px] font-black leading-none shadow-[0_4px_10px_rgba(106,90,138,0.18)];
-    border-radius: 8px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    min-height: 24px;
+
+    padding:
+      0.25rem
+      0.625rem;
+
+    border-radius:
+      8px;
+
+    font-size:
+      0.75rem;
+
+    font-weight:
+      800;
+
+    line-height:
+      1;
+
+    box-shadow:
+      0 5px 14px
+      rgba(0, 0, 0, 0.16);
   }
 
   .price-tier-3 {
-    background-color: var(--w-highlight);
-    color: var(--w-heading);
+    border:
+      1px solid
+      rgba(251, 191, 36, 0.28);
+
+    background:
+      var(--color-collector-soft);
+
+    color:
+      var(--color-collector-light);
   }
 
   .price-tier-12 {
-    background-color: var(--w-primary);
-    color: white;
+    border:
+      1px solid
+      var(--color-border-active);
+
+    background:
+      var(--color-commerce-soft);
+
+    color:
+      var(--color-commerce-light);
   }
 
   .price-tier-50 {
-    background-color: var(--w-secondary);
-    color: white;
+    border:
+      1px solid
+      var(--color-border);
+
+    background:
+      var(--color-surface-raised);
+
+    color:
+      var(--color-text-secondary);
   }
 
   .price-tier-100 {
-    background-color: var(--w-primary-dark);
-    color: white;
+    border:
+      1px solid
+      rgba(56, 189, 248, 0.24);
+
+    background:
+      var(--color-commerce-strong);
+
+    color:
+      #ffffff;
   }
 
-  .badge-offer {
-    background: linear-gradient(135deg, #e85d75, #d98aad);
-    color: #ffffff;
-  }
-
+  .badge-offer,
   .badge-best-seller {
-    background: linear-gradient(135deg, #f9c95b, #eca4c2);
-    color: var(--w-heading);
+    border:
+      1px solid
+      rgba(251, 191, 36, 0.3);
+
+    background:
+      linear-gradient(
+        135deg,
+        var(--color-collector-strong),
+        var(--color-collector)
+      );
+
+    color:
+      var(--color-bg);
+
+    box-shadow:
+      var(--shadow-collector);
   }
 
-  .badge-new {
-    background: linear-gradient(
-      135deg,
-      var(--w-primary),
-      var(--w-secondary)
-    );
-    color: #ffffff;
-  }
-
+  .badge-new,
   .badge-preorder {
-    background: linear-gradient(
-      135deg,
-      var(--w-whatsapp),
-      var(--w-whatsapp-dark)
-    );
-    color: #ffffff;
+    border:
+      1px solid
+      rgba(125, 211, 252, 0.26);
+
+    background:
+      linear-gradient(
+        135deg,
+        var(--color-commerce-strong),
+        var(--color-commerce)
+      );
+
+    color:
+      #ffffff;
+
+    box-shadow:
+      0 8px 20px
+      rgba(14, 165, 233, 0.16);
   }
 
-  .badge-special {
-    background: linear-gradient(
-      135deg,
-      var(--w-primary-dark),
-      var(--w-primary)
-    );
-    color: #ffffff;
+  .badge-special,
+  .badge-premium,
+  .badge-mothers-day {
+    border:
+      1px solid
+      rgba(251, 191, 36, 0.26);
+
+    background:
+      linear-gradient(
+        135deg,
+        var(--color-surface-raised),
+        #1b2333
+      );
+
+    color:
+      var(--color-collector-light);
+
+    box-shadow:
+      0 8px 20px
+      rgba(0, 0, 0, 0.22);
   }
 
   .badge-last-units {
-    background: linear-gradient(135deg, #e85d75, #b8325f);
-    color: #ffffff;
-  }
+    border:
+      1px solid
+      rgba(253, 164, 175, 0.25);
 
-  .badge-premium {
-    background: linear-gradient(
-      135deg,
-      #2f2437,
-      var(--w-primary-dark)
-    );
-    color: #ffffff;
+    background:
+      var(--color-danger-soft);
+
+    color:
+      var(--color-danger-light);
+
+    box-shadow:
+      0 8px 20px
+      rgba(244, 63, 94, 0.11);
   }
 
   .badge-default {
-    background: rgba(47, 36, 55, 0.82);
-    color: #ffffff;
-  }
+    border:
+      1px solid
+      var(--color-border);
 
-  .badge-mothers-day {
-    background: linear-gradient(135deg, #e63946, #d7263d);
-    color: #ffffff;
-    box-shadow:
-      0 10px 24px rgba(230, 57, 70, 0.28),
-      inset 0 1px 0 rgba(255, 255, 255, 0.16);
-  }
+    background:
+      rgba(30, 41, 59, 0.92);
 
-  .badge-mothers-day::before {
-    background: linear-gradient(
-      to bottom,
-      rgba(255, 255, 255, 0.22),
-      transparent
-    );
+    color:
+      var(--color-text-secondary);
   }
 }

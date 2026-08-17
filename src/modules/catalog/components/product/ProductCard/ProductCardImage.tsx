@@ -23,7 +23,7 @@ export function ProductCardImage({
       onClick={onImageClick}
       role="button"
       tabIndex={0}
-      aria-label={`Ver producto ${product.title}`}
+      aria-label={`Ampliar imagen de ${product.title}`}
       onKeyDown={(event) => {
         if (
           event.key === "Enter" ||

@@ -8,7 +8,7 @@ export const UI_CONFIG = {
   },
 
   floating: {
-    cartLabel: "Mi carrito",
+    cartLabel: "Mi Box",
     catalogLabel: "Ver catálogo",
     whatsappLabel: "Consultar",
   },

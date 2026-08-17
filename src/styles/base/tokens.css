@@ -1,7 +1,169 @@
-/* ===== TOKENS ===== */
+/* ==========================================================
+   PLATFORM VISUAL IDENTITY 1.0
+   Semantic tokens
+
+   Foundation : Midnight / Slate
+   Commerce   : Electric Cyan
+   Collector  : Amber / Gold
+   Success    : Emerald
+   WhatsApp   : WhatsApp Green
+   Danger     : Rose
+
+   Estos tokens son independientes del nombre final
+   de la marca y constituyen la fuente visual canónica.
+========================================================== */
 
 :root {
-  /* Z-INDEX */
+  /* ========================================================
+     FOUNDATION
+  ======================================================== */
+
+  --color-bg: #020617;
+  --color-bg-deep: #020617;
+
+  --color-surface: #0f172a;
+  --color-surface-raised: #1e293b;
+  --color-surface-strong: #334155;
+
+  --color-overlay:
+    rgba(2, 6, 23, 0.88);
+
+  /* ========================================================
+     TEXT
+  ======================================================== */
+
+  --color-text: #f8fafc;
+  --color-text-secondary: #cbd5e1;
+  --color-text-muted: #94a3b8;
+  --color-text-subtle: #64748b;
+
+  /* ========================================================
+     BORDERS
+  ======================================================== */
+
+  --color-border:
+    rgba(148, 163, 184, 0.14);
+
+  --color-border-strong:
+    rgba(148, 163, 184, 0.24);
+
+  --color-border-active:
+    rgba(56, 189, 248, 0.34);
+
+  /* ========================================================
+     COMMERCE
+     Acción / navegación / compra / Mi Box
+  ======================================================== */
+
+  --color-commerce-strong: #0369a1;
+  --color-commerce: #0ea5e9;
+  --color-commerce-bright: #38bdf8;
+  --color-commerce-light: #7dd3fc;
+
+  --color-commerce-soft:
+    rgba(14, 165, 233, 0.1);
+
+  --color-commerce-glow:
+    rgba(56, 189, 248, 0.22);
+
+  /* ========================================================
+     COLLECTOR
+     Colección / ficha / premium / rareza / recompensa
+  ======================================================== */
+
+  --color-collector-strong: #d97706;
+  --color-collector: #fbbf24;
+  --color-collector-light: #fde68a;
+
+  --color-collector-soft:
+    rgba(245, 158, 11, 0.1);
+
+  --color-collector-glow:
+    rgba(245, 158, 11, 0.2);
+
+  /* ========================================================
+     STATES
+  ======================================================== */
+
+  --color-success: #22c55e;
+  --color-success-light: #86efac;
+
+  --color-success-soft:
+    rgba(34, 197, 94, 0.1);
+
+  --color-warning: #fbbf24;
+
+  --color-danger: #f43f5e;
+  --color-danger-light: #fda4af;
+
+  --color-danger-soft:
+    rgba(244, 63, 94, 0.1);
+
+  /* ========================================================
+     CHANNELS
+  ======================================================== */
+
+  --color-whatsapp: #25d366;
+  --color-whatsapp-dark: #1ead54;
+
+  /* ========================================================
+     TYPOGRAPHY
+  ======================================================== */
+
+  --font-ui:
+    "Plus Jakarta Sans",
+    "Inter",
+    system-ui,
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    sans-serif;
+
+  --font-display: var(--font-ui);
+  --font-data: var(--font-ui);
+
+  /* ========================================================
+     RADIUS
+  ======================================================== */
+
+  --radius-sm: 12px;
+  --radius-md: 16px;
+  --radius-lg: 22px;
+  --radius-xl: 28px;
+  --radius-pill: 9999px;
+
+  /* ========================================================
+     SHADOWS
+  ======================================================== */
+
+  --shadow-card:
+    0 18px 40px
+    rgba(0, 0, 0, 0.22);
+
+  --shadow-raised:
+    0 24px 60px
+    rgba(0, 0, 0, 0.32);
+
+  --shadow-floating:
+    0 18px 44px
+    rgba(0, 0, 0, 0.38);
+
+  --shadow-commerce:
+    0 14px 30px
+    rgba(14, 165, 233, 0.2);
+
+  --shadow-collector:
+    0 14px 30px
+    rgba(245, 158, 11, 0.16);
+
+  --shadow-whatsapp:
+    0 14px 30px
+    rgba(37, 211, 102, 0.22);
+
+  /* ========================================================
+     Z-INDEX
+  ======================================================== */
+
   --z-base: 1;
   --z-header: 100;
   --z-sticky: 200;
@@ -10,14 +172,20 @@
   --z-sidebar: 1500;
   --z-toast: 3000;
 
-  /* CONTAINERS */
+  /* ========================================================
+     CONTAINERS
+  ======================================================== */
+
   --container-sm: 640px;
   --container-md: 768px;
   --container-lg: 1024px;
   --container-xl: 1280px;
   --container-2xl: 1440px;
 
-  /* SPACING */
+  /* ========================================================
+     SPACING
+  ======================================================== */
+
   --space-1: 0.25rem;
   --space-2: 0.5rem;
   --space-3: 0.75rem;
@@ -30,8 +198,37 @@
   --space-16: 4rem;
   --space-20: 5rem;
 
-  /* MOTION */
-  --motion-fast: 160ms ease;
-  --motion-normal: 240ms ease;
-  --motion-slow: 420ms ease;
+  /* ========================================================
+     MOTION
+  ======================================================== */
+  --motion-duration-fast: 160ms;
+  --motion-duration-standard: 180ms;
+  --motion-duration-deliberate: 220ms;
+  --motion-duration-slow: 280ms;
+
+  --motion-ease-standard: ease;
+
+  --motion-ease-out:
+    cubic-bezier(0.2, 0.8, 0.2, 1);
+
+  /*
+   * Composite aliases.
+   * Conservan compatibilidad temporal con consumidores
+   * existentes mientras migramos el runtime.
+   */
+  --motion-fast:
+    var(--motion-duration-fast)
+    var(--motion-ease-standard);
+
+  --motion-normal:
+    var(--motion-duration-standard)
+    var(--motion-ease-standard);
+
+  --motion-deliberate:
+    var(--motion-duration-deliberate)
+    var(--motion-ease-out);
+
+  --motion-slow:
+    var(--motion-duration-slow)
+    var(--motion-ease-out);
 }

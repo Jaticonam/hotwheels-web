@@ -1,78 +1,164 @@
-/* ===== BASE & TOKENS ===== */
-/* Sistema visual Gleemour
-   Core marca:
-   1. Primary   → Morado   #6A5A8A
-   2. Secondary → Rosado   #ECA4C2
-   3. Highlight → Amarillo #F9C95B
+/* ==========================================================
+   PLATFORM BASE 1.0
 
-   Apoyo:
-   Peach, lavanda, fondos, textos, bordes y estados.
-*/
+   Fuente visual canónica:
+   src/styles/base/tokens.css
 
-@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Plus+Jakarta+Sans:wght@300;400;600;700;800&display=swap');
+   Los tokens --w-* se mantienen temporalmente como aliases
+   para permitir una migración progresiva de componentes
+   heredados sin romper la aplicación.
+========================================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap');
 
 @layer base {
   :root {
-    /* ===== CORE DE MARCA ===== */
-    --w-primary: #6A5A8A;
-    --w-primary-dark: #4E4268;
-    --w-primary-soft: #F4F0FA;
+    color-scheme: dark;
 
-    --w-secondary: #ECA4C2;
-    --w-secondary-strong: #D98AAD;
-    --w-secondary-soft: #FDF1F6;
+    /* ======================================================
+       LEGACY COMPATIBILITY
+       Temporal: migrar consumidores a tokens semánticos.
+    ====================================================== */
 
-    --w-highlight: #F9C95B;
-    --w-highlight-soft: #FFF7D8;
+    /* Commerce */
+    --w-primary:
+      var(--color-commerce);
 
-    /* ===== COLORES DE APOYO ===== */
-    --w-accent: #F6AD97;
-    --w-accent-soft: #FFF2EC;
+    --w-primary-dark:
+      var(--color-commerce-strong);
 
-    --w-lavender: #9A8BBA;
-    --w-lavender-soft: #F4F0FA;
+    --w-primary-soft:
+      var(--color-commerce-soft);
 
-    /* ===== SISTEMA ===== */
-    --w-bg: #FDFBF7;
-    --w-surface: #FFFFFF;
-    --w-surface-soft: #FFF8F3;
+    --w-secondary:
+      var(--color-commerce-bright);
 
-    --w-text: #4B3F52;
-    --w-heading: #2F2437;
-    --w-muted: #7B6F82;
-    --w-border: #EFE3EA;
+    --w-secondary-strong:
+      var(--color-commerce);
 
-    /* ===== ESTADOS / CANALES ===== */
-    --w-whatsapp: #25D366;
-    --w-whatsapp-dark: #1EAD54;
+    --w-secondary-soft:
+      var(--color-commerce-soft);
 
-    --w-danger: #E85D75;
-    --w-warning: #F9C95B;
-    --w-success: #25D366;
+    /* Collector */
+    --w-highlight:
+      var(--color-collector);
 
-    /* ===== RADIOS ===== */
-    --w-radius-sm: 14px;
-    --w-radius-md: 20px;
-    --w-radius-lg: 28px;
-    --w-radius-xl: 36px;
-    --w-radius-full: 9999px;
+    --w-highlight-soft:
+      var(--color-collector-soft);
 
-    /* ===== SOMBRAS ===== */
-    --w-shadow-soft: 0 12px 35px rgba(106, 90, 138, 0.10);
-    --w-shadow-medium: 0 16px 42px rgba(106, 90, 138, 0.14);
-    --w-shadow-strong: 0 18px 50px rgba(106, 90, 138, 0.16);
-    --w-shadow-secondary: 0 14px 34px rgba(236, 164, 194, 0.30);
-    --w-shadow-highlight: 0 14px 30px rgba(249, 201, 91, 0.25);
-    --w-shadow-whatsapp: 0 14px 30px rgba(37, 211, 102, 0.25);
+    --w-accent:
+      var(--color-commerce-light);
 
-    /* ===== TIPOGRAFÍA ===== */
-    --font-brand: 'Plus Jakarta Sans', 'Inter', sans-serif;
-    --font-serif: 'Playfair Display', Georgia, serif;
+    --w-accent-soft:
+      var(--color-commerce-soft);
 
-    /* ===== TRANSICIONES ===== */
-    --w-transition-fast: 0.2s ease;
-    --w-transition: 0.3s ease;
-    --w-transition-slow: 0.45s cubic-bezier(0.4, 0, 0.2, 1);
+    --w-lavender:
+      var(--color-text-secondary);
+
+    --w-lavender-soft:
+      var(--color-surface-raised);
+
+    /* Foundation */
+    --w-bg:
+      var(--color-bg);
+
+    --w-surface:
+      var(--color-surface);
+
+    --w-surface-soft:
+      var(--color-surface-raised);
+
+    --w-text:
+      var(--color-text-secondary);
+
+    --w-heading:
+      var(--color-text);
+
+    --w-muted:
+      var(--color-text-muted);
+
+    --w-border:
+      var(--color-border);
+
+    /* Channels / states */
+    --w-whatsapp:
+      var(--color-whatsapp);
+
+    --w-whatsapp-dark:
+      var(--color-whatsapp-dark);
+
+    --w-danger:
+      var(--color-danger);
+
+    --w-warning:
+      var(--color-warning);
+
+    --w-success:
+      var(--color-success);
+
+    /* Radius */
+    --w-radius-sm:
+      var(--radius-sm);
+
+    --w-radius-md:
+      var(--radius-md);
+
+    --w-radius-lg:
+      var(--radius-lg);
+
+    --w-radius-xl:
+      var(--radius-xl);
+
+    --w-radius-full:
+      var(--radius-pill);
+
+    /* Shadows */
+    --w-shadow-soft:
+      var(--shadow-card);
+
+    --w-shadow-medium:
+      var(--shadow-raised);
+
+    --w-shadow-strong:
+      var(--shadow-floating);
+
+    --w-shadow-secondary:
+      var(--shadow-commerce);
+
+    --w-shadow-highlight:
+      var(--shadow-collector);
+
+    --w-shadow-whatsapp:
+      var(--shadow-whatsapp);
+
+    /*
+     * Alias heredado que algunos botones consumen
+     * pero que la foundation anterior no declaraba.
+     */
+    --w-shadow-pink:
+      var(--shadow-commerce);
+
+    /* Typography */
+    --font-brand:
+      var(--font-ui);
+
+    /*
+     * Compatibilidad temporal.
+     * Se elimina el lenguaje serif heredado sin
+     * romper utilidades que todavía usan --font-serif.
+     */
+    --font-serif:
+      var(--font-display);
+
+    /* Motion */
+    --w-transition-fast:
+      var(--motion-fast);
+
+    --w-transition:
+      var(--motion-normal);
+
+    --w-transition-slow:
+      var(--motion-slow);
   }
 
   *,
@@ -82,22 +168,50 @@
   }
 
   html {
+    min-height: 100%;
+
     scroll-behavior: smooth;
+
+    background:
+      var(--color-bg);
   }
 
   body {
     margin: 0;
+
     min-width: 320px;
+    min-height: 100vh;
+
     background:
-      radial-gradient(circle at top left, rgba(236, 164, 194, 0.14), transparent 34%),
-      radial-gradient(circle at top right, rgba(249, 201, 91, 0.10), transparent 30%),
-      radial-gradient(circle at bottom left, rgba(106, 90, 138, 0.10), transparent 36%),
-      var(--w-bg);
-    color: var(--w-text);
-    font-family: var(--font-brand);
-    -webkit-tap-highlight-color: transparent;
+      radial-gradient(
+        circle at 10% -10%,
+        rgba(14, 165, 233, 0.12),
+        transparent 30rem
+      ),
+      radial-gradient(
+        circle at 92% 0%,
+        rgba(245, 158, 11, 0.055),
+        transparent 24rem
+      ),
+      var(--color-bg);
+
+    color:
+      var(--color-text-secondary);
+
+    font-family:
+      var(--font-ui);
+
+    -webkit-tap-highlight-color:
+      transparent;
+
     overflow-x: hidden;
-    text-rendering: optimizeLegibility;
+
+    text-rendering:
+      optimizeLegibility;
+  }
+
+  #root {
+    min-height: 100vh;
   }
 
   h1,
@@ -106,13 +220,19 @@
   h4,
   h5,
   h6 {
-    color: var(--w-heading);
-    font-family: var(--font-brand);
-    letter-spacing: -0.03em;
+    color:
+      var(--color-text);
+
+    font-family:
+      var(--font-display);
+
+    letter-spacing:
+      -0.03em;
   }
 
   .font-serif {
-    font-family: var(--font-serif);
+    font-family:
+      var(--font-display);
   }
 
   a {
@@ -135,16 +255,63 @@
   video {
     max-width: 100%;
     height: auto;
+
     display: block;
   }
 
   ::selection {
-    background: var(--w-secondary);
-    color: #ffffff;
+    background:
+      var(--color-commerce-bright);
+
+    color:
+      var(--color-bg);
   }
 
   :focus-visible {
-    outline: 3px solid rgba(236, 164, 194, 0.55);
-    outline-offset: 3px;
+    outline:
+      2px solid
+      var(--color-commerce-bright);
+
+    outline-offset:
+      3px;
+
+    box-shadow:
+      0 0 0 4px
+      var(--color-commerce-soft);
+  }
+}
+/* ==========================================================
+   MOTION ACCESSIBILITY 1.0
+
+   Mantiene cambios de estado funcionales, pero elimina
+   movimiento perceptible cuando el usuario solicita
+   reducción de movimiento.
+========================================================== */
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    scroll-behavior:
+      auto !important;
+
+    animation-duration:
+      0.01ms !important;
+
+    animation-delay:
+      0ms !important;
+
+    animation-iteration-count:
+      1 !important;
+
+    transition-duration:
+      0.01ms !important;
+
+    transition-delay:
+      0ms !important;
   }
 }

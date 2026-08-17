@@ -1,66 +1,226 @@
-/* ===== BUTTONS ===== */
+/* ==========================================================
+   PLATFORM BUTTON SYSTEM 1.0
+
+   Commerce  -> Electric Cyan
+   Secondary -> Midnight Surface
+   WhatsApp  -> WhatsApp Green
+
+   Nombres legacy preservados temporalmente para mantener
+   compatibilidad con los consumidores actuales.
+========================================================== */
 
 @layer components {
-  .btn-shop-primary {
-    @apply inline-flex items-center justify-center gap-2 rounded-2xl px-5 py-3 text-sm font-semibold text-white transition-all duration-200 hover:-translate-y-0.5 active:translate-y-0;
-    background-color: var(--w-primary-dark);
-    box-shadow: var(--w-shadow-pink);
+  .btn-shop-primary,
+  .btn-w-primary,
+  .btn-shop-pink {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+
+    min-height: 44px;
+    padding: 0.75rem 1.25rem;
+
+    border: 1px solid rgba(125, 211, 252, 0.3);
+    border-radius: var(--radius-md);
+
+    background:
+      linear-gradient(
+        135deg,
+        var(--color-commerce),
+        var(--color-commerce-bright)
+      );
+
+    color: var(--color-bg);
+
+    font-size: 0.875rem;
+    font-weight: 800;
+    line-height: 1;
+
+    box-shadow: var(--shadow-commerce);
+
+    cursor: pointer;
+
+    transition:
+      transform var(--motion-fast),
+      box-shadow var(--motion-fast),
+      filter var(--motion-fast),
+      border-color var(--motion-fast);
   }
 
-  .btn-shop-primary:hover {
-    background-color: var(--w-primary);
+  .btn-shop-primary:hover,
+  .btn-w-primary:hover,
+  .btn-shop-pink:hover {
+    transform: translateY(-2px);
+
+    border-color: rgba(186, 230, 253, 0.58);
+
+    box-shadow:
+      0 16px 34px
+      rgba(14, 165, 233, 0.27);
+
+    filter: brightness(1.06);
+  }
+
+  .btn-shop-primary:active,
+  .btn-w-primary:active,
+  .btn-shop-pink:active {
+    transform:
+      translateY(0)
+      scale(0.985);
   }
 
   .btn-shop-secondary {
-    @apply inline-flex items-center justify-center gap-2 rounded-2xl border px-5 py-3 text-sm font-semibold transition-all duration-200 hover:-translate-y-0.5 active:translate-y-0;
-    color: var(--w-primary-dark);
-    border-color: var(--w-primary);
-    background-color: var(--w-primary-soft);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+
+    min-height: 44px;
+    padding: 0.75rem 1.25rem;
+
+    border:
+      1px solid
+      var(--color-border-active);
+
+    border-radius:
+      var(--radius-md);
+
+    background:
+      rgba(15, 23, 42, 0.82);
+
+    color:
+      var(--color-commerce-light);
+
+    font-size: 0.875rem;
+    font-weight: 700;
+    line-height: 1;
+
+    box-shadow:
+      inset 0 1px 0
+      rgba(255, 255, 255, 0.035);
+
+    cursor: pointer;
+
+    transition:
+      transform var(--motion-fast),
+      border-color var(--motion-fast),
+      background var(--motion-fast),
+      box-shadow var(--motion-fast);
   }
 
   .btn-shop-secondary:hover {
-    color: white;
-    background-color: var(--w-primary-dark);
-    border-color: var(--w-primary-dark);
+    transform:
+      translateY(-2px);
+
+    border-color:
+      var(--color-commerce-bright);
+
+    background:
+      var(--color-commerce-soft);
+
+    box-shadow:
+      0 12px 28px
+      rgba(14, 165, 233, 0.12);
   }
 
-  .btn-shop-whatsapp {
-    @apply inline-flex items-center justify-center gap-2 rounded-2xl px-5 py-3 text-sm font-semibold text-white transition-all duration-200 hover:-translate-y-0.5 active:translate-y-0;
-    background-color: var(--w-whatsapp);
-    box-shadow: var(--w-shadow-whatsapp);
+  .btn-shop-secondary:active {
+    transform:
+      translateY(0)
+      scale(0.985);
   }
 
-  .btn-shop-whatsapp:hover {
-    background-color: var(--w-whatsapp-dark);
-  }
-
-  .btn-shop-pink {
-    @apply inline-flex items-center justify-center gap-2 rounded-2xl px-5 py-3 text-sm font-semibold text-white transition-all duration-200 hover:-translate-y-0.5 active:translate-y-0;
-    background-color: var(--w-primary);
-    box-shadow: var(--w-shadow-pink);
-  }
-
-  .btn-shop-pink:hover {
-    background-color: var(--w-primary-dark);
-  }
-
-  .btn-w-primary {
-    @apply inline-flex items-center justify-center gap-2 rounded-2xl px-6 py-4 text-sm font-extrabold text-white transition-all hover:-translate-y-1;
-    background-color: var(--w-primary-dark);
-    box-shadow: var(--w-shadow-pink);
-  }
-
-  .btn-w-primary:hover {
-    background-color: var(--w-primary);
-  }
-
+  .btn-shop-whatsapp,
   .btn-w-whatsapp {
-    @apply inline-flex items-center justify-center gap-2 rounded-2xl px-6 py-4 text-sm font-extrabold text-white transition-all hover:-translate-y-1;
-    background-color: var(--w-whatsapp);
-    box-shadow: var(--w-shadow-whatsapp);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+
+    min-height: 44px;
+    padding: 0.75rem 1.25rem;
+
+    border:
+      1px solid
+      rgba(134, 239, 172, 0.24);
+
+    border-radius:
+      var(--radius-md);
+
+    background:
+      var(--color-whatsapp);
+
+    color:
+      #ffffff;
+
+    font-size: 0.875rem;
+    font-weight: 800;
+    line-height: 1;
+
+    box-shadow:
+      var(--shadow-whatsapp);
+
+    cursor: pointer;
+
+    transition:
+      transform var(--motion-fast),
+      background var(--motion-fast),
+      box-shadow var(--motion-fast);
   }
 
+  .btn-shop-whatsapp:hover,
   .btn-w-whatsapp:hover {
-    background-color: var(--w-whatsapp-dark);
+    transform:
+      translateY(-2px);
+
+    background:
+      var(--color-whatsapp-dark);
+
+    box-shadow:
+      0 16px 34px
+      rgba(37, 211, 102, 0.28);
+  }
+
+  .btn-shop-whatsapp:active,
+  .btn-w-whatsapp:active {
+    transform:
+      translateY(0)
+      scale(0.985);
+  }
+
+  .btn-shop-primary:disabled,
+  .btn-shop-secondary:disabled,
+  .btn-shop-whatsapp:disabled,
+  .btn-shop-pink:disabled,
+  .btn-w-primary:disabled,
+  .btn-w-whatsapp:disabled {
+    transform: none;
+
+    opacity: 0.5;
+
+    cursor: not-allowed;
+
+    box-shadow: none;
+    filter: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .btn-shop-primary,
+  .btn-shop-secondary,
+  .btn-shop-whatsapp,
+  .btn-shop-pink,
+  .btn-w-primary,
+  .btn-w-whatsapp {
+    transition: none;
+  }
+
+  .btn-shop-primary:hover,
+  .btn-shop-secondary:hover,
+  .btn-shop-whatsapp:hover,
+  .btn-shop-pink:hover,
+  .btn-w-primary:hover,
+  .btn-w-whatsapp:hover {
+    transform: none;
   }
 }
