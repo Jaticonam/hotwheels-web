@@ -10,6 +10,7 @@ import HomePage from "@/modules/home/pages/HomePage";
 import CatalogPage from "@/modules/catalog/pages/CatalogPage";
 import CategoryPage from "@/modules/catalog/pages/CategoryPage";
 import ProductPage from "@/modules/catalog/pages/ProductPage";
+import AdminPage from "@/modules/admin/pages/AdminPage";
 
 import NotFound from "@/app/routes/NotFound";
 
@@ -64,7 +65,12 @@ export default function App() {
           element={<ProductPage />}
         />
 
-        <Route path="*" element={<NotFound />} />
+        <Route
+        path="/admin"
+        element={<AdminPage />}
+      />
+
+      <Route path="*" element={<NotFound />} />
       </Routes>
     </BrowserRouter>
   );

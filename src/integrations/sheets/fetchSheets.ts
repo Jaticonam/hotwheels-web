@@ -272,6 +272,73 @@ Promise<CsvRow[]> {
   return getMeaningfulRows(rows);
 }
 
+function prepareAdminProducts(
+  products: Product[],
+): Product[] {
+  const seen =
+    new Set<string>();
+
+  return products
+    .filter((product) => {
+      if (!product.id) {
+        console.warn(
+          "Admin: fila descartada por id vacío",
+          product,
+        );
+
+        return false;
+      }
+
+      if (seen.has(product.id)) {
+        console.warn(
+          "Admin: fila descartada por id duplicado ->",
+          product.id,
+        );
+
+        return false;
+      }
+
+      if (!product.title) {
+        console.warn(
+          "Admin: fila descartada por title vacío ->",
+          product.id,
+        );
+
+        return false;
+      }
+
+      seen.add(product.id);
+
+      return true;
+    })
+    .sort(
+      (a, b) =>
+        b.priority - a.priority,
+    );
+}
+
+/**
+ * Lectura administrativa de Sheets.
+ *
+ * Importante:
+ * - reutiliza el mismo parser y normalizer público;
+ * - NO aplica filtro de visibilidad comercial;
+ * - permite inspeccionar Oculto y Borrador;
+ * - no modifica el contrato ProductSource público.
+ */
+export async function loadAllProductsForAdmin():
+Promise<Product[]> {
+  const rows =
+    await loadProductRows();
+
+  const normalized =
+    rows.map(normalizeProduct);
+
+  return prepareAdminProducts(
+    normalized,
+  );
+}
+
 export async function loadAllProducts():
 Promise<Product[]> {
   const rows =

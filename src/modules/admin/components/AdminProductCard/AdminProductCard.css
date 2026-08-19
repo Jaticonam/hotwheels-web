@@ -1,0 +1,304 @@
+.hwa-product-card {
+  min-width: 0;
+  overflow: hidden;
+
+  border:
+    1px solid
+    rgba(148, 163, 184, 0.22);
+  border-radius: 18px;
+
+  background: #ffffff;
+
+  box-shadow:
+    0 8px 28px
+    rgba(15, 23, 42, 0.05);
+
+  transition:
+    transform 160ms ease,
+    box-shadow 160ms ease,
+    border-color 160ms ease;
+}
+
+.hwa-product-card:hover {
+  transform:
+    translateY(-2px);
+
+  border-color:
+    rgba(14, 165, 233, 0.34);
+
+  box-shadow:
+    0 14px 34px
+    rgba(15, 23, 42, 0.08);
+}
+
+.hwa-product-card-media {
+  position: relative;
+
+  aspect-ratio: 3 / 4;
+
+  overflow: hidden;
+
+  background:
+    linear-gradient(
+      145deg,
+      #f8fafc,
+      #f1f5f9
+    );
+}
+
+.hwa-product-card-media img {
+  width: 100%;
+  height: 100%;
+
+  display: block;
+
+  object-fit: cover;
+}
+
+.hwa-product-card-image-empty {
+  width: 100%;
+  height: 100%;
+
+  display: grid;
+  place-items: center;
+
+  align-content: center;
+  gap: 8px;
+
+  color: #94a3b8;
+
+  font-size: 0.76rem;
+  font-weight: 700;
+}
+
+.hwa-status {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+
+  max-width:
+    calc(100% - 20px);
+
+  padding:
+    5px 9px;
+
+  border-radius: 999px;
+
+  background:
+    rgba(15, 23, 42, 0.82);
+
+  color: #ffffff;
+
+  font-size: 0.65rem;
+  font-weight: 800;
+  line-height: 1;
+
+  backdrop-filter:
+    blur(8px);
+}
+
+.hwa-status-publicado {
+  background:
+    rgba(5, 150, 105, 0.9);
+}
+
+.hwa-status-preventa {
+  background:
+    rgba(79, 70, 229, 0.92);
+}
+
+.hwa-status-agotado {
+  background:
+    rgba(220, 38, 38, 0.9);
+}
+
+.hwa-status-borrador {
+  background:
+    rgba(100, 116, 139, 0.92);
+}
+
+.hwa-product-card-body {
+  padding:
+    13px 14px 15px;
+}
+
+.hwa-product-card-id {
+  margin-bottom: 5px;
+
+  color: #0284c7;
+
+  font-size: 0.67rem;
+  font-weight: 900;
+  letter-spacing: 0.08em;
+
+  text-transform: uppercase;
+}
+
+.hwa-product-card h3 {
+  margin: 0;
+
+  overflow: hidden;
+
+  color: #0f172a;
+
+  font-size: 0.91rem;
+  font-weight: 800;
+  line-height: 1.26;
+
+  display: -webkit-box;
+
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+
+.hwa-product-card-meta,
+.hwa-product-card-category {
+  margin:
+    6px 0 0;
+
+  overflow: hidden;
+
+  color: #64748b;
+
+  font-size: 0.72rem;
+  line-height: 1.35;
+
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.hwa-product-card-category {
+  color: #475569;
+  font-weight: 700;
+}
+
+.hwa-product-card-commerce {
+  margin-top: 12px;
+
+  padding-top: 11px;
+
+  border-top:
+    1px solid #eef2f7;
+
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.hwa-product-card-commerce > div {
+  min-width: 0;
+
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+}
+
+.hwa-product-card-price {
+  color: #020617;
+
+  font-size: 0.87rem;
+  font-weight: 900;
+}
+
+.hwa-product-card-original-price {
+  color: #94a3b8;
+
+  font-size: 0.67rem;
+
+  text-decoration: line-through;
+}
+
+.hwa-product-card-stock {
+  flex: 0 0 auto;
+
+  font-size: 0.66rem;
+  font-weight: 800;
+}
+
+.hwa-product-card-stock-ok {
+  color: #059669;
+}
+
+.hwa-product-card-stock-zero {
+  color: #dc2626;
+}
+
+.hwa-product-card-selected {
+  border-color:
+    rgba(14, 165, 233, 0.7);
+
+  box-shadow:
+    0 0 0 2px
+    rgba(14, 165, 233, 0.1),
+    0 14px 34px
+    rgba(15, 23, 42, 0.08);
+}
+
+.hwa-select-button {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  z-index: 2;
+
+  width: 27px;
+  height: 27px;
+
+  padding: 0;
+
+  border:
+    1px solid
+    rgba(148, 163, 184, 0.42);
+
+  border-radius: 9px;
+
+  background:
+    rgba(255, 255, 255, 0.9);
+
+  color: #ffffff;
+
+  display: grid;
+  place-items: center;
+
+  cursor: pointer;
+
+  box-shadow:
+    0 4px 12px
+    rgba(15, 23, 42, 0.08);
+
+  backdrop-filter:
+    blur(8px);
+
+  transition:
+    background 150ms ease,
+    border-color 150ms ease,
+    transform 150ms ease;
+}
+
+.hwa-select-button:hover {
+  transform:
+    scale(1.04);
+
+  border-color:
+    rgba(14, 165, 233, 0.65);
+}
+
+.hwa-select-button > span {
+  width: 9px;
+  height: 9px;
+
+  border-radius: 3px;
+
+  background: #e2e8f0;
+}
+
+.hwa-select-button-active {
+  border-color: #0ea5e9;
+
+  background:
+    linear-gradient(
+      145deg,
+      #0ea5e9,
+      #0284c7
+    );
+}
