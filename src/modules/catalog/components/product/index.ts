@@ -1,4 +1,3 @@
-export * from "./ProductBenefits";
 export * from "./ProductBuyBox";
 export * from "./ProductCard";
 export * from "./ProductHeader";

@@ -69,9 +69,16 @@ export function useProductCart({
         PRODUCT_DETAIL_CONFIG
           .notifications
           .addedToCartTitle,
-        PRODUCT_DETAIL_CONFIG
-          .notifications
-          .addedToCartDescription,
+        `${parsedQtyInput} ${
+          parsedQtyInput === 1
+            ? "unidad"
+            : "unidades"
+        } de ${product.title} ${
+          parsedQtyInput === 1
+            ? "se agregó"
+            : "se agregaron"
+        } a Mi Box.`,
+        "cart",
       );
 
       return true;

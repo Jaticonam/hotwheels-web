@@ -1,9 +1,9 @@
 {
-  "name": "Gleemour",
-  "short_name": "Gleemour",
+  "name": "Coleccionables 1:64",
+  "short_name": "Coleccionables",
   "start_url": "/",
   "display": "standalone",
-  "background_color": "#fff7fb",
-  "theme_color": "#6A5A8A",
+  "background_color": "#F8FAFC",
+  "theme_color": "#0EA5E9",
   "icons": []
 }

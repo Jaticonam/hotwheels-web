@@ -1,4 +1,5 @@
 import "./HeaderBar.css";
+
 import { SearchInput } from "@/modules/catalog/components/search/SearchInput";
 import { BRAND_CONFIG } from "@/tenant/config/brand";
 import type { Product } from "@/shared/types/product";
@@ -17,19 +18,7 @@ export function HeaderBar({
   return (
     <div className="catalog-header-bar">
       <div className="catalog-header-bar-inner">
-        <button
-          type="button"
-          className="catalog-header-logo"
-          onClick={() => (window.location.href = "/")}
-          aria-label={`Ir al inicio de ${BRAND_CONFIG.name}`}
-        >
-          <img
-            src={BRAND_CONFIG.assets.logo}
-            alt={BRAND_CONFIG.name}
-          />
-        </button>
-
-        <div className="catalog-header-search">
+<div className="catalog-header-search">
           <SearchInput
             value={searchQuery}
             onChange={onSearchChange}
@@ -41,7 +30,3 @@ export function HeaderBar({
     </div>
   );
 }
-
-
-
-

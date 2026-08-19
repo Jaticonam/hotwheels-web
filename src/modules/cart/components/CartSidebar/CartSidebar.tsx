@@ -11,7 +11,7 @@ import {
   MessageCircle,
   Minus,
   PackageOpen,
-  PackagePlus,
+  Box,
   Plus,
   Trash2,
   X,
@@ -422,7 +422,7 @@ export function CartSidebar({
         <header className="cart-sidebar-header">
           <div className="cart-sidebar-title-wrap">
             <div className="cart-sidebar-icon">
-              <PackagePlus className="w-5 h-5" />
+              <Box className="w-5 h-5" />
             </div>
 
             <div>

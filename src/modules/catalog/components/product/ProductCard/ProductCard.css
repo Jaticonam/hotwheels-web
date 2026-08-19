@@ -1093,3 +1093,92 @@
     min-height: 2.65rem;
   }
 }
+/* ============================================================
+   PRODUCT CARD STATE CTA V1
+
+   Single CTA slot:
+   - Cyan = direct commerce / Mi Box
+   - WhatsApp green = consultation / reservation / availability
+   ============================================================ */
+
+.product-card-button-whatsapp {
+  color: #ffffff;
+
+  border-color:
+    color-mix(
+      in srgb,
+      var(--color-whatsapp) 64%,
+      transparent
+    );
+
+  background:
+    linear-gradient(
+      135deg,
+      var(--color-whatsapp-dark),
+      var(--color-whatsapp)
+    );
+
+  box-shadow:
+    0 10px 24px
+    color-mix(
+      in srgb,
+      var(--color-whatsapp) 18%,
+      transparent
+    );
+}
+
+.product-card-button-whatsapp
+.product-card-button-content,
+.product-card-button-whatsapp
+.product-card-button-label,
+.product-card-button-whatsapp
+.product-card-button-icon {
+  color: #ffffff;
+}
+
+.product-card-button-whatsapp
+.product-card-button-icon-shell {
+  border-color:
+    rgba(255, 255, 255, 0.27);
+
+  background:
+    rgba(255, 255, 255, 0.12);
+
+  color:
+    #ffffff;
+}
+
+.product-card-button-whatsapp:hover:not(:disabled) {
+  transform:
+    translateY(-2px);
+
+  border-color:
+    color-mix(
+      in srgb,
+      var(--color-whatsapp) 78%,
+      #ffffff
+    );
+
+  box-shadow:
+    0 13px 28px
+    color-mix(
+      in srgb,
+      var(--color-whatsapp) 24%,
+      transparent
+    );
+}
+
+.product-card-button-whatsapp:hover:not(:disabled)
+.product-card-button-icon-shell {
+  transform:
+    translateY(-1px);
+
+  background:
+    rgba(255, 255, 255, 0.16);
+}
+
+.product-card-button-whatsapp:active:not(:disabled) {
+  transform:
+    translateY(0)
+    scale(0.985);
+}

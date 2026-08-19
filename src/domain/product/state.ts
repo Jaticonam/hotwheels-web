@@ -31,7 +31,7 @@ export function getProductState(product: Product): {
     return {
       type: "preorder",
       label: "Preventa",
-      available: true,
+      available: false,
     };
   }
 

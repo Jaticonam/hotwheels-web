@@ -1,83 +1,172 @@
 import "./NotificationStack.css";
-import { useState, useEffect, useCallback } from "react";
-import { CheckCircle } from "lucide-react";
+
+import {
+  useCallback,
+  useEffect,
+  useState,
+} from "react";
+
+import {
+  Box,
+  CheckCircle,
+} from "lucide-react";
+
+type NotificationVariant =
+  | "default"
+  | "cart";
 
 interface Toast {
   id: number;
   title: string;
   message: string;
+  variant: NotificationVariant;
   leaving: boolean;
 }
 
 let toastId = 0;
 
-type Listener = (title: string, message: string) => void;
-const listeners: Set<Listener> = new Set();
+type Listener = (
+  title: string,
+  message: string,
+  variant?: NotificationVariant,
+) => void;
 
-export function showNotification(title: string, message: string) {
-  listeners.forEach((fn) => fn(title, message));
+const listeners: Set<Listener> =
+  new Set();
+
+export function showNotification(
+  title: string,
+  message: string,
+  variant: NotificationVariant = "default",
+) {
+  listeners.forEach(
+    (listener) =>
+      listener(
+        title,
+        message,
+        variant,
+      ),
+  );
 }
 
 export function NotificationStack() {
-  const [toasts, setToasts] = useState<Toast[]>([]);
+  const [
+    toasts,
+    setToasts,
+  ] =
+    useState<Toast[]>([]);
 
-  const addToast = useCallback((title: string, message: string) => {
-    const id = ++toastId;
+  const addToast =
+    useCallback(
+      (
+        title: string,
+        message: string,
+        variant:
+          NotificationVariant =
+            "default",
+      ) => {
+        const id =
+          ++toastId;
 
-    setToasts((prev) => [
-      ...prev,
-      {
-        id,
-        title,
-        message,
-        leaving: false,
+        setToasts(
+          (previous) => [
+            ...previous,
+            {
+              id,
+              title,
+              message,
+              variant,
+              leaving: false,
+            },
+          ],
+        );
+
+        setTimeout(() => {
+          setToasts(
+            (previous) =>
+              previous.map(
+                (toast) =>
+                  toast.id === id
+                    ? {
+                        ...toast,
+                        leaving: true,
+                      }
+                    : toast,
+              ),
+          );
+
+          setTimeout(() => {
+            setToasts(
+              (previous) =>
+                previous.filter(
+                  (toast) =>
+                    toast.id !== id,
+                ),
+            );
+          }, 300);
+        }, 2500);
       },
-    ]);
-
-    setTimeout(() => {
-      setToasts((prev) =>
-        prev.map((toast) =>
-          toast.id === id ? { ...toast, leaving: true } : toast
-        )
-      );
-
-      setTimeout(() => {
-        setToasts((prev) => prev.filter((toast) => toast.id !== id));
-      }, 300);
-    }, 2500);
-  }, []);
+      [],
+    );
 
   useEffect(() => {
     listeners.add(addToast);
 
     return () => {
-      listeners.delete(addToast);
+      listeners.delete(
+        addToast,
+      );
     };
   }, [addToast]);
 
   return (
-    <div className="notification-stack">
-      {toasts.map((toast) => (
-        <div
-          key={toast.id}
-          className={toast.leaving ? "notification-toast-out" : "notification-toast-in"}
-        >
-          <div className="notification-toast">
-            <div className="notification-toast-icon">
-              <CheckCircle className="w-5 h-5" />
-            </div>
+    <div
+      className="notification-stack"
+      aria-live="polite"
+      aria-atomic="true"
+    >
+      {toasts.map(
+        (toast) => {
+          const Icon =
+            toast.variant ===
+            "cart"
+              ? Box
+              : CheckCircle;
 
-            <div className="notification-toast-content">
-              <span>{toast.title}</span>
-              <p>{toast.message}</p>
+          return (
+            <div
+              key={toast.id}
+              className={
+                toast.leaving
+                  ? "notification-toast-out"
+                  : "notification-toast-in"
+              }
+            >
+              <div
+                className={[
+                  "notification-toast",
+                  `notification-toast--${toast.variant}`,
+                ].join(" ")}
+                role="status"
+              >
+                <div className="notification-toast-icon">
+                  <Icon className="w-5 h-5" />
+                </div>
+
+                <div className="notification-toast-content">
+                  <span>
+                    {toast.title}
+                  </span>
+
+                  <p>
+                    {toast.message}
+                  </p>
+                </div>
+              </div>
             </div>
-          </div>
-        </div>
-      ))}
+          );
+        },
+      )}
     </div>
   );
 }
-
-
-
-

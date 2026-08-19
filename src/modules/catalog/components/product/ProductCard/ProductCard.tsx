@@ -5,12 +5,22 @@ import {
   useState,
   type MouseEvent,
 } from "react";
-import { useNavigate } from "react-router-dom";
 
-import { getProductUrl } from "@/app/routes/routes";
-import { sortBadges } from "@/tenant/config/product";
+import {
+  useNavigate,
+} from "react-router-dom";
 
-import type { Product } from "@/shared/types/product";
+import {
+  getProductUrl,
+} from "@/app/routes/routes";
+
+import {
+  sortBadges,
+} from "@/tenant/config/product";
+
+import type {
+  Product,
+} from "@/shared/types/product";
 
 import {
   getOriginalProductPrice,
@@ -20,15 +30,36 @@ import {
   isProductAvailable,
 } from "@/domain/product";
 
-import { showNotification } from "@/shared/components/feedback/NotificationStack";
-import { ImageZoomModal } from "@/modules/catalog/components/overlays/ImageZoomModal";
-
-import { ProductCardImage } from "./ProductCardImage";
-import { ProductCardContent } from "./ProductCardContent";
-import { ProductCardPrice } from "./ProductCardPrice";
-import { ProductCardActions } from "./ProductCardActions";
+import {
+  buildProductWhatsAppUrl,
+} from "@/integrations/whatsapp/whatsapp";
 
 import {
+  showNotification,
+} from "@/shared/components/feedback/NotificationStack";
+
+import {
+  ImageZoomModal,
+} from "@/modules/catalog/components/overlays/ImageZoomModal";
+
+import {
+  ProductCardImage,
+} from "./ProductCardImage";
+
+import {
+  ProductCardContent,
+} from "./ProductCardContent";
+
+import {
+  ProductCardPrice,
+} from "./ProductCardPrice";
+
+import {
+  ProductCardActions,
+} from "./ProductCardActions";
+
+import {
+  getProductCardPrimaryAction,
   getProductCardStockPresentation,
 } from "./ProductCard.utils";
 
@@ -55,7 +86,8 @@ export function ProductCard({
   product,
   onAddToCart,
 }: ProductCardProps) {
-  const navigate = useNavigate();
+  const navigate =
+    useNavigate();
 
   const [
     zoomImage,
@@ -66,17 +98,23 @@ export function ProductCard({
     );
 
   const available =
-    isProductAvailable(product);
+    isProductAvailable(
+      product,
+    );
 
   const productState =
-    getProductState(product);
+    getProductState(
+      product,
+    );
 
   const isPreventa =
     productState.type ===
     "preorder";
 
   const price =
-    getProductPrice(product);
+    getProductPrice(
+      product,
+    );
 
   const originalPrice =
     getOriginalProductPrice(
@@ -84,7 +122,9 @@ export function ProductCard({
     );
 
   const hasOffer =
-    hasOfferPrice(product);
+    hasOfferPrice(
+      product,
+    );
 
   const visibleBadges =
     useMemo(
@@ -104,16 +144,17 @@ export function ProductCard({
     available &&
     Boolean(onAddToCart);
 
-  const addToCartLabel =
-    available
-      ? "Agregar a Mi Box"
-      : isPreventa
-        ? "Preventa"
-        : "Agotado";
+  const primaryAction =
+    getProductCardPrimaryAction(
+      product,
+      canAddToCart,
+    );
 
   const handleViewDetail = () => {
     navigate(
-      getProductUrl(product),
+      getProductUrl(
+        product,
+      ),
     );
   };
 
@@ -187,36 +228,74 @@ export function ProductCard({
     handleViewDetail();
   };
 
-  const handleAddToCart = (): boolean => {
-    if (
-      !available ||
-      !onAddToCart
-    ) {
-      return false;
-    }
+  const handleAddToCart =
+    (): boolean => {
+      if (
+        !available ||
+        !onAddToCart
+      ) {
+        return false;
+      }
 
-    const added =
-      onAddToCart(
-        product,
-        1,
-      );
+      const added =
+        onAddToCart(
+          product,
+          1,
+        );
 
-    if (added === false) {
+      if (added === false) {
+        showNotification(
+          "Stock máximo alcanzado",
+          `Ya tienes el máximo disponible de ${product.title}.`,
+        );
+
+        return false;
+      }
+
       showNotification(
-        "Stock máximo alcanzado",
-        `Ya tienes el máximo disponible de ${product.title}.`,
+        "Agregado a Mi Box",
+        `1 unidad de ${product.title} se agregó a Mi Box.`,
+        "cart",
       );
 
+      return true;
+    };
+
+  const handleWhatsApp =
+    (): boolean => {
+      const url =
+        buildProductWhatsAppUrl({
+          product,
+          qty: 1,
+        });
+
+      window.open(
+        url,
+        "_blank",
+        "noopener,noreferrer",
+      );
+
+      return true;
+    };
+
+  const handlePrimaryAction =
+    (): boolean => {
+      if (
+        primaryAction.type ===
+        "cart"
+      ) {
+        return handleAddToCart();
+      }
+
+      if (
+        primaryAction.type ===
+        "whatsapp"
+      ) {
+        return handleWhatsApp();
+      }
+
       return false;
-    }
-
-    showNotification(
-      "Agregado a Mi Box",
-      `${product.title} se agregó correctamente.`,
-    );
-
-    return true;
-  };
+    };
 
   return (
     <>
@@ -247,7 +326,9 @@ export function ProductCard({
               hasOffer={
                 hasOffer
               }
-              price={price}
+              price={
+                price
+              }
               originalPrice={
                 originalPrice
               }
@@ -264,7 +345,9 @@ export function ProductCard({
                 aria-hidden="true"
               />
 
-              {stockPresentation.label}
+              {
+                stockPresentation.label
+              }
             </div>
           </div>
 
@@ -272,14 +355,14 @@ export function ProductCard({
             productTitle={
               product.title
             }
-            canAddToCart={
-              canAddToCart
+            actionType={
+              primaryAction.type
             }
-            addToCartLabel={
-              addToCartLabel
+            actionLabel={
+              primaryAction.label
             }
-            onAddToCart={
-              handleAddToCart
+            onAction={
+              handlePrimaryAction
             }
           />
         </div>

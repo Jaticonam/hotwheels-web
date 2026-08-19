@@ -1,4 +1,3 @@
-export * from "./benefits";
 export * from "./buybox";
 export * from "./gallery";
 export * from "./badgeRules";

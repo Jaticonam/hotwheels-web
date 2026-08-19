@@ -6,28 +6,34 @@ import {
 
 import {
   Check,
+  MessageCircle,
   PackagePlus,
 } from "lucide-react";
 
+import type {
+  ProductCardPrimaryActionType,
+} from "./ProductCard.utils";
+
 interface ProductCardActionsProps {
   productTitle: string;
-  canAddToCart: boolean;
-  addToCartLabel: string;
-  onAddToCart: () => boolean;
+  actionType: ProductCardPrimaryActionType;
+  actionLabel: string;
+  onAction: () => boolean;
 }
 
 const SUCCESS_DURATION_MS = 900;
 
 export function ProductCardActions({
   productTitle,
-  canAddToCart,
-  addToCartLabel,
-  onAddToCart,
+  actionType,
+  actionLabel,
+  onAction,
 }: ProductCardActionsProps) {
   const [
     addedSuccessfully,
     setAddedSuccessfully,
-  ] = useState(false);
+  ] =
+    useState(false);
 
   const successTimerRef =
     useRef<number | null>(null);
@@ -44,11 +50,27 @@ export function ProductCardActions({
     };
   }, []);
 
-  const handleClick = () => {
-    const added =
-      onAddToCart();
+  const disabled =
+    actionType === "disabled";
 
-    if (!added) {
+  const isCart =
+    actionType === "cart";
+
+  const isWhatsApp =
+    actionType === "whatsapp";
+
+  const handleClick = () => {
+    if (disabled) {
+      return;
+    }
+
+    const completed =
+      onAction();
+
+    if (
+      !completed ||
+      !isCart
+    ) {
       return;
     }
 
@@ -75,21 +97,23 @@ export function ProductCardActions({
   const buttonLabel =
     addedSuccessfully
       ? "Agregado a Mi Box"
-      : addToCartLabel;
+      : actionLabel;
 
   return (
     <div className="product-card-actions">
       <button
         type="button"
         onClick={handleClick}
-        disabled={!canAddToCart}
+        disabled={disabled}
         className={[
           "product-card-button",
-          "product-card-button-cart",
+          isWhatsApp
+            ? "product-card-button-whatsapp"
+            : "product-card-button-cart",
           addedSuccessfully
             ? "product-card-button-success"
             : "",
-          !canAddToCart
+          disabled
             ? "product-card-button-disabled"
             : "",
         ].join(" ")}
@@ -104,6 +128,11 @@ export function ProductCardActions({
           <span className="product-card-button-icon-shell">
             {addedSuccessfully ? (
               <Check
+                className="product-card-button-icon"
+                aria-hidden="true"
+              />
+            ) : isWhatsApp ? (
+              <MessageCircle
                 className="product-card-button-icon"
                 aria-hidden="true"
               />

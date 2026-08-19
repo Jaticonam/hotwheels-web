@@ -1,3 +1,4 @@
+import { BRAND_CONFIG } from "@/tenant/config/brand";
 import {
   Link,
 } from "react-router-dom";
@@ -189,7 +190,7 @@ export default function HowToBuySection() {
 
               <div className="flex flex-col gap-3 sm:flex-row lg:items-center">
                 <a
-                  href="https://wa.me/51936188636"
+                  href={`https://wa.me/${BRAND_CONFIG.contact.whatsapp}`}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="inline-flex min-h-11 items-center justify-center gap-2 rounded-xl border border-emerald-400/20 bg-emerald-400/[0.07] px-4 text-xs font-black text-emerald-400 transition hover:border-emerald-400/40 hover:bg-emerald-400/[0.12]"
