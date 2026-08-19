@@ -1,0 +1,9 @@
+RewriteEngine On
+
+# Mantener archivos y directorios reales sin reescritura.
+RewriteCond %{REQUEST_FILENAME} -f [OR]
+RewriteCond %{REQUEST_FILENAME} -d
+RewriteRule ^ - [L]
+
+# React SPA: cualquier otra URL debe cargar index.html.
+RewriteRule ^ index.html [L]
