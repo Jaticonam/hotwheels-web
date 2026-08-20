@@ -84,10 +84,14 @@ function formatSyncTime(
 interface AdminProductExplorerProps {
   onPrepareCatalog?:
     () => void;
+
+  onPrepareQuotation?:
+    () => void;
 }
 
 export function AdminProductExplorer({
   onPrepareCatalog,
+  onPrepareQuotation,
 }: AdminProductExplorerProps) {
   const {
     products,
@@ -535,7 +539,21 @@ export function AdminProductExplorer({
                 Limpiar selección
               </button>
 
+
               {
+                onPrepareQuotation &&
+                (
+                  <button
+                    type="button"
+                    className="hwa-clear-selection"
+                    onClick={
+                      onPrepareQuotation
+                    }
+                  >
+                    Preparar cotización
+                  </button>
+                )
+              }              {
                 onPrepareCatalog &&
                 (
                   <button

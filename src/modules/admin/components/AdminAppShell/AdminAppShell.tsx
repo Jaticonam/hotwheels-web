@@ -12,7 +12,8 @@ import {
 
 export type AdminSection =
   | "catalog"
-  | "catalogs";
+  | "catalogs"
+  | "quotations";
 
 interface AdminAppShellProps {
   children: ReactNode;
@@ -44,7 +45,7 @@ export function AdminAppShell({
             </strong>
 
             <span>
-              Admin 1.0
+              Admin 1.1
             </span>
           </div>
         </div>
@@ -105,9 +106,18 @@ export function AdminAppShell({
 
           <button
             type="button"
-            className="hwa-nav-item"
-            disabled
-            title="Hot Wheels Admin 1.1"
+            className={[
+              "hwa-nav-item",
+              activeSection ===
+                "quotations"
+                ? "hwa-nav-item-active"
+                : "",
+            ].join(" ")}
+            onClick={() =>
+              onSectionChange(
+                "quotations",
+              )
+            }
           >
             <ReceiptText
               size={18}
@@ -148,7 +158,7 @@ export function AdminAppShell({
           </div>
 
           <div className="hwa-version">
-            1.0 · R4
+            1.1 · Q2
           </div>
         </header>
 

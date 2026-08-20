@@ -15,6 +15,10 @@ import {
   AdminProductExplorer,
 } from "@/modules/admin/components/AdminProductExplorer/AdminProductExplorer";
 
+import {
+  AdminQuotationWorkspace,
+} from "@/modules/admin/components/AdminQuotationWorkspace/AdminQuotationWorkspace";
+
 export default function AdminPage() {
   const [
     section,
@@ -43,17 +47,33 @@ export default function AdminPage() {
                     "catalogs",
                   )
                 }
-              />
-            )
-          : (
-              <AdminCatalogWorkspace
-                onBackToCatalog={() =>
+                onPrepareQuotation={() =>
                   setSection(
-                    "catalog",
+                    "quotations",
                   )
                 }
               />
             )
+          : section ===
+              "catalogs"
+            ? (
+                <AdminCatalogWorkspace
+                  onBackToCatalog={() =>
+                    setSection(
+                      "catalog",
+                    )
+                  }
+                />
+              )
+            : (
+                <AdminQuotationWorkspace
+                  onBackToCatalog={() =>
+                    setSection(
+                      "catalog",
+                    )
+                  }
+                />
+              )
       }
     </AdminAppShell>
   );
