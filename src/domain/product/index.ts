@@ -7,3 +7,4 @@ export * from "./Taxonomy";
 export * from "./TaxonomyResolver";
 export * from "./LegacyTaxonomyMigration";
 export * from "./LegacyMiniSeriesMigration";
+export * from "./LegacyRarityMigration";
