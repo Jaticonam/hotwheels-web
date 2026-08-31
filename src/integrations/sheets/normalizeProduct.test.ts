@@ -204,7 +204,7 @@ describe("normalizeProduct MVP", () => {
       .toBe("");
   });
 
-  it("mantiene retrocompatibles filas sin Taxonomy 1.0", () => {
+  it("preserva mini_series legacy y migra sus campos determinísticos", () => {
     const product = normalizeProduct({
       id: "HW-TAX-004",
       title: "Legacy Product",
@@ -217,13 +217,13 @@ describe("normalizeProduct MVP", () => {
       .toBe("Ferrari 3/5");
 
     expect(product.series)
-      .toBe("");
+      .toBe("Ferrari");
 
     expect(product.collection)
       .toBe("");
 
     expect(product.set_number)
-      .toBe("");
+      .toBe("3/5");
 
     expect(product.format)
       .toBe("");
@@ -475,4 +475,163 @@ describe("normalizeProduct MVP", () => {
 
     expect(product.format)
       .toBe("");
+  });
+  it("migra mini_series determinística hacia series y set_number", () => {
+    const product = normalizeProduct({
+      id: "HWC26025",
+      title: "McMurtry Spéirling",
+      price: "20",
+      status: "Publicado",
+
+      year: "2026",
+      card_number: "25/250",
+      category: "Deportivos",
+
+      mini_series:
+        "Exoticars 2/10",
+    });
+
+    expect(product.series)
+      .toBe(
+        "Exoticars",
+      );
+
+    expect(product.set_number)
+      .toBe(
+        "2/10",
+      );
+
+    expect(product.mini_series)
+      .toBe(
+        "Exoticars 2/10",
+      );
+  });
+
+  it("no inventa set_number para Layin Low", () => {
+    const product = normalizeProduct({
+      id: "HWC26017",
+      title: "Bounce'n Bass",
+      price: "20",
+      status: "Publicado",
+
+      year: "2026",
+      card_number: "17/250",
+      category: "Fantasía",
+
+      mini_series:
+        "Layin' Low",
+    });
+
+    expect(product.series)
+      .toBe("");
+
+    expect(product.set_number)
+      .toBe("");
+
+    expect(product.mini_series)
+      .toBe(
+        "Layin' Low",
+      );
+  });
+
+  it("no propaga una posición imposible desde mini_series", () => {
+    const product = normalizeProduct({
+      id: "HWC26199",
+      title:
+        "Nissan Skyline GT-R (BNR34)",
+      price: "20",
+      status: "Publicado",
+
+      year: "2026",
+      card_number: "199/250",
+      category: "JDM",
+
+      mini_series:
+        "HW J-Imports 11/10",
+    });
+
+    expect(product.series)
+      .toBe("");
+
+    expect(product.set_number)
+      .toBe("");
+
+    expect(product.mini_series)
+      .toBe(
+        "HW J-Imports 11/10",
+      );
+  });
+
+  it("da prioridad a series y set_number canónicos explícitos", () => {
+    const product = normalizeProduct({
+      id: "HW-CANONICAL-SERIES",
+      title: "Canonical Series",
+      price: "20",
+      status: "Publicado",
+
+      mini_series:
+        "Exoticars 2/10",
+
+      series:
+        "Car Culture",
+
+      set_number:
+        "3/5",
+    });
+
+    expect(product.series)
+      .toBe(
+        "Car Culture",
+      );
+
+    expect(product.set_number)
+      .toBe(
+        "3/5",
+      );
+  });
+
+  it("no mezcla una fuente canónica parcial con mini_series legacy", () => {
+    const product = normalizeProduct({
+      id: "HW-PARTIAL-SERIES",
+      title: "Partial Canonical",
+      price: "20",
+      status: "Publicado",
+
+      mini_series:
+        "Exoticars 2/10",
+
+      series:
+        "Car Culture",
+    });
+
+    expect(product.series)
+      .toBe(
+        "Car Culture",
+      );
+
+    expect(product.set_number)
+      .toBe("");
+  });
+
+  it("preserva set_number explícito aislado sin completar series desde legacy", () => {
+    const product = normalizeProduct({
+      id: "HW-PARTIAL-SET",
+      title: "Partial Set",
+      price: "20",
+      status: "Publicado",
+
+      mini_series:
+        "Exoticars 2/10",
+
+      set_number:
+        "4/5",
+    });
+
+    expect(product.series)
+      .toBe("");
+
+    expect(product.set_number)
+      .toBe(
+        "4/5",
+      );
   });});

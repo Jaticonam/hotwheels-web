@@ -1,4 +1,7 @@
 import {
+  resolveLegacyMiniSeriesMigration,
+} from "@/domain/product/LegacyMiniSeriesMigration";
+import {
   resolveLegacyTaxonomyMigration,
 } from "@/domain/product/LegacyTaxonomyMigration";
 import {
@@ -351,6 +354,44 @@ export function normalizeProduct(
           "mainline-2026-card-sequence"
         ? "single"
         : "";
+  const sourceSeries =
+    cleanText(
+      row.series,
+    );
+
+  const sourceSetNumber =
+    cleanText(
+      row.set_number,
+    );
+
+  const legacyMiniSeriesMigration =
+    resolveLegacyMiniSeriesMigration(
+      row.mini_series,
+    );
+
+  const canUseLegacyMiniSeries =
+    !sourceSeries &&
+    !sourceSetNumber &&
+    legacyMiniSeriesMigration.status ===
+      "parsed";
+
+  const series =
+    sourceSeries ||
+    (
+      canUseLegacyMiniSeries
+        ? legacyMiniSeriesMigration.series ??
+          ""
+        : ""
+    );
+
+  const setNumber =
+    sourceSetNumber ||
+    (
+      canUseLegacyMiniSeries
+        ? legacyMiniSeriesMigration.set_number ??
+          ""
+        : ""
+    );
   return {
     id:
       cleanText(row.id),
@@ -434,10 +475,7 @@ export function normalizeProduct(
         row.mini_series,
       ),
 
-    series:
-      cleanText(
-        row.series,
-      ),
+    series,
 
     collection:
       cleanText(
@@ -445,9 +483,7 @@ export function normalizeProduct(
       ),
 
     set_number:
-      cleanText(
-        row.set_number,
-      ),
+      setNumber,
 
     format,
 
