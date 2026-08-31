@@ -4,3 +4,4 @@ export * from "./normalize";
 export * from "./pricing";
 export * from "./state";
 export * from "./Taxonomy";
+export * from "./TaxonomyResolver";
