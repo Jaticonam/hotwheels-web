@@ -13,87 +13,155 @@ export const ALL_CATALOG_CATEGORY_ID =
   "todas" as const;
 
 /**
- * Configuración legacy vigente del catálogo.
+ * Taxonomía oficial Hot Wheels 1.0.
  *
- * CAT-1B solo separa navegación de clasificación.
- * La migración a Mainline / Silver Series /
- * Premium / Collector se realizará posteriormente.
+ * Estas son las únicas categorías canónicas
+ * para nuevos productos.
  */
-export const CATEGORIES: CatalogCategory[] = [
-  {
-    id: ALL_CATALOG_CATEGORY_ID,
-    name: "Todos",
-    sheetLabel: "Todos",
-    icon: "🏁",
-    description: "Explora todos los autos disponibles en el catálogo.",
-  },
-  {
-    id: "deportivos",
-    name: "Deportivos",
-    sheetLabel: "Deportivos",
-    icon: "🏎️",
-    description: "Velocidad, diseño y alto desempeño.",
-  },
-  {
-    id: "coleccionables",
-    name: "Coleccionables",
-    sheetLabel: "Coleccionables",
-    icon: "💎",
-    description: "Piezas que destacan dentro de una colección.",
-  },
-  {
-    id: "tematicos",
-    name: "Temáticos",
-    sheetLabel: "Temáticos",
-    icon: "🎬",
-    description: "Modelos inspirados en personajes y franquicias.",
-  },
-  {
-    id: "clasicos",
-    name: "Clásicos",
-    sheetLabel: "Clásicos",
-    icon: "🚗",
-    description: "Diseños legendarios que nunca pasan de moda.",
-  },
-  {
-    id: "premium",
-    name: "Premium",
-    sheetLabel: "Premium",
-    icon: "✨",
-    description: "Mayor detalle, acabados y presentaciones especiales.",
-  },
-  {
-    id: "x-caja",
-    name: "x Caja",
-    sheetLabel: "x Caja",
-    icon: "📦",
-    description: "Opciones disponibles para compra por caja.",
-  },
-  {
-    id: "ofertas",
-    name: "Ofertas",
-    sheetLabel: "Ofertas",
-    icon: "🔥",
-    description: "Oportunidades y precios especiales disponibles.",
-  },
-];
+export const CANONICAL_PRODUCT_CATEGORIES:
+  CatalogCategory[] = [
+    {
+      id: "mainline",
+      name: "Mainline",
+      sheetLabel: "Mainline",
+      icon: "🏁",
+      description:
+        "Línea principal Hot Wheels.",
+    },
+    {
+      id: "silver-series",
+      name: "Silver Series",
+      sheetLabel: "Silver Series",
+      icon: "🥈",
+      description:
+        "Series especiales Silver Series.",
+    },
+    {
+      id: "premium",
+      name: "Premium",
+      sheetLabel: "Premium",
+      icon: "✨",
+      description:
+        "Líneas Hot Wheels Premium.",
+    },
+    {
+      id: "collector",
+      name: "Collector",
+      sheetLabel: "Collector",
+      icon: "💎",
+      description:
+        "Líneas orientadas al coleccionista.",
+    },
+  ];
 
 /**
- * Categorías que pueden asignarse temporalmente a productos
- * mientras se completa la migración Taxonomy 1.0.
+ * Navegación legacy vigente.
  *
- * Importante:
- * - excluye "todas";
- * - x-caja y ofertas permanecen solo por compatibilidad legacy
- *   hasta su migración a formato/estado comercial.
+ * CAT-3B1 NO cambia todavía la experiencia pública.
+ * Estas opciones se retirarán o reclasificarán
+ * progresivamente en CAT-5.
  */
-export const PRODUCT_CATEGORIES:
+export const CATEGORIES:
+  CatalogCategory[] = [
+    {
+      id: ALL_CATALOG_CATEGORY_ID,
+      name: "Todos",
+      sheetLabel: "Todos",
+      icon: "🏁",
+      description:
+        "Explora todos los autos disponibles en el catálogo.",
+    },
+    {
+      id: "deportivos",
+      name: "Deportivos",
+      sheetLabel: "Deportivos",
+      icon: "🏎️",
+      description:
+        "Velocidad, diseño y alto desempeño.",
+    },
+    {
+      id: "coleccionables",
+      name: "Coleccionables",
+      sheetLabel: "Coleccionables",
+      icon: "💎",
+      description:
+        "Piezas que destacan dentro de una colección.",
+    },
+    {
+      id: "tematicos",
+      name: "Temáticos",
+      sheetLabel: "Temáticos",
+      icon: "🎬",
+      description:
+        "Modelos inspirados en personajes y franquicias.",
+    },
+    {
+      id: "clasicos",
+      name: "Clásicos",
+      sheetLabel: "Clásicos",
+      icon: "🚗",
+      description:
+        "Diseños legendarios que nunca pasan de moda.",
+    },
+    {
+      id: "premium",
+      name: "Premium",
+      sheetLabel: "Premium",
+      icon: "✨",
+      description:
+        "Mayor detalle, acabados y presentaciones especiales.",
+    },
+    {
+      id: "x-caja",
+      name: "x Caja",
+      sheetLabel: "x Caja",
+      icon: "📦",
+      description:
+        "Opciones disponibles para compra por caja.",
+    },
+    {
+      id: "ofertas",
+      name: "Ofertas",
+      sheetLabel: "Ofertas",
+      icon: "🔥",
+      description:
+        "Oportunidades y precios especiales disponibles.",
+    },
+  ];
+
+/**
+ * Clasificaciones legacy todavía aceptadas
+ * durante la transición.
+ *
+ * Se excluye:
+ * - "todas" porque es navegación;
+ * - "premium" porque ya existe como categoría canónica.
+ */
+export const LEGACY_PRODUCT_CATEGORIES:
   CatalogCategory[] =
   CATEGORIES.filter(
     (category) =>
       category.id !==
-      ALL_CATALOG_CATEGORY_ID,
+        ALL_CATALOG_CATEGORY_ID &&
+      category.id !==
+        "premium",
   );
+
+/**
+ * Registro transitorio aceptado por integraciones
+ * y Validator.
+ *
+ * Nuevos datos:
+ *   canonical only.
+ *
+ * Datos existentes:
+ *   canonical + legacy durante migración.
+ */
+export const PRODUCT_CATEGORIES:
+  CatalogCategory[] = [
+    ...CANONICAL_PRODUCT_CATEGORIES,
+    ...LEGACY_PRODUCT_CATEGORIES,
+  ];
 
 function normalizeCategoryLabel(
   value: string,
@@ -101,7 +169,10 @@ function normalizeCategoryLabel(
   return value
     .trim()
     .normalize("NFD")
-    .replace(/[\u0300-\u036f]/g, "")
+    .replace(
+      /[\u0300-\u036f]/g,
+      "",
+    )
     .toLowerCase();
 }
 
@@ -113,17 +184,22 @@ export function getCategoryById(
   }
 
   return (
+    CANONICAL_PRODUCT_CATEGORIES.find(
+      (category) =>
+        category.id === categoryId,
+    ) ??
     CATEGORIES.find(
       (category) =>
         category.id === categoryId,
-    ) ?? null
+    ) ??
+    null
   );
 }
 
 /**
- * Resolver general.
+ * Resolver general de UI.
  *
- * Incluye opciones de navegación como "Todos".
+ * Puede devolver "todas".
  */
 export function getCategoryIdFromSheetLabel(
   label?: string | null,
@@ -135,8 +211,13 @@ export function getCategoryIdFromSheetLabel(
   const normalized =
     normalizeCategoryLabel(label);
 
+  const allCategories = [
+    ...CATEGORIES,
+    ...CANONICAL_PRODUCT_CATEGORIES,
+  ];
+
   return (
-    CATEGORIES.find(
+    allCategories.find(
       (category) =>
         normalizeCategoryLabel(
           category.sheetLabel,
@@ -149,6 +230,7 @@ export function getCategoryIdFromSheetLabel(
  * Resolver exclusivo para productos.
  *
  * Nunca devuelve "todas".
+ * Durante CAT-3 acepta canonical + legacy.
  */
 export function getProductCategoryIdFromSheetLabel(
   label?: string | null,
@@ -187,7 +269,9 @@ export function getCategoryName(
   categoryId?: string | null,
 ): string {
   return (
-    getCategoryById(categoryId)?.name ??
+    getCategoryById(
+      categoryId,
+    )?.name ??
     "Coleccionable"
   );
 }

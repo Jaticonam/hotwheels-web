@@ -6,103 +6,198 @@ import {
 
 import {
   ALL_CATALOG_CATEGORY_ID,
+  CANONICAL_PRODUCT_CATEGORIES,
   CATEGORIES,
+  LEGACY_PRODUCT_CATEGORIES,
   PRODUCT_CATEGORIES,
+  getCategoryById,
   getCategoryIdFromSheetLabel,
   getCategoryName,
   getProductCategoryIdFromSheetLabel,
   isProductCategoryId,
 } from "./categories";
 
-describe("Hot Wheels catalog categories", () => {
-  it("mantiene el orden comercial legacy durante la migración", () => {
-    expect(
-      CATEGORIES.map(
-        (category) =>
-          category.id,
-      ),
-    ).toEqual([
-      "todas",
-      "deportivos",
-      "coleccionables",
-      "tematicos",
-      "clasicos",
-      "premium",
-      "x-caja",
-      "ofertas",
-    ]);
-  });
+describe(
+  "Hot Wheels catalog categories",
+  () => {
+    it("mantiene navegación legacy sin cambios durante CAT-3", () => {
+      expect(
+        CATEGORIES.map(
+          (category) =>
+            category.id,
+        ),
+      ).toEqual([
+        "todas",
+        "deportivos",
+        "coleccionables",
+        "tematicos",
+        "clasicos",
+        "premium",
+        "x-caja",
+        "ofertas",
+      ]);
+    });
 
-  it("declara todas únicamente como navegación", () => {
-    expect(
-      ALL_CATALOG_CATEGORY_ID,
-    ).toBe("todas");
+    it("define exactamente cuatro categorías canónicas", () => {
+      expect(
+        CANONICAL_PRODUCT_CATEGORIES.map(
+          (category) =>
+            category.id,
+        ),
+      ).toEqual([
+        "mainline",
+        "silver-series",
+        "premium",
+        "collector",
+      ]);
+    });
 
-    expect(
-      PRODUCT_CATEGORIES.some(
-        (category) =>
-          category.id === "todas",
-      ),
-    ).toBe(false);
+    it("mantiene todas únicamente como navegación", () => {
+      expect(
+        ALL_CATALOG_CATEGORY_ID,
+      ).toBe("todas");
 
-    expect(
-      isProductCategoryId("todas"),
-    ).toBe(false);
-  });
+      expect(
+        PRODUCT_CATEGORIES.some(
+          (category) =>
+            category.id ===
+            "todas",
+        ),
+      ).toBe(false);
 
-  it("mantiene categorías legacy válidas durante la transición", () => {
-    expect(
-      isProductCategoryId("premium"),
-    ).toBe(true);
+      expect(
+        isProductCategoryId(
+          "todas",
+        ),
+      ).toBe(false);
+    });
 
-    expect(
-      isProductCategoryId("clasicos"),
-    ).toBe(true);
-  });
+    it("acepta categorías canónicas como categorías de producto", () => {
+      expect(
+        isProductCategoryId(
+          "mainline",
+        ),
+      ).toBe(true);
 
-  it("normaliza etiquetas generales de navegación", () => {
-    expect(
-      getCategoryIdFromSheetLabel(
-        "Todos",
-      ),
-    ).toBe("todas");
+      expect(
+        isProductCategoryId(
+          "silver-series",
+        ),
+      ).toBe(true);
 
-    expect(
-      getCategoryIdFromSheetLabel(
-        "TEMÁTICOS",
-      ),
-    ).toBe("tematicos");
-  });
+      expect(
+        isProductCategoryId(
+          "premium",
+        ),
+      ).toBe(true);
 
-  it("impide asignar Todos como categoría de producto", () => {
-    expect(
-      getProductCategoryIdFromSheetLabel(
-        "Todos",
-      ),
-    ).toBe("");
+      expect(
+        isProductCategoryId(
+          "collector",
+        ),
+      ).toBe(true);
+    });
 
-    expect(
-      getProductCategoryIdFromSheetLabel(
-        "Clásicos",
-      ),
-    ).toBe("clasicos");
+    it("mantiene temporalmente categorías legacy", () => {
+      expect(
+        isProductCategoryId(
+          "clasicos",
+        ),
+      ).toBe(true);
 
-    expect(
-      getProductCategoryIdFromSheetLabel(
-        "Premium",
-      ),
-    ).toBe("premium");
-  });
+      expect(
+        isProductCategoryId(
+          "deportivos",
+        ),
+      ).toBe(true);
 
-  it("devuelve nombre visible desde id", () => {
-    expect(
-      getCategoryName("premium"),
-    ).toBe("Premium");
+      expect(
+        LEGACY_PRODUCT_CATEGORIES.some(
+          (category) =>
+            category.id ===
+            "premium",
+        ),
+      ).toBe(false);
+    });
 
-    expect(
-      getCategoryName(
-        "categoria-inexistente",
-      ),
-    ).toBe("Coleccionable");
-  });
-});
+    it("premium aparece una sola vez en el registro de producto", () => {
+      expect(
+        PRODUCT_CATEGORIES.filter(
+          (category) =>
+            category.id ===
+            "premium",
+        ),
+      ).toHaveLength(1);
+    });
+
+    it("resuelve Mainline desde Sheets", () => {
+      expect(
+        getProductCategoryIdFromSheetLabel(
+          "Mainline",
+        ),
+      ).toBe(
+        "mainline",
+      );
+
+      expect(
+        getProductCategoryIdFromSheetLabel(
+          "SILVER SERIES",
+        ),
+      ).toBe(
+        "silver-series",
+      );
+    });
+
+    it("continúa resolviendo etiquetas legacy durante transición", () => {
+      expect(
+        getProductCategoryIdFromSheetLabel(
+          "Clásicos",
+        ),
+      ).toBe(
+        "clasicos",
+      );
+
+      expect(
+        getProductCategoryIdFromSheetLabel(
+          "Deportivos",
+        ),
+      ).toBe(
+        "deportivos",
+      );
+    });
+
+    it("impide asignar Todos como categoría de producto", () => {
+      expect(
+        getCategoryIdFromSheetLabel(
+          "Todos",
+        ),
+      ).toBe(
+        "todas",
+      );
+
+      expect(
+        getProductCategoryIdFromSheetLabel(
+          "Todos",
+        ),
+      ).toBe("");
+    });
+
+    it("permite resolver metadata visible de categorías canónicas", () => {
+      expect(
+        getCategoryById(
+          "mainline",
+        )?.name,
+      ).toBe(
+        "Mainline",
+      );
+
+      expect(
+        getCategoryName(
+          "collector",
+        ),
+      ).toBe(
+        "Collector",
+      );
+    });
+  },
+);
