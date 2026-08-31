@@ -95,4 +95,21 @@ describe("Hot Wheels Taxonomy 1.0", () => {
       ),
     ).toBe(true);
   });
-});
+
+  it("permite registrar exclusividad sin convertirla en categoría", () => {
+    const taxonomy = {
+      category: "mainline",
+      format: "single",
+      exclusivity: "zamac",
+    } as const;
+
+    expect(
+      taxonomy.exclusivity,
+    ).toBe("zamac");
+
+    expect(
+      isHotWheelsCategoryId(
+        taxonomy.exclusivity,
+      ),
+    ).toBe(false);
+  });});

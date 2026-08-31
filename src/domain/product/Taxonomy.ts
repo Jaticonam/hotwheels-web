@@ -52,6 +52,7 @@ export interface HotWheelsTaxonomy {
   manufacturer?: string;
   franchise?: string;
   style?: string;
+  exclusivity?: string;
 }
 
 export function isHotWheelsCategoryId(
