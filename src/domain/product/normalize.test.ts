@@ -57,6 +57,7 @@ describe("ensureCatalogProduct", () => {
 
         series: "Car Culture",
         collection: "Modern Classics",
+        set_number: "3/5",
         format: "single",
         rarity: "chase",
         manufacturer: "Porsche",
@@ -70,6 +71,9 @@ describe("ensureCatalogProduct", () => {
 
     expect(product.collection)
       .toBe("Modern Classics");
+
+    expect(product.set_number)
+      .toBe("3/5");
 
     expect(product.format)
       .toBe("single");
@@ -105,6 +109,9 @@ describe("ensureCatalogProduct", () => {
       .toBe("");
 
     expect(product.collection)
+      .toBe("");
+
+    expect(product.set_number)
       .toBe("");
 
     expect(product.format)

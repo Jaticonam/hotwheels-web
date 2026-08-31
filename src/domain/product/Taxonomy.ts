@@ -45,6 +45,7 @@ export interface HotWheelsTaxonomy {
 
   series?: string;
   collection?: string;
+  set_number?: string;
 
   format: HotWheelsFormatId;
   rarity?: HotWheelsRarityId;

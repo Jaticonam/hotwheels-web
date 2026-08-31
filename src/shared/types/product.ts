@@ -43,6 +43,7 @@ export interface Product {
    */
   series?: string;
   collection?: string;
+  set_number?: string;
 
   format?: string;
   rarity?: string;

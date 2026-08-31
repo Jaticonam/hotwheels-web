@@ -81,6 +81,9 @@ export function ensureCatalogProduct(
     collection:
       product.collection ?? "",
 
+    set_number:
+      product.set_number ?? "",
+
     format:
       product.format ?? "",
 

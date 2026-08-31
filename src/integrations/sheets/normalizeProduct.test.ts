@@ -121,4 +121,125 @@ describe("normalizeProduct MVP", () => {
 
     expect(product.year).toBeNull();
   });
-});
+
+  it("normaliza metadata Taxonomy 1.0 desde Sheets", () => {
+    const product = normalizeProduct({
+      id: "HW-TAX-001",
+      title: "Porsche 911 GT3",
+      price: "59.90",
+      status: "Publicado",
+
+      series: "Car Culture",
+      collection: "Modern Classics",
+      set_number: "3/5",
+
+      format: "Team Transport",
+      rarity: "Super Treasure Hunt",
+
+      manufacturer: "Porsche",
+      franchise: "Fast & Furious",
+      style: "JDM",
+      exclusivity: "ZAMAC",
+    });
+
+    expect(product.series)
+      .toBe("Car Culture");
+
+    expect(product.collection)
+      .toBe("Modern Classics");
+
+    expect(product.set_number)
+      .toBe("3/5");
+
+    expect(product.format)
+      .toBe("team-transport");
+
+    expect(product.rarity)
+      .toBe("super-treasure-hunt");
+
+    expect(product.manufacturer)
+      .toBe("Porsche");
+
+    expect(product.franchise)
+      .toBe("Fast & Furious");
+
+    expect(product.style)
+      .toBe("jdm");
+
+    expect(product.exclusivity)
+      .toBe("zamac");
+  });
+
+  it("acepta aliases operativos seguros para formato y rareza", () => {
+    const product = normalizeProduct({
+      id: "HW-TAX-002",
+      title: "Treasure Test",
+      price: "20",
+      status: "Publicado",
+      format: "Caja",
+      rarity: "STH",
+    });
+
+    expect(product.format)
+      .toBe("case");
+
+    expect(product.rarity)
+      .toBe("super-treasure-hunt");
+  });
+
+  it("no inventa formato o rareza cuando el valor no es reconocido", () => {
+    const product = normalizeProduct({
+      id: "HW-TAX-003",
+      title: "Unknown Taxonomy",
+      price: "20",
+      status: "Publicado",
+      format: "Formato desconocido",
+      rarity: "Ultra raro inventado",
+    });
+
+    expect(product.format)
+      .toBe("");
+
+    expect(product.rarity)
+      .toBe("");
+  });
+
+  it("mantiene retrocompatibles filas sin Taxonomy 1.0", () => {
+    const product = normalizeProduct({
+      id: "HW-TAX-004",
+      title: "Legacy Product",
+      price: "20",
+      status: "Publicado",
+      mini_series: "Ferrari 3/5",
+    });
+
+    expect(product.mini_series)
+      .toBe("Ferrari 3/5");
+
+    expect(product.series)
+      .toBe("");
+
+    expect(product.collection)
+      .toBe("");
+
+    expect(product.set_number)
+      .toBe("");
+
+    expect(product.format)
+      .toBe("");
+
+    expect(product.rarity)
+      .toBe("");
+
+    expect(product.manufacturer)
+      .toBe("");
+
+    expect(product.franchise)
+      .toBe("");
+
+    expect(product.style)
+      .toBe("");
+
+    expect(product.exclusivity)
+      .toBe("");
+  });});
