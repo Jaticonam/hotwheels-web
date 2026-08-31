@@ -6,6 +6,10 @@ import {
 } from "./sheetsConfig";
 
 import { normalizeProduct } from "./normalizeProduct";
+import {
+  PRODUCT_RECOMMENDED_HEADERS,
+  PRODUCT_REQUIRED_HEADERS,
+} from "./productSheetSchema";
 import { validateProducts } from "./validateProducts";
 import { isVisibleProductStatus } from "@/tenant/config/product/statuses";
 
@@ -13,28 +17,6 @@ type CsvRow = Record<string, string>;
 
 const SHEETS_FETCH_TIMEOUT_MS =
   10_000;
-
-const PRODUCT_REQUIRED_HEADERS = [
-  "id",
-  "title",
-  "price",
-  "status",
-] as const;
-
-const PRODUCT_RECOMMENDED_HEADERS = [
-  "description",
-  "category",
-  "badges",
-  "offer_price",
-  "stock",
-  "img",
-  "priority",
-
-  "year",
-  "case_code",
-  "card_number",
-  "mini_series",
-] as const;
 
 function parseCSVLine(
   line: string,
