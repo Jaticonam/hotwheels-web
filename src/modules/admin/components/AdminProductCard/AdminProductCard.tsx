@@ -1,3 +1,4 @@
+import { ProductImage } from "../../../../shared/components/media/ProductImage";
 import "./AdminProductCard.css";
 
 import {
@@ -95,25 +96,12 @@ export function AdminProductCard({
     >
       <div className="hwa-product-card-media">
         {
-          product.img
-            ? (
-                <img
+          (
+                <ProductImage
                   src={product.img}
                   alt={product.title}
                   loading="lazy"
                 />
-              )
-            : (
-                <div className="hwa-product-card-image-empty">
-                  <PackageOpen
-                    size={28}
-                    aria-hidden="true"
-                  />
-
-                  <span>
-                    Sin imagen
-                  </span>
-                </div>
               )
         }
 

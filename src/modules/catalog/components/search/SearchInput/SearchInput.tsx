@@ -1,3 +1,4 @@
+import { ProductImage } from "../../../../../shared/components/media/ProductImage";
 import "./SearchInput.css";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { ArrowRight, Search, Sparkles, X } from "lucide-react";
@@ -358,7 +359,7 @@ export function SearchInput({
                 activeIndex === index ? "search-suggestion-item-active" : "",
               ].join(" ")}
             >
-              <img
+              <ProductImage
                 src={p.img || "/placeholder.svg"}
                 alt={p.title}
                 loading="lazy"

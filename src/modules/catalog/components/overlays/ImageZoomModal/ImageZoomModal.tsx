@@ -1,3 +1,4 @@
+import { ProductImage } from "../../../../../shared/components/media/ProductImage";
 import {
   useCallback,
   useEffect,
@@ -332,7 +333,7 @@ export function ImageZoomModal({
         }
         className="relative mt-8 flex h-[72vh] w-full max-w-4xl items-center justify-center overflow-hidden rounded-2xl border border-slate-800 bg-slate-900/40"
       >
-        <img
+        <ProductImage
           src={src}
           alt={title}
           className="max-h-full max-w-full origin-center cursor-grab object-contain drop-shadow-2xl active:cursor-grabbing"

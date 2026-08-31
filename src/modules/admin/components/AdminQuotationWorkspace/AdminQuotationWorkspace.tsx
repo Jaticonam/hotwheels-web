@@ -1,8 +1,10 @@
+import { ProductImage } from "../../../../shared/components/media/ProductImage";
 import "./AdminQuotationWorkspace.css";
 
 import {
   ArrowLeft,
   Clock3,
+  MessageCircle,
   Minus,
   PackageOpen,
   Plus,
@@ -40,6 +42,14 @@ import {
   updateQuotationDraft,
   type QuotationDraft,
 } from "@/application/quotation/QuotationDraft";
+import {
+  createQuotationOutputPlan,
+  createQuotationOutputRequest,
+} from "@/application/quotation/QuotationOutput";
+
+import {
+  buildQuotationWhatsAppUrl,
+} from "@/integrations/whatsapp/quotationWhatsApp";
 
 import {
   adminCatalogSource,
@@ -345,6 +355,32 @@ export function AdminQuotationWorkspace({
   const ready =
     compositionReady &&
     commercialReady;
+  const outputPlan =
+    useMemo(
+      () =>
+        composition
+          ? createQuotationOutputPlan({
+              quotationId:
+                activeDraftId,
+
+              composition,
+
+              commercialContext,
+            })
+          : null,
+      [
+        activeDraftId,
+        commercialContext,
+        composition,
+      ],
+    );
+
+  const whatsappReady =
+    outputPlan
+      ?.capabilities
+      .whatsapp
+      .state ===
+    "ready";
 
   const refreshDrafts =
     () => {
@@ -438,6 +474,41 @@ export function AdminQuotationWorkspace({
       );
     };
 
+  const sendQuotationByWhatsApp =
+    () => {
+      if (!outputPlan) {
+        return;
+      }
+
+      const request =
+        createQuotationOutputRequest(
+          outputPlan,
+          "whatsapp",
+        );
+
+      if (!request) {
+        return;
+      }
+
+      try {
+        const url =
+          buildQuotationWhatsAppUrl(
+            request,
+          );
+
+        window.open(
+          url,
+          "_blank",
+          "noopener,noreferrer",
+        );
+      }
+      catch (whatsappError) {
+        console.error(
+          "No se pudo abrir WhatsApp:",
+          whatsappError,
+        );
+      }
+    };
   const saveDraft =
     () => {
       if (!composition) {
@@ -1162,15 +1233,15 @@ export function AdminQuotationWorkspace({
                                         >
                                           <div className="hwa-quotation-product">
                                             <div className="hwa-quotation-image">
-                                              <img
-                                                src={
-                                                  line.imageUrl ||
-                                                  "/placeholder.svg"
-                                                }
-                                                alt={
-                                                  line.title
-                                                }
-                                              />
+                                              <ProductImage
+                                                  src={
+                                                    line.imageUrl ||
+                                                    "/placeholder.svg"
+                                                  }
+                                                  alt={
+                                                    line.title
+                                                  }
+                                                />
                                             </div>
 
                                             <div>
@@ -1457,6 +1528,33 @@ export function AdminQuotationWorkspace({
                                       }
                                     </small>
                                   </div>
+                                </div>
+                                <div className="hwa-quotation-output-actions">
+                                  <button
+                                    type="button"
+                                    className="hwa-quotation-output-primary"
+                                    disabled={
+                                      !whatsappReady
+                                    }
+                                    onClick={
+                                      sendQuotationByWhatsApp
+                                    }
+                                  >
+                                    <MessageCircle
+                                      size={15}
+                                      aria-hidden="true"
+                                    />
+
+                                    Enviar por WhatsApp
+                                  </button>
+
+                                  <small>
+                                    {
+                                      whatsappReady
+                                        ? "Se abrirá la conversación del cliente con la cotización preparada."
+                                        : "Completa la cotización y el WhatsApp del cliente para habilitar el envío."
+                                    }
+                                  </small>
                                 </div>
                               </aside>
                             </div>

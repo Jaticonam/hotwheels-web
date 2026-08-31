@@ -1,3 +1,4 @@
+import { ProductImage } from "../../../../shared/components/media/ProductImage";
 import "./AdminCatalogPreview.css";
 
 import {
@@ -286,9 +287,8 @@ export function AdminCatalogPreview({
                             >
                               <div className="hwa-document-product-media">
                                 {
-                                  product.img
-                                    ? (
-                                        <img
+                                  (
+                                        <ProductImage
                                           src={
                                             product.img
                                           }
@@ -296,11 +296,6 @@ export function AdminCatalogPreview({
                                             product.title
                                           }
                                         />
-                                      )
-                                    : (
-                                        <div className="hwa-document-no-image">
-                                          Sin imagen
-                                        </div>
                                       )
                                 }
 

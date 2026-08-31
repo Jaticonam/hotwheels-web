@@ -1,3 +1,4 @@
+import { ProductImage } from "../../../../shared/components/media/ProductImage";
 import "./CartSidebar.css";
 
 import {
@@ -277,7 +278,7 @@ function CartRow({
     >
       <div className="cart-sidebar-item-main">
         <div className="cart-sidebar-item-img">
-          <img
+          <ProductImage
             src={
               item.img ||
               "/placeholder.svg"

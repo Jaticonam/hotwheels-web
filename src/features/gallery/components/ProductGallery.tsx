@@ -1,3 +1,4 @@
+import { ProductImage } from "../../../shared/components/media/ProductImage";
 import { Maximize2 } from "lucide-react";
 
 import { ProductGalleryModal, useProductGallery } from "@/features/gallery";
@@ -33,7 +34,7 @@ export function ProductGallery({
     <>
       <div className="product-gallery">
         <div className="product-gallery-main">
-          <img
+          <ProductImage
             src={activeImage || product.img}
             alt={product.title}
             className={
@@ -78,7 +79,7 @@ export function ProductGallery({
                 onClick={() => selectImage(index)}
                 aria-label={`Ver imagen ${index + 1}`}
               >
-                <img src={image} alt={`${product.title} ${index + 1}`} />
+                <ProductImage src={image} alt={`${product.title} ${index + 1}`} />
               </button>
             ))}
           </div>

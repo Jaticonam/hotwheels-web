@@ -1,3 +1,4 @@
+import { ProductImage } from "../../../../../shared/components/media/ProductImage";
 import { getBadgePresentation } from "@/tenant/config/product";
 
 import type { Product } from "@/shared/types/product";
@@ -34,7 +35,7 @@ export function ProductCardImage({
         }
       }}
     >
-      <img
+      <ProductImage
         src={
           product.img ||
           "/placeholder.svg"

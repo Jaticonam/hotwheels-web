@@ -158,7 +158,7 @@ export function AdminAppShell({
           </div>
 
           <div className="hwa-version">
-            1.1 · Q2
+            1.1 · Q4
           </div>
         </header>
 
