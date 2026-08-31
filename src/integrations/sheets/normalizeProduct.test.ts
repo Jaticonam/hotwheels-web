@@ -634,4 +634,106 @@ describe("normalizeProduct MVP", () => {
       .toBe(
         "4/5",
       );
+  });
+  it("infiere Treasure Hunt desde description", () => {
+    const product = normalizeProduct({
+      id: "HWC26009",
+      title: "87 Buick Regal GNX",
+      price: "20",
+      status: "Publicado",
+
+      description:
+        "Edición Treasure Hunt de Hot Wheels 2026.",
+    });
+
+    expect(product.rarity)
+      .toBe(
+        "treasure-hunt",
+      );
+  });
+
+  it("infiere Super Treasure Hunt desde description", () => {
+    const product = normalizeProduct({
+      id: "HWC26063",
+      title:
+        "Ferrari F40 Competizione",
+      price: "20",
+      status: "Publicado",
+
+      description:
+        "Modelo Super Treasure Hunt.",
+    });
+
+    expect(product.rarity)
+      .toBe(
+        "super-treasure-hunt",
+      );
+  });
+
+  it("da prioridad a rarity explícito válido", () => {
+    const product = normalizeProduct({
+      id: "HW-RARITY-EXPLICIT",
+      title: "Explicit Rarity",
+      price: "20",
+      status: "Publicado",
+
+      rarity:
+        "Treasure Hunt",
+
+      description:
+        "Este texto dice Super Treasure Hunt.",
+    });
+
+    expect(product.rarity)
+      .toBe(
+        "treasure-hunt",
+      );
+  });
+
+  it("no reemplaza un rarity explícito inválido usando description", () => {
+    const product = normalizeProduct({
+      id: "HW-RARITY-INVALID",
+      title: "Invalid Explicit Rarity",
+      price: "20",
+      status: "Publicado",
+
+      rarity:
+        "Ultra Rare",
+
+      description:
+        "Modelo Super Treasure Hunt.",
+    });
+
+    expect(product.rarity)
+      .toBe("");
+  });
+
+  it("no infiere regular cuando description no contiene señal", () => {
+    const product = normalizeProduct({
+      id: "HW-RARITY-NONE",
+      title: "Regular Unknown",
+      price: "20",
+      status: "Publicado",
+
+      description:
+        "Hot Wheels Mainline 2026.",
+    });
+
+    expect(product.rarity)
+      .toBe("");
+  });
+
+  it("no migra un conflicto TH y STH", () => {
+    const product = normalizeProduct({
+      id: "HW-RARITY-CONFLICT",
+      title: "Conflict Rarity",
+      price: "20",
+      status: "Publicado",
+
+      description:
+        "Treasure Hunt y Super Treasure Hunt.",
+    });
+
+    expect(product.rarity)
+      .toBe("");
   });});

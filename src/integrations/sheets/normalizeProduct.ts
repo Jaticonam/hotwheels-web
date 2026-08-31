@@ -2,6 +2,9 @@ import {
   resolveLegacyMiniSeriesMigration,
 } from "@/domain/product/LegacyMiniSeriesMigration";
 import {
+  resolveLegacyRarityMigration,
+} from "@/domain/product/LegacyRarityMigration";
+import {
   resolveLegacyTaxonomyMigration,
 } from "@/domain/product/LegacyTaxonomyMigration";
 import {
@@ -392,6 +395,26 @@ export function normalizeProduct(
           ""
         : ""
     );
+  const sourceRarity =
+    cleanText(
+      row.rarity,
+    );
+
+  const legacyRarityMigration =
+    resolveLegacyRarityMigration(
+      row.description,
+    );
+
+  const rarity =
+    sourceRarity
+      ? parseRarity(
+          sourceRarity,
+        )
+      : legacyRarityMigration.status ===
+          "resolved"
+        ? legacyRarityMigration.rarity ??
+          ""
+        : "";
   return {
     id:
       cleanText(row.id),
@@ -487,10 +510,7 @@ export function normalizeProduct(
 
     format,
 
-    rarity:
-      parseRarity(
-        row.rarity,
-      ),
+    rarity,
 
     manufacturer:
       cleanText(
