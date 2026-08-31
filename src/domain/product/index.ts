@@ -6,3 +6,4 @@ export * from "./state";
 export * from "./Taxonomy";
 export * from "./TaxonomyResolver";
 export * from "./LegacyTaxonomyMigration";
+export * from "./LegacyMiniSeriesMigration";
