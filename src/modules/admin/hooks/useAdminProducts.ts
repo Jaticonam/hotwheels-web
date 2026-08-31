@@ -7,8 +7,13 @@ import {
 } from "react";
 
 import {
-  productBelongsToCategory,
-} from "@/domain/product/categories";
+  productMatchesCatalogNavigationItem,
+} from "@/application/catalog/CatalogNavigationResolver";
+
+import {
+  CATALOG_ALL_NAVIGATION_ITEM,
+  CATALOG_CATEGORY_NAVIGATION_ITEMS,
+} from "@/tenant/config/catalog";
 
 import {
   adminCatalogSource,
@@ -33,6 +38,10 @@ export type AdminProductStatusFilter =
   | "oculto"
   | "borrador";
 
+const ADMIN_CATEGORY_NAVIGATION_ITEMS = [
+  CATALOG_ALL_NAVIGATION_ITEM,
+  ...CATALOG_CATEGORY_NAVIGATION_ITEMS,
+];
 function normalizeText(
   value: string,
 ): string {
@@ -127,7 +136,7 @@ export function useAdminProducts() {
     category,
     setCategory,
   ] =
-    useState("todas");
+    useState(CATALOG_ALL_NAVIGATION_ITEM.id);
 
   const [
     status,
@@ -283,16 +292,28 @@ export function useAdminProducts() {
       [],
     );
 
+  const activeCategoryNavigationItem =
+    useMemo(
+      () =>
+        ADMIN_CATEGORY_NAVIGATION_ITEMS
+          .find(
+            (item) =>
+              item.id === category,
+          ) ??
+        CATALOG_ALL_NAVIGATION_ITEM,
+      [
+        category,
+      ],
+    );
   const filteredProducts =
     useMemo(
       () =>
         products.filter(
           (product) => {
             const categoryMatch =
-              category === "todas" ||
-              productBelongsToCategory(
+              productMatchesCatalogNavigationItem(
                 product,
-                category,
+                activeCategoryNavigationItem,
               );
 
             return (
@@ -310,7 +331,7 @@ export function useAdminProducts() {
         ),
       [
         products,
-        category,
+        activeCategoryNavigationItem,
         status,
         query,
       ],

@@ -8,7 +8,9 @@ import {
 } from "lucide-react";
 
 import {
-  CATEGORIES,
+  CATALOG_ALL_NAVIGATION_ITEM,
+  CATALOG_CATEGORY_NAVIGATION_ITEMS,
+  getCategoryById,
 } from "@/tenant/config/catalog";
 
 import {
@@ -24,6 +26,26 @@ import {
   useProductSelection,
 } from "@/modules/admin/hooks/useProductSelection";
 
+const CATEGORY_OPTIONS = [
+  CATALOG_ALL_NAVIGATION_ITEM,
+  ...CATALOG_CATEGORY_NAVIGATION_ITEMS,
+].map(
+  (item) => {
+    const metadata =
+      getCategoryById(
+        item.id ===
+          CATALOG_ALL_NAVIGATION_ITEM.id
+          ? "todas"
+          : item.id,
+      );
+
+    return {
+      id: item.id,
+      label: item.label,
+      icon: metadata?.icon ?? "",
+    };
+  },
+);
 const STATUS_OPTIONS: {
   id: AdminProductStatusFilter;
   label: string;
@@ -326,7 +348,7 @@ export function AdminProductExplorer({
       <div className="hwa-filter-group">
         <div className="hwa-category-row">
           {
-            CATEGORIES.map(
+            CATEGORY_OPTIONS.map(
               (item) => (
                 <button
                   key={item.id}
@@ -347,7 +369,7 @@ export function AdminProductExplorer({
                     {item.icon}
                   </span>
 
-                  {item.name}
+                  {item.label}
                 </button>
               ),
             )
