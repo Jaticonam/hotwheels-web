@@ -388,4 +388,91 @@ describe("normalizeProduct MVP", () => {
     ).not.toContain(
       "deportivos",
     );
+  });
+  it("infiere single para Mainline 2026 auditado cuando format está vacío", () => {
+    const product = normalizeProduct({
+      id: "HWC26060",
+      title: "Toyota Prius Custom",
+      price: "20",
+      status: "Publicado",
+
+      year: "2026",
+      card_number: "60/250",
+      category: "JDM",
+    });
+
+    expect(product.category)
+      .toBe("mainline");
+
+    expect(product.format)
+      .toBe("single");
+  });
+
+  it("respeta un format explícito válido sobre la inferencia Mainline 2026", () => {
+    const product = normalizeProduct({
+      id: "HW-FORMAT-001",
+      title: "Formato explícito",
+      price: "20",
+      status: "Publicado",
+
+      year: "2026",
+      card_number: "60/250",
+      category: "JDM",
+
+      format: "5-pack",
+    });
+
+    expect(product.category)
+      .toBe("mainline");
+
+    expect(product.format)
+      .toBe("5-pack");
+  });
+
+  it("no reemplaza silenciosamente un format explícito inválido por single", () => {
+    const product = normalizeProduct({
+      id: "HW-FORMAT-002",
+      title: "Formato inválido",
+      price: "20",
+      status: "Publicado",
+
+      year: "2026",
+      card_number: "60/250",
+      category: "JDM",
+
+      format: "rocket-pack",
+    });
+
+    expect(product.category)
+      .toBe("mainline");
+
+    expect(product.format)
+      .toBe("");
+  });
+
+  it("no infiere single fuera de la migración Mainline 2026 auditada", () => {
+    const product = normalizeProduct({
+      id: "HW-2027-FORMAT",
+      title: "Producto 2027",
+      price: "20",
+      status: "Publicado",
+
+      year: "2027",
+      card_number: "60/250",
+      category: "JDM",
+    });
+
+    expect(product.category)
+      .toBe("");
+
+    expect(product.categories)
+      .toEqual([]);
+
+    expect(product.explore_tags)
+      .toEqual([
+        "jdm",
+      ]);
+
+    expect(product.format)
+      .toBe("");
   });});

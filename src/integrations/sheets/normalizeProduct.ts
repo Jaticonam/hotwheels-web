@@ -337,6 +337,20 @@ export function normalizeProduct(
         ].filter(Boolean),
       ),
     );
+  const sourceFormat =
+    cleanText(
+      row.format,
+    );
+
+  const format =
+    sourceFormat
+      ? parseFormat(
+          sourceFormat,
+        )
+      : migration.reason ===
+          "mainline-2026-card-sequence"
+        ? "single"
+        : "";
   return {
     id:
       cleanText(row.id),
@@ -435,10 +449,7 @@ export function normalizeProduct(
         row.set_number,
       ),
 
-    format:
-      parseFormat(
-        row.format,
-      ),
+    format,
 
     rarity:
       parseRarity(
