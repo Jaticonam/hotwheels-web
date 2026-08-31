@@ -51,7 +51,9 @@ import type {
 } from "@/shared/types/product";
 
 import {
-  CATEGORIES,
+  CATALOG_ALL_NAVIGATION_ITEM,
+  CATALOG_CATEGORY_NAVIGATION_ITEMS,
+  getCategoryById,
 } from "@/tenant/config/catalog";
 
 type CatalogMode =
@@ -107,7 +109,7 @@ export function AdminCatalogWorkspace({
     setCategoryIds,
   ] =
     useState<string[]>([
-      "todas",
+      CATALOG_ALL_NAVIGATION_ITEM.id,
     ]);
 
   const [
@@ -241,11 +243,22 @@ export function AdminCatalogWorkspace({
   const categories =
     useMemo(
       () =>
-        CATEGORIES.filter(
-          (category) =>
-            category.id !==
-              "todas",
-        ),
+        CATALOG_CATEGORY_NAVIGATION_ITEMS
+          .map(
+            (item) => {
+              const metadata =
+                getCategoryById(
+                  item.id,
+                );
+
+              return {
+                id: item.id,
+                name: item.label,
+                icon:
+                  metadata?.icon ?? "",
+              };
+            },
+          ),
       [],
     );
 
@@ -254,10 +267,10 @@ export function AdminCatalogWorkspace({
       categoryId: string,
     ) => {
       if (
-        categoryId === "todas"
+        categoryId === CATALOG_ALL_NAVIGATION_ITEM.id
       ) {
         setCategoryIds([
-          "todas",
+          CATALOG_ALL_NAVIGATION_ITEM.id,
         ]);
 
         return;
@@ -268,7 +281,7 @@ export function AdminCatalogWorkspace({
           const withoutAll =
             current.filter(
               (id) =>
-                id !== "todas",
+                id !== CATALOG_ALL_NAVIGATION_ITEM.id,
             );
 
           if (
@@ -607,28 +620,28 @@ export function AdminCatalogWorkspace({
                                   className={[
                                     "hwa-catalog-category",
                                     categoryIds.includes(
-                                      "todas",
+                                      CATALOG_ALL_NAVIGATION_ITEM.id,
                                     )
                                       ? "hwa-catalog-category-active"
                                       : "",
                                   ].join(" ")}
                                   onClick={() =>
                                     toggleCategory(
-                                      "todas",
+                                      CATALOG_ALL_NAVIGATION_ITEM.id,
                                     )
                                   }
                                 >
                                   <span>
                                     {
                                       categoryIds.includes(
-                                        "todas",
+                                        CATALOG_ALL_NAVIGATION_ITEM.id,
                                       )
                                         ? "✓"
                                         : "▦"
                                     }
                                   </span>
 
-                                  Todas
+                                  Todos
                                 </button>
 
                                 {
@@ -766,7 +779,7 @@ export function AdminCatalogWorkspace({
                           mode === "category"
                             ? `${
                                 categoryIds.includes(
-                                  "todas",
+                                  CATALOG_ALL_NAVIGATION_ITEM.id,
                                 )
                                   ? "Todas las categorías"
                                   : `${categoryIds.length} categorías`

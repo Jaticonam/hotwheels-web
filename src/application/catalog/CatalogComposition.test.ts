@@ -27,10 +27,10 @@ function product(
     description: "",
 
     category:
-      "deportivos",
+      "mainline",
 
     categories: [
-      "deportivos",
+      "mainline",
     ],
 
     price: 19.9,
@@ -204,16 +204,16 @@ describe(
     );
 
     it(
-      "resuelve múltiples categorías",
+      "resuelve múltiples categorías canónicas",
       () => {
         const products = [
           product(
             "A",
             {
               category:
-                "deportivos",
+                "mainline",
               categories: [
-                "deportivos",
+                "mainline",
               ],
             },
           ),
@@ -245,7 +245,7 @@ describe(
           createCategoryCatalogComposition(
             products,
             [
-              "deportivos",
+              "mainline",
               "premium",
             ],
           );
@@ -262,14 +262,14 @@ describe(
           result.composition
             .categoryIds,
         ).toEqual([
-          "deportivos",
+          "mainline",
           "premium",
         ]);
       },
     );
 
     it(
-      "todas incluye solo estados comerciales visibles",
+      "todos incluye solo estados comerciales visibles",
       () => {
         const products = [
           product("A"),
@@ -311,7 +311,7 @@ describe(
           createCategoryCatalogComposition(
             products,
             [
-              "todas",
+              "todos",
             ],
           );
 
@@ -331,6 +331,51 @@ describe(
           "D",
           "E",
         ]);
+
+        expect(
+          result.composition
+            .categoryIds,
+        ).toEqual([
+          "todos",
+        ]);
+      },
+    );
+
+    it(
+      "acepta aliases legacy de todos y normaliza la salida",
+      () => {
+        const products = [
+          product("A"),
+        ];
+
+        for (
+          const alias of [
+            "todas",
+            "all",
+          ]
+        ) {
+          const result =
+            createCategoryCatalogComposition(
+              products,
+              [
+                alias,
+              ],
+            );
+
+          expect(
+            result.composition
+              .productIds,
+          ).toEqual([
+            "A",
+          ]);
+
+          expect(
+            result.composition
+              .categoryIds,
+          ).toEqual([
+            "todos",
+          ]);
+        }
       },
     );
 

@@ -1,6 +1,11 @@
 import {
-  productBelongsToCategory,
-} from "@/domain/product/categories";
+  productMatchesCatalogNavigationItem,
+} from "@/application/catalog/CatalogNavigationResolver";
+
+import {
+  CATALOG_ALL_NAVIGATION_ITEM,
+  CATALOG_CATEGORY_NAVIGATION_ITEMS,
+} from "@/tenant/config/catalog";
 
 import type {
   Product,
@@ -51,6 +56,28 @@ export interface CatalogCompositionResolution {
     string[];
 }
 
+const LEGACY_ALL_CATEGORY_IDS =
+  new Set([
+    "todas",
+    "all",
+  ]);
+
+const CATEGORY_NAVIGATION_ITEMS = [
+  CATALOG_ALL_NAVIGATION_ITEM,
+  ...CATALOG_CATEGORY_NAVIGATION_ITEMS,
+];
+
+function isAllCategoryId(
+  categoryId: string,
+): boolean {
+  return (
+    categoryId ===
+      CATALOG_ALL_NAVIGATION_ITEM.id ||
+    LEGACY_ALL_CATEGORY_IDS.has(
+      categoryId,
+    )
+  );
+}
 function normalizeUniqueIds(
   values:
   readonly string[],
@@ -198,18 +225,37 @@ export function createCategoryCatalogComposition(
   title =
     "Catálogo por categorías",
 ): CatalogCompositionResolution {
-  const categoryIds =
+  const requestedCategoryIds =
     normalizeUniqueIds(
       selectedCategoryIds,
     );
 
   const includeAll =
-    categoryIds.includes(
-      "todas",
-    ) ||
-    categoryIds.includes(
-      "all",
+    requestedCategoryIds.some(
+      isAllCategoryId,
     );
+
+  const categoryIds =
+    includeAll
+      ? [
+          CATALOG_ALL_NAVIGATION_ITEM.id,
+        ]
+      : requestedCategoryIds;
+
+  const selectedNavigationItems =
+    includeAll
+      ? [
+          CATALOG_ALL_NAVIGATION_ITEM,
+        ]
+      : CATEGORY_NAVIGATION_ITEMS
+          .filter(
+            (item) =>
+              item.id !==
+                CATALOG_ALL_NAVIGATION_ITEM.id &&
+              categoryIds.includes(
+                item.id,
+              ),
+          );
 
   const includedIds:
     string[] = [];
@@ -220,12 +266,11 @@ export function createCategoryCatalogComposition(
   products.forEach(
     (product) => {
       const belongs =
-        includeAll ||
-        categoryIds.some(
-          (categoryId) =>
-            productBelongsToCategory(
+        selectedNavigationItems.some(
+          (item) =>
+            productMatchesCatalogNavigationItem(
               product,
-              categoryId,
+              item,
             ),
         );
 
@@ -269,10 +314,7 @@ export function createCategoryCatalogComposition(
           includedIds,
         ),
 
-      categoryIds:
-        includeAll
-          ? ["todas"]
-          : categoryIds,
+      categoryIds,
     },
 
     excludedProductIds:
