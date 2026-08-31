@@ -91,3 +91,62 @@ export function filterProductsByCatalogNavigation(
       ),
   );
 }
+export interface CatalogNavigationSnapshot {
+  counts: Record<string, number>;
+  visibleItems: CatalogNavigationItem[];
+}
+
+/**
+ * Construye una proyección de navegación para UI sin
+ * volver a interpretar category, explore, format u offer.
+ *
+ * Todos permanece visible incluso cuando el catálogo
+ * está vacío. El resto de items solo aparece si tiene
+ * al menos un producto.
+ */
+export function buildCatalogNavigationSnapshot(
+  products: readonly Product[],
+  items: readonly CatalogNavigationItem[],
+): CatalogNavigationSnapshot {
+  const counts =
+    items.reduce<
+      Record<string, number>
+    >(
+      (result, item) => {
+        result[item.id] =
+          products.reduce(
+            (
+              count,
+              product,
+            ) =>
+              productMatchesCatalogNavigationItem(
+                product,
+                item,
+              )
+                ? count + 1
+                : count,
+            0,
+          );
+
+        return result;
+      },
+      {},
+    );
+
+  const visibleItems =
+    items.filter(
+      (item) =>
+        item.filter.kind ===
+          "all" ||
+        (
+          counts[
+            item.id
+          ] ?? 0
+        ) > 0,
+    );
+
+  return {
+    counts,
+    visibleItems,
+  };
+}

@@ -16,6 +16,7 @@ import {
 } from "@/tenant/config/catalog/navigation";
 
 import {
+  buildCatalogNavigationSnapshot,
   filterProductsByCatalogNavigation,
   productMatchesCatalogNavigationFilter,
   productMatchesCatalogNavigationItem,
@@ -508,6 +509,99 @@ describe(
           },
         ),
       ).toBe(true);
+    
+    it("construye conteos y visibilidad usando el resolver único", () => {
+      const products = [
+        makeProduct({
+          id:
+            "A",
+
+          category:
+            "mainline",
+
+          categories: [
+            "mainline",
+          ],
+        }),
+
+        makeProduct({
+          id:
+            "B",
+
+          category:
+            "mainline",
+
+          categories: [
+            "mainline",
+          ],
+
+          explore_tags: [
+            "jdm",
+          ],
+        }),
+      ];
+
+      const snapshot =
+        buildCatalogNavigationSnapshot(
+          products,
+          [
+            CATALOG_ALL_NAVIGATION_ITEM,
+            ...CATALOG_CATEGORY_NAVIGATION_ITEMS,
+          ],
+        );
+
+      expect(
+        snapshot.counts,
+      ).toMatchObject({
+        todos:
+          2,
+
+        mainline:
+          2,
+
+        "silver-series":
+          0,
+
+        premium:
+          0,
+
+        collector:
+          0,
+      });
+
+      expect(
+        snapshot.visibleItems.map(
+          (item) =>
+            item.id,
+        ),
+      ).toEqual([
+        "todos",
+        "mainline",
+      ]);
     });
+
+    it("mantiene Todos visible aunque el catálogo esté vacío", () => {
+      const snapshot =
+        buildCatalogNavigationSnapshot(
+          [],
+          [
+            CATALOG_ALL_NAVIGATION_ITEM,
+            ...CATALOG_CATEGORY_NAVIGATION_ITEMS,
+          ],
+        );
+
+      expect(
+        snapshot.counts.todas,
+      ).toBe(0);
+
+      expect(
+        snapshot.visibleItems.map(
+          (item) =>
+            item.id,
+        ),
+      ).toEqual([
+        "todos",
+      ]);
+    });});
   },
 );
