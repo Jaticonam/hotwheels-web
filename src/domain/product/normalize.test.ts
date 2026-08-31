@@ -126,4 +126,52 @@ describe("ensureCatalogProduct", () => {
     expect(product.exclusivity)
       .toBe("");
   });
-});
+
+  it("preserva explore_tags sin convertirlos en categorías", () => {
+    const product =
+      ensureCatalogProduct({
+        id: "HW-EXPLORE-001",
+        title: "Nissan Skyline",
+        description: "",
+
+        category: "mainline",
+        categories: [
+          "mainline",
+        ],
+
+        price: 20,
+        offer_price: null,
+        stock: 1,
+
+        img: "",
+        images: [],
+
+        priority: 0,
+        status: "Publicado",
+
+        badges: [],
+        attributes: [],
+
+        explore_tags: [
+          "jdm",
+        ],
+      });
+
+    expect(
+      product.category,
+    ).toBe(
+      "mainline",
+    );
+
+    expect(
+      product.categories,
+    ).toEqual([
+      "mainline",
+    ]);
+
+    expect(
+      product.explore_tags,
+    ).toEqual([
+      "jdm",
+    ]);
+  });});

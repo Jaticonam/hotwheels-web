@@ -75,6 +75,13 @@ export function ensureCatalogProduct(
     mini_series:
       product.mini_series ?? "",
 
+    explore_tags:
+      Array.isArray(
+        product.explore_tags,
+      )
+        ? product.explore_tags
+        : [],
+
     series:
       product.series ?? "",
 

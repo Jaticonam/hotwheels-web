@@ -33,6 +33,7 @@ export interface Product {
   case_code?: string;
   card_number?: string;
   mini_series?: string;
+  explore_tags?: string[];
 
   /**
    * Dimensiones canónicas preparadas para Taxonomy 1.0.
