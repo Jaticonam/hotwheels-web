@@ -16,12 +16,18 @@ import {
 } from "lucide-react";
 
 import {
-  BRAND_CONFIG,
-} from "@/tenant/config/brand";
+  CATALOG_ALL_NAVIGATION_ITEM,
+  CATALOG_CATEGORY_NAVIGATION_ITEMS,
+  getCategoryById,
+} from "@/tenant/config/catalog";
 
 import {
   getCategoryUrl,
 } from "@/app/routes/routes";
+
+import {
+  buildCatalogNavigationSnapshot,
+} from "@/application/catalog/CatalogNavigationResolver";
 
 import {
   productSource,
@@ -149,7 +155,9 @@ export default function CategoryPage() {
   useEffect(() => {
     if (
       categoryId ===
-      "todas"
+        "todas" ||
+      categoryId ===
+        CATALOG_ALL_NAVIGATION_ITEM.id
     ) {
       navigate(
         "/catalogo",
@@ -172,65 +180,60 @@ export default function CategoryPage() {
     "todas";
 
   const categoryInfo =
-    BRAND_CONFIG
-      .categories
-      .find(
-        (category) =>
-          category.id ===
-          activeCategory,
-      );
+    getCategoryById(
+      activeCategory,
+    );
 
-  const categoryCounts =
+  const catalogNavigation =
     useMemo(() => {
-      return products.reduce<
-        Record<string, number>
-      >(
-        (counts, product) => {
-          counts.todas =
-            (counts.todas ?? 0) +
-            1;
-
-          const categoryIds =
-            Array.from(
-              new Set(
-                [
-                  product.category,
-                  ...product.categories,
-                ].filter(Boolean),
-              ),
-            );
-
-          categoryIds.forEach(
-            (id) => {
-              counts[id] =
-                (
-                  counts[id] ??
-                  0
-                ) + 1;
-            },
-          );
-
-          return counts;
-        },
-        {},
+      return buildCatalogNavigationSnapshot(
+        products,
+        [
+          CATALOG_ALL_NAVIGATION_ITEM,
+          ...CATALOG_CATEGORY_NAVIGATION_ITEMS,
+        ],
       );
     }, [products]);
 
+  const categoryCounts =
+    catalogNavigation.counts;
+
   const visibleCategories =
-    useMemo(() => {
-      return BRAND_CONFIG
-        .categories
-        .filter(
-          (category) =>
-            category.id ===
-              "todas" ||
-            (
-              categoryCounts[
-                category.id
-              ] ?? 0
-            ) > 0,
-        );
-    }, [categoryCounts]);
+    catalogNavigation
+      .visibleItems
+      .map(
+        (item) => {
+          const category =
+            getCategoryById(
+              item.filter.kind ===
+                "all"
+                ? "todas"
+                : item.id,
+            );
+
+          if (!category) {
+            return null;
+          }
+
+          return {
+            ...category,
+            id:
+              item.id,
+            name:
+              item.label,
+          };
+        },
+      )
+      .filter(
+        (
+          category,
+        ): category is NonNullable<
+          typeof category
+        > =>
+          Boolean(
+            category,
+          ),
+      );
 
   const categoryProducts =
     useMemo(() => {
@@ -273,7 +276,9 @@ export default function CategoryPage() {
       (id: string) => {
         if (
           id ===
-          "todas"
+            "todas" ||
+          id ===
+            CATALOG_ALL_NAVIGATION_ITEM.id
         ) {
           navigate(
             "/catalogo",
@@ -304,7 +309,10 @@ export default function CategoryPage() {
           visibleCategories
         }
         activeCategory={
-          activeCategory
+          activeCategory ===
+            "todas"
+            ? CATALOG_ALL_NAVIGATION_ITEM.id
+            : activeCategory
         }
         categoryCounts={
           categoryCounts

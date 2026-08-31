@@ -509,7 +509,8 @@ describe(
           },
         ),
       ).toBe(true);
-    
+    });
+
     it("construye conteos y visibilidad usando el resolver único", () => {
       const products = [
         makeProduct({
@@ -591,7 +592,7 @@ describe(
         );
 
       expect(
-        snapshot.counts.todas,
+        snapshot.counts.todos,
       ).toBe(0);
 
       expect(
@@ -602,6 +603,6 @@ describe(
       ).toEqual([
         "todos",
       ]);
-    });});
+    });
   },
 );
