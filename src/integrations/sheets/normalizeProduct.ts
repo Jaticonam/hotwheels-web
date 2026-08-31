@@ -1,6 +1,6 @@
 import type { Product } from "@/shared/types/product";
 
-import { getCategoryIdFromSheetLabel } from "@/tenant/config/catalog";
+import { getProductCategoryIdFromSheetLabel } from "@/tenant/config/catalog";
 
 type CsvRow = Record<string, string>;
 
@@ -108,7 +108,7 @@ function parseCategories(
   value: unknown,
 ): string[] {
   return parsePipeList(value)
-    .map(getCategoryIdFromSheetLabel)
+    .map(getProductCategoryIdFromSheetLabel)
     .filter(Boolean);
 }
 
@@ -173,7 +173,7 @@ export function normalizeProduct(
   row: CsvRow,
 ): SheetProduct {
   const primaryCategory =
-    getCategoryIdFromSheetLabel(row.category);
+    getProductCategoryIdFromSheetLabel(row.category);
 
   const extraCategories =
     parseCategories(row.categories);

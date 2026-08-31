@@ -1,128 +1,292 @@
-import { CATEGORIES } from "@/tenant/config/catalog";
-import { isVisibleProductStatus } from "@/tenant/config/product/statuses";
-import type { SheetProduct } from "./normalizeProduct";
+import {
+  PRODUCT_CATEGORIES,
+} from "@/tenant/config/catalog";
 
-const CATEGORY_IDS = new Set(CATEGORIES.map((category) => category.id));
-const FALLBACK_CATEGORY_ID = CATEGORIES[0]?.id ?? "";
+import {
+  isVisibleProductStatus,
+} from "@/tenant/config/product/statuses";
 
-function hasValidBasePrice(product: SheetProduct): boolean {
-  return Number.isFinite(product.price) && product.price > 0;
-}
+import type {
+  SheetProduct,
+} from "./normalizeProduct";
 
-function getInvalidCategories(product: SheetProduct): string[] {
-  if (!product.category) return ["category vacío"];
-
-  if (!product.categories || product.categories.length === 0) {
-    return ["categories vacío"];
-  }
-
-  return product.categories.filter((categoryId) => !CATEGORY_IDS.has(categoryId));
-}
-
-function fixInvalidCategories(product: SheetProduct): void {
-  const validCategories = (product.categories ?? []).filter((categoryId) =>
-    CATEGORY_IDS.has(categoryId),
+const PRODUCT_CATEGORY_IDS =
+  new Set(
+    PRODUCT_CATEGORIES.map(
+      (category) =>
+        category.id,
+    ),
   );
 
-  const hasValidPrimaryCategory =
-    product.category && CATEGORY_IDS.has(product.category);
-
-  if (hasValidPrimaryCategory) {
-    product.categories = Array.from(
-      new Set([product.category, ...validCategories].filter(Boolean)),
-    );
-    return;
-  }
-
-  if (validCategories.length > 0) {
-    product.category = validCategories[0];
-    product.categories = validCategories;
-    return;
-  }
-
-  product.category = FALLBACK_CATEGORY_ID;
-  product.categories = FALLBACK_CATEGORY_ID ? [FALLBACK_CATEGORY_ID] : [];
+function hasValidBasePrice(
+  product: SheetProduct,
+): boolean {
+  return (
+    Number.isFinite(product.price) &&
+    product.price > 0
+  );
 }
 
-function hasInvalidOffer(product: SheetProduct): boolean {
-  if (product.offer_price === null) return false;
+function getInvalidCategories(
+  product: SheetProduct,
+): string[] {
+  const invalid: string[] = [];
+
+  if (
+    product.category &&
+    !PRODUCT_CATEGORY_IDS.has(
+      product.category,
+    )
+  ) {
+    invalid.push(
+      product.category,
+    );
+  }
+
+  for (
+    const categoryId
+    of product.categories ?? []
+  ) {
+    if (
+      !PRODUCT_CATEGORY_IDS.has(
+        categoryId,
+      )
+    ) {
+      invalid.push(
+        categoryId,
+      );
+    }
+  }
+
+  if (
+    !product.category &&
+    (
+      !product.categories ||
+      product.categories.length === 0
+    )
+  ) {
+    invalid.push(
+      "sin categoría válida",
+    );
+  }
+
+  return Array.from(
+    new Set(invalid),
+  );
+}
+
+/**
+ * Sanitiza clasificación legacy sin inventar datos.
+ *
+ * Si la categoría principal es inválida:
+ * - promueve una secundaria válida, si existe;
+ * - de lo contrario deja el producto sin categoría.
+ *
+ * El producto continúa visible en "Todos".
+ */
+function sanitizeCategories(
+  product: SheetProduct,
+): void {
+  const validCategories =
+    (
+      product.categories ?? []
+    ).filter(
+      (categoryId) =>
+        PRODUCT_CATEGORY_IDS.has(
+          categoryId,
+        ),
+    );
+
+  const hasValidPrimary =
+    Boolean(
+      product.category &&
+      PRODUCT_CATEGORY_IDS.has(
+        product.category,
+      ),
+    );
+
+  if (hasValidPrimary) {
+    product.categories =
+      Array.from(
+        new Set([
+          product.category,
+          ...validCategories,
+        ]),
+      );
+
+    return;
+  }
+
+  if (
+    validCategories.length > 0
+  ) {
+    product.category =
+      validCategories[0];
+
+    product.categories =
+      Array.from(
+        new Set(
+          validCategories,
+        ),
+      );
+
+    return;
+  }
+
+  product.category = "";
+  product.categories = [];
+}
+
+function hasInvalidOffer(
+  product: SheetProduct,
+): boolean {
+  if (
+    product.offer_price === null
+  ) {
+    return false;
+  }
 
   return (
-    !Number.isFinite(product.offer_price) ||
+    !Number.isFinite(
+      product.offer_price,
+    ) ||
     product.offer_price <= 0 ||
-    product.offer_price >= product.price
+    product.offer_price >=
+      product.price
   );
 }
 
-export function validateProducts(products: SheetProduct[]): SheetProduct[] {
-  const seen = new Set<string>();
+export function validateProducts(
+  products: SheetProduct[],
+): SheetProduct[] {
+  const seen =
+    new Set<string>();
 
-  return products.filter((product) => {
-    const status = product.status.trim();
+  return products.filter(
+    (product) => {
+      const status =
+        product.status.trim();
 
-    if (!product.id) {
-      console.warn("Producto descartado: sin id", product);
-      return false;
-    }
+      if (!product.id) {
+        console.warn(
+          "Producto descartado: sin id",
+          product,
+        );
 
-    if (seen.has(product.id)) {
-      console.warn("Producto descartado: id duplicado ->", product.id);
-      return false;
-    }
+        return false;
+      }
 
-    if (!product.title) {
-      console.warn("Producto descartado: sin title ->", product.id);
-      return false;
-    }
+      if (
+        seen.has(product.id)
+      ) {
+        console.warn(
+          "Producto descartado: id duplicado ->",
+          product.id,
+        );
 
-    if (!isVisibleProductStatus(status)) {
-      return false;
-    }
+        return false;
+      }
 
-    if (!hasValidBasePrice(product)) {
-      console.warn("Producto descartado: precio base inválido ->", {
-        id: product.id,
-        title: product.title,
-        price: product.price,
-      });
-      return false;
-    }
+      if (!product.title) {
+        console.warn(
+          "Producto descartado: sin title ->",
+          product.id,
+        );
 
-    const invalidCategories = getInvalidCategories(product);
+        return false;
+      }
 
-    if (invalidCategories.length > 0) {
-      console.warn("Producto con categoría incompleta o inválida. Se aplica fallback ->", {
-        id: product.id,
-        title: product.title,
-        category: product.category,
-        categories: product.categories,
-        invalidCategories,
-        fallbackCategory: FALLBACK_CATEGORY_ID,
-        validCategories: CATEGORIES.map((category) => category.sheetLabel),
-      });
+      if (
+        !isVisibleProductStatus(
+          status,
+        )
+      ) {
+        return false;
+      }
 
-      fixInvalidCategories(product);
-    }
+      if (
+        !hasValidBasePrice(
+          product,
+        )
+      ) {
+        console.warn(
+          "Producto descartado: precio base inválido ->",
+          {
+            id: product.id,
+            title: product.title,
+            price: product.price,
+          },
+        );
 
-    if (hasInvalidOffer(product)) {
-      console.warn("Producto con oferta inválida. Se mantiene precio base ->", {
-        id: product.id,
-        title: product.title,
-        price: product.price,
-        offer_price: product.offer_price,
-      });
+        return false;
+      }
 
-      product.offer_price = null;
-    }
+      const invalidCategories =
+        getInvalidCategories(
+          product,
+        );
 
-    if (!product.img.trim()) {
-      console.warn("Producto sin imagen. Se mantiene publicado, revisar ficha ->", {
-        id: product.id,
-        title: product.title,
-      });
-    }
+      if (
+        invalidCategories.length > 0
+      ) {
+        console.warn(
+          "Producto con categoría incompleta o inválida. Se normaliza sin inventar categoría ->",
+          {
+            id: product.id,
+            title: product.title,
+            category:
+              product.category,
+            categories:
+              product.categories,
+            invalidCategories,
+            validCategories:
+              PRODUCT_CATEGORIES.map(
+                (category) =>
+                  category.sheetLabel,
+              ),
+          },
+        );
 
-    seen.add(product.id);
-    return true;
-  });
+        sanitizeCategories(
+          product,
+        );
+      }
+
+      if (
+        hasInvalidOffer(
+          product,
+        )
+      ) {
+        console.warn(
+          "Producto con oferta inválida. Se mantiene precio base ->",
+          {
+            id: product.id,
+            title: product.title,
+            price: product.price,
+            offer_price:
+              product.offer_price,
+          },
+        );
+
+        product.offer_price =
+          null;
+      }
+
+      if (
+        !product.img.trim()
+      ) {
+        console.warn(
+          "Producto sin imagen. Se mantiene publicado, revisar ficha ->",
+          {
+            id: product.id,
+            title: product.title,
+          },
+        );
+      }
+
+      seen.add(product.id);
+
+      return true;
+    },
+  );
 }

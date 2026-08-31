@@ -4,9 +4,24 @@ export interface CatalogCategory extends Category {
   sheetLabel: string;
 }
 
+/**
+ * Selector global de navegación.
+ *
+ * "todas" NO representa una categoría real de producto.
+ */
+export const ALL_CATALOG_CATEGORY_ID =
+  "todas" as const;
+
+/**
+ * Configuración legacy vigente del catálogo.
+ *
+ * CAT-1B solo separa navegación de clasificación.
+ * La migración a Mainline / Silver Series /
+ * Premium / Collector se realizará posteriormente.
+ */
 export const CATEGORIES: CatalogCategory[] = [
   {
-    id: "todas",
+    id: ALL_CATALOG_CATEGORY_ID,
     name: "Todos",
     sheetLabel: "Todos",
     icon: "🏁",
@@ -63,6 +78,33 @@ export const CATEGORIES: CatalogCategory[] = [
   },
 ];
 
+/**
+ * Categorías que pueden asignarse temporalmente a productos
+ * mientras se completa la migración Taxonomy 1.0.
+ *
+ * Importante:
+ * - excluye "todas";
+ * - x-caja y ofertas permanecen solo por compatibilidad legacy
+ *   hasta su migración a formato/estado comercial.
+ */
+export const PRODUCT_CATEGORIES:
+  CatalogCategory[] =
+  CATEGORIES.filter(
+    (category) =>
+      category.id !==
+      ALL_CATALOG_CATEGORY_ID,
+  );
+
+function normalizeCategoryLabel(
+  value: string,
+): string {
+  return value
+    .trim()
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .toLowerCase();
+}
+
 export function getCategoryById(
   categoryId?: string | null,
 ): CatalogCategory | null {
@@ -78,6 +120,11 @@ export function getCategoryById(
   );
 }
 
+/**
+ * Resolver general.
+ *
+ * Incluye opciones de navegación como "Todos".
+ */
 export function getCategoryIdFromSheetLabel(
   label?: string | null,
 ): string {
@@ -85,23 +132,54 @@ export function getCategoryIdFromSheetLabel(
     return "";
   }
 
-  const normalized = label
-    .trim()
-    .normalize("NFD")
-    .replace(/[\u0300-\u036f]/g, "")
-    .toLowerCase();
+  const normalized =
+    normalizeCategoryLabel(label);
 
   return (
-    CATEGORIES.find((category) => {
-      const normalizedSheetLabel =
-        category.sheetLabel
-          .trim()
-          .normalize("NFD")
-          .replace(/[\u0300-\u036f]/g, "")
-          .toLowerCase();
+    CATEGORIES.find(
+      (category) =>
+        normalizeCategoryLabel(
+          category.sheetLabel,
+        ) === normalized,
+    )?.id ?? ""
+  );
+}
 
-      return normalizedSheetLabel === normalized;
-    })?.id ?? ""
+/**
+ * Resolver exclusivo para productos.
+ *
+ * Nunca devuelve "todas".
+ */
+export function getProductCategoryIdFromSheetLabel(
+  label?: string | null,
+): string {
+  if (!label) {
+    return "";
+  }
+
+  const normalized =
+    normalizeCategoryLabel(label);
+
+  return (
+    PRODUCT_CATEGORIES.find(
+      (category) =>
+        normalizeCategoryLabel(
+          category.sheetLabel,
+        ) === normalized,
+    )?.id ?? ""
+  );
+}
+
+export function isProductCategoryId(
+  categoryId?: string | null,
+): boolean {
+  if (!categoryId) {
+    return false;
+  }
+
+  return PRODUCT_CATEGORIES.some(
+    (category) =>
+      category.id === categoryId,
   );
 }
 
