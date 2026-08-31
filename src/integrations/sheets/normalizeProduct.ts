@@ -1,4 +1,7 @@
 import {
+  resolveLegacyTaxonomyMigration,
+} from "@/domain/product/LegacyTaxonomyMigration";
+import {
   isHotWheelsFormatId,
   isHotWheelsRarityId,
 } from "@/domain/product/Taxonomy";
@@ -289,15 +292,41 @@ function normalizeSheetStatus(
 export function normalizeProduct(
   row: CsvRow,
 ): SheetProduct {
-  const primaryCategory =
+  const year =
+    parseOptionalInteger(
+      row.year,
+    );
+
+  const legacyPrimaryCategory =
     getProductCategoryIdFromSheetLabel(
       row.category,
     );
 
+  const migration =
+    resolveLegacyTaxonomyMigration({
+      category:
+        cleanText(
+          row.category,
+        ),
+
+      year,
+
+      cardNumber:
+        cleanText(
+          row.card_number,
+        ),
+    });
+
+  const primaryCategory =
+    migration.canonicalCategory ??
+    legacyPrimaryCategory;
+
   const extraCategories =
-    parseCategories(
-      row.categories,
-    );
+    migration.canonicalCategory
+      ? []
+      : parseCategories(
+          row.categories,
+        );
 
   const categories =
     Array.from(
@@ -308,7 +337,6 @@ export function normalizeProduct(
         ].filter(Boolean),
       ),
     );
-
   return {
     id:
       cleanText(row.id),
@@ -373,10 +401,9 @@ export function normalizeProduct(
         row.attributes,
       ),
 
-    year:
-      parseOptionalInteger(
-        row.year,
-      ),
+    explore_tags:
+      migration.exploreTags,
+    year,
 
     case_code:
       cleanText(

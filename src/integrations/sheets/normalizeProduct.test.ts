@@ -242,4 +242,150 @@ describe("normalizeProduct MVP", () => {
 
     expect(product.exclusivity)
       .toBe("");
+  });
+  it("migra un JDM 2026 auditado a Mainline", () => {
+    const product = normalizeProduct({
+      id: "HWC26060",
+      title: "Toyota Prius Custom",
+      price: "20",
+      status: "Publicado",
+
+      year: "2026",
+      card_number: "60/250",
+      category: "JDM",
+      badges: "JDM",
+    });
+
+    expect(product.category)
+      .toBe("mainline");
+
+    expect(product.categories)
+      .toEqual([
+        "mainline",
+      ]);
+
+    expect(product.explore_tags)
+      .toEqual([
+        "jdm",
+      ]);
+  });
+
+  it("migra Fantasía 2026 sin convertirla en categoría", () => {
+    const product = normalizeProduct({
+      id: "HWC26005",
+      title: "Pass 'n Go",
+      price: "20",
+      status: "Publicado",
+
+      year: "2026",
+      card_number: "5/250",
+      category: "Fantasía",
+    });
+
+    expect(product.category)
+      .toBe("mainline");
+
+    expect(product.categories)
+      .toEqual([
+        "mainline",
+      ]);
+
+    expect(product.explore_tags)
+      .toEqual([
+        "fantasia",
+      ]);
+
+    expect(
+      product.categories,
+    ).not.toContain(
+      "fantasia",
+    );
+  });
+
+  it("prioriza una categoría canónica explícita sobre la regla Mainline 2026", () => {
+    const product = normalizeProduct({
+      id: "HW-SILVER-001",
+      title: "Silver Test",
+      price: "20",
+      status: "Publicado",
+
+      year: "2026",
+      card_number: "10/250",
+      category: "Silver Series",
+    });
+
+    expect(product.category)
+      .toBe(
+        "silver-series",
+      );
+
+    expect(product.categories)
+      .toEqual([
+        "silver-series",
+      ]);
+
+    expect(product.explore_tags)
+      .toEqual([]);
+  });
+
+  it("no extrapola Mainline 2026 hacia productos de otro año", () => {
+    const product = normalizeProduct({
+      id: "HW-2027-001",
+      title: "Legacy 2027",
+      price: "20",
+      status: "Publicado",
+
+      year: "2027",
+      card_number: "60/250",
+      category: "Clásicos",
+    });
+
+    expect(product.category)
+      .toBe(
+        "clasicos",
+      );
+
+    expect(product.categories)
+      .toContain(
+        "clasicos",
+      );
+
+    expect(product.explore_tags)
+      .toEqual([
+        "clasicos",
+      ]);
+  });
+
+  it("no contamina categories con la clasificación legacy migrada", () => {
+    const product = normalizeProduct({
+      id: "HWC26015",
+      title: "Porsche 911 Carrera T",
+      price: "20",
+      status: "Publicado",
+
+      year: "2026",
+      card_number: "15/250",
+      category: "Deportivos",
+    });
+
+    expect(product.category)
+      .toBe(
+        "mainline",
+      );
+
+    expect(product.categories)
+      .toEqual([
+        "mainline",
+      ]);
+
+    expect(product.explore_tags)
+      .toEqual([
+        "deportivos",
+      ]);
+
+    expect(
+      product.categories,
+    ).not.toContain(
+      "deportivos",
+    );
   });});
