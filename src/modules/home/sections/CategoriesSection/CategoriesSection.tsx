@@ -19,8 +19,8 @@ import {
 } from "@/app/routes/routes";
 
 import {
-  productBelongsToCategory,
-} from "@/domain/product/categories";
+  buildCatalogNavigationSnapshot,
+} from "@/application/catalog/CatalogNavigationResolver";
 
 import {
   productSource,
@@ -31,15 +31,9 @@ import type {
 } from "@/shared/types/product";
 
 import {
-  BRAND_CONFIG,
-} from "@/tenant/config/brand";
-
-const PREFERRED_HOME_CATEGORY_IDS = [
-  "deportivos",
-  "coleccionables",
-  "premium",
-  "ofertas",
-] as const;
+  CATALOG_CATEGORY_NAVIGATION_ITEMS,
+  getCategoryById,
+} from "@/tenant/config/catalog";
 
 export default function CategoriesSection() {
   const [
@@ -98,72 +92,50 @@ export default function CategoriesSection() {
         return [];
       }
 
-      const visibleCatalogCategories =
-        BRAND_CONFIG
-          .categories
-          .filter(
-            (category) =>
-              category.id !==
-                "todas" &&
-              category.id !==
-                "all" &&
-              products.some(
-                (product) =>
-                  productBelongsToCategory(
-                    product,
-                    category.id,
-                  ),
-              ),
-          );
+      const navigation =
+        buildCatalogNavigationSnapshot(
+          products,
+          CATALOG_CATEGORY_NAVIGATION_ITEMS,
+        );
 
-      const preferredCategories =
-        PREFERRED_HOME_CATEGORY_IDS
-          .map(
-            (categoryId) =>
-              visibleCatalogCategories
-                .find(
-                  (category) =>
-                    category.id ===
-                    categoryId,
-                ),
-          )
-          .filter(
-            (
+      return navigation
+        .visibleItems
+        .map(
+          (item) => {
+            const category =
+              getCategoryById(
+                item.id,
+              );
+
+            if (!category) {
+              return null;
+            }
+
+            return {
+              ...category,
+              id: item.id,
+              name: item.label,
+            };
+          },
+        )
+        .filter(
+          (
+            category,
+          ): category is NonNullable<
+            typeof category
+          > =>
+            Boolean(
               category,
-            ): category is NonNullable<
-              typeof category
-            > =>
-              Boolean(category),
-          );
-
-      const preferredIds =
-        new Set(
-          preferredCategories.map(
-            (category) =>
-              category.id,
-          ),
-        );
-
-      const fallbackCategories =
-        visibleCatalogCategories.filter(
-          (category) =>
-            !preferredIds.has(
-              category.id,
             ),
+        )
+        .slice(
+          0,
+          4,
         );
-
-      return [
-        ...preferredCategories,
-        ...fallbackCategories,
-      ].slice(
-        0,
-        4,
-      );
     }, [
       loading,
       products,
     ]);
-
   return (
     <section
       id="categorias"
