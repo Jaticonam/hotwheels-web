@@ -53,6 +53,9 @@ import {
 import type {
   QuotationDocumentResult,
 } from "@/application/documents/QuotationDocumentPort";
+import {
+  getReadyPublicAssetUrl,
+} from "@/application/publishing/CommercialPublication";
 
 import {
   quotationDocumentPort,
@@ -431,6 +434,10 @@ export function AdminQuotationWorkspace({
     pdfReady &&
     documentProviderReady &&
     !generatingPdf;
+  const generatedPdfUrl =
+    getReadyPublicAssetUrl(
+      generatedPdf?.pdf,
+    );
 
   useEffect(
     () => {
@@ -1715,12 +1722,12 @@ export function AdminQuotationWorkspace({
                                   }
 
                                   {
-                                    generatedPdf &&
+                                    generatedPdfUrl &&
                                     (
                                       <a
                                         className="hwa-quotation-output-result"
                                         href={
-                                          generatedPdf.url
+                                          generatedPdfUrl
                                         }
                                         target="_blank"
                                         rel="noreferrer"
