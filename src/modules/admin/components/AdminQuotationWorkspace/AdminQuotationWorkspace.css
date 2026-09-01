@@ -1278,3 +1278,69 @@
   font-size: 0.5rem;
   line-height: 1.35;
 }
+.hwa-quotation-output-secondary {
+  width: 100%;
+  min-height: 38px;
+  border: 0;
+  border-radius: 10px;
+  background: #4f46e5;
+  color: #ffffff;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  font: inherit;
+  font-size: 0.72rem;
+  font-weight: 800;
+  cursor: pointer;
+  transition:
+    background 160ms ease,
+    transform 160ms ease,
+    opacity 160ms ease;
+}
+
+.hwa-quotation-output-secondary:hover:not(:disabled) {
+  background: #3730a3;
+  transform: translateY(-1px);
+}
+
+.hwa-quotation-output-secondary:focus-visible {
+  outline: 3px solid rgba(79, 70, 229, 0.2);
+  outline-offset: 2px;
+}
+
+.hwa-quotation-output-secondary:disabled {
+  background: #cbd5e1;
+  color: #64748b;
+  cursor: not-allowed;
+  opacity: 0.78;
+}
+
+.hwa-quotation-output-pdf-status {
+  margin-top: -1px;
+}
+
+.hwa-quotation-output-error {
+  margin: 0;
+  color: #b91c1c;
+  font-size: 0.58rem;
+  line-height: 1.35;
+}
+
+.hwa-quotation-output-result {
+  min-height: 34px;
+  border: 1px solid #c7d2fe;
+  border-radius: 9px;
+  background: #eef2ff;
+  color: #3730a3;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.64rem;
+  font-weight: 800;
+  text-decoration: none;
+}
+
+.hwa-quotation-output-result:hover {
+  background: #e0e7ff;
+}

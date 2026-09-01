@@ -46,6 +46,17 @@ import {
   createQuotationOutputPlan,
   createQuotationOutputRequest,
 } from "@/application/quotation/QuotationOutput";
+import {
+  prepareQuotationDocumentRequest,
+} from "@/application/documents/QuotationDocumentRequest";
+
+import type {
+  QuotationDocumentResult,
+} from "@/application/documents/QuotationDocumentPort";
+
+import {
+  quotationDocumentPort,
+} from "@/infrastructure/documents/quotationDocumentPort";
 
 import {
   buildQuotationWhatsAppUrl,
@@ -381,6 +392,105 @@ export function AdminQuotationWorkspace({
       .whatsapp
       .state ===
     "ready";
+  const pdfReady =
+    outputPlan
+      ?.capabilities
+      .pdf
+      .state ===
+    "ready";
+
+  const documentProviderReady =
+    quotationDocumentPort
+      .status
+      .state ===
+    "ready";
+
+  const [
+    generatingPdf,
+    setGeneratingPdf,
+  ] =
+    useState(false);
+
+  const [
+    generatedPdf,
+    setGeneratedPdf,
+  ] =
+    useState<QuotationDocumentResult | null>(
+      null,
+    );
+
+  const [
+    pdfError,
+    setPdfError,
+  ] =
+    useState<string | null>(
+      null,
+    );
+
+  const canGeneratePdf =
+    pdfReady &&
+    documentProviderReady &&
+    !generatingPdf;
+
+  useEffect(
+    () => {
+      setGeneratedPdf(null);
+      setPdfError(null);
+    },
+    [outputPlan],
+  );
+
+  const generateQuotationPdf =
+    async () => {
+      if (
+        !outputPlan ||
+        !documentProviderReady
+      ) {
+        return;
+      }
+
+      const outputRequest =
+        createQuotationOutputRequest(
+          outputPlan,
+          "pdf",
+        );
+
+      if (!outputRequest) {
+        return;
+      }
+
+      const documentRequest =
+        prepareQuotationDocumentRequest(
+          outputRequest,
+        );
+
+      setGeneratingPdf(true);
+      setGeneratedPdf(null);
+      setPdfError(null);
+
+      try {
+        const result =
+          await quotationDocumentPort
+            .generate(
+              documentRequest,
+            );
+
+        setGeneratedPdf(result);
+      }
+      catch (error) {
+        console.error(
+          "No se pudo generar el PDF de cotización:",
+          error,
+        );
+
+        setPdfError(
+          "No se pudo generar el PDF de cotización.",
+        );
+      }
+      finally {
+        setGeneratingPdf(false);
+      }
+    };
 
   const refreshDrafts =
     () => {
@@ -1555,6 +1665,70 @@ export function AdminQuotationWorkspace({
                                         : "Completa la cotización y el WhatsApp del cliente para habilitar el envío."
                                     }
                                   </small>
+
+                                  <button
+                                    type="button"
+                                    className="hwa-quotation-output-secondary"
+                                    disabled={
+                                      !canGeneratePdf
+                                    }
+                                    onClick={() =>
+                                      void generateQuotationPdf()
+                                    }
+                                    title={
+                                      !pdfReady
+                                        ? "Completa la cotización para preparar el PDF"
+                                        : documentProviderReady
+                                          ? "Generar PDF de cotización"
+                                          : "Disponible cuando JUNG CORE Documents esté conectado"
+                                    }
+                                  >
+                                    <ReceiptText
+                                      size={15}
+                                      aria-hidden="true"
+                                    />
+
+                                    {
+                                      generatingPdf
+                                        ? "Generando PDF..."
+                                        : "Descargar PDF"
+                                    }
+                                  </button>
+
+                                  <small className="hwa-quotation-output-pdf-status">
+                                    {
+                                      !pdfReady
+                                        ? "Completa cliente, condiciones y productos para preparar el PDF."
+                                        : documentProviderReady
+                                          ? "PDF preparado desde el snapshot canónico de la cotización."
+                                          : quotationDocumentPort.status.message
+                                    }
+                                  </small>
+
+                                  {
+                                    pdfError &&
+                                    (
+                                      <p className="hwa-quotation-output-error">
+                                        {pdfError}
+                                      </p>
+                                    )
+                                  }
+
+                                  {
+                                    generatedPdf &&
+                                    (
+                                      <a
+                                        className="hwa-quotation-output-result"
+                                        href={
+                                          generatedPdf.url
+                                        }
+                                        target="_blank"
+                                        rel="noreferrer"
+                                      >
+                                        Abrir PDF generado
+                                      </a>
+                                    )
+                                  }
                                 </div>
                               </aside>
                             </div>
